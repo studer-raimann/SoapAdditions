@@ -1,0 +1,32 @@
+<?php namespace srag\Plugins\SoapAdditions\Command;
+
+/**
+ * Interface Command
+ *
+ * @author Fabian Schmid <fs@studer-raimann.ch>
+ */
+interface Command {
+
+	/**
+	 * @return void
+	 */
+	public function run();
+
+
+	/**
+	 * @return void
+	 */
+	public function revert();
+
+
+	/**
+	 * @return bool
+	 */
+	public function wasSuccessful()/*:bool*/ ;
+
+
+	/**
+	 * @return string
+	 */
+	public function getUnsuccessfulReason();
+}

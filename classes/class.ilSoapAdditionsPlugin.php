@@ -1,6 +1,6 @@
 <?php
 
-use srag\Plugins\SoapAdditions\RBAC\BlockRole;
+use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRole;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

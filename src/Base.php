@@ -1,6 +1,4 @@
-<?php
-
-namespace srag\Plugins\SoapAdditions;
+<?php namespace srag\Plugins\SoapAdditions;
 
 use ilAbstractSoapMethod;
 use ilSoapAdditionsPlugin;
