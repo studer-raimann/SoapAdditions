@@ -1,0 +1,36 @@
+{
+  "name": "srag/plugins_soap-additions",
+  "type": "project",
+  "license": "GPL-3.0+",
+  "keywords": [
+    "ILIAS",
+    "Plugin"
+  ],
+  "support": {
+    "email": "support-core1@studer-raimann.ch"
+  },
+  "authors": [
+    {
+      "name": "studer + raimann ag - Team Core 1",
+      "email": "support-core1@studer-raimann.ch",
+      "homepage": "https://studer-raimann.ch",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "srag\\Plugins\\SoapAdditions\\": "src/"
+    },
+    "classmap": [
+      "./classes/",
+      "../../../../../../../Services/WebServices/SOAP/classes/class.ilSoapHookPlugin.php",
+      "../../../../../../../Services/WebServices/SOAP/classes/class.ilAbstractSoapMethod.php",
+      "../../../../../../../Services/ActiveRecord/class.ActiveRecord.php",
+      "../../../../../../../Services/Component/classes/class.ilPluginConfigGUI.php",
+      "../../../../../../../Services/Form/classes/class.ilPropertyFormGUI.php",
+      "../../../../../../../Services/Table/classes/class.ilTable2GUI.php"
+    ]
+  }
+}
