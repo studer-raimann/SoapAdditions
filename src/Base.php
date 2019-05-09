@@ -4,6 +4,7 @@ namespace srag\Plugins\SoapAdditions;
 
 use ilAbstractSoapMethod;
 use ilSoapAdditionsPlugin;
+use ilSoapPluginException;
 
 /**
  * Class Base
@@ -18,6 +19,7 @@ abstract class Base extends ilAbstractSoapMethod {
 	const TYPE_INT_ARRAY = 'tns:intArray';
 	const TYPE_STRING = 'xsd:string';
 	const TYPE_INT = 'xsd:int';
+	const TYPE_BOOL = 'xsd:boolean';
 	const TYPE_DOUBLE_ARRAY = 'tns:doubleArray';
 	const SID = 'sid';
 	const ORGU_REF_ID = 'orgu_ref_id';
@@ -64,7 +66,7 @@ abstract class Base extends ilAbstractSoapMethod {
 	 * @param array $params
 	 *
 	 * @return mixed
-	 * @throws \ilSoapPluginException
+	 * @throws ilSoapPluginException
 	 */
 	public function execute(array $params) {
 		$this->checkParameters($params);
@@ -85,17 +87,17 @@ abstract class Base extends ilAbstractSoapMethod {
 	/**
 	 * @param $message
 	 *
-	 * @throws \ilSoapPluginException
+	 * @throws ilSoapPluginException
 	 */
 	protected function error($message) {
-		throw new \ilSoapPluginException($message);
+		throw new ilSoapPluginException($message);
 	}
 
 
 	/**
 	 * @param $session_id
 	 *
-	 * @throws \ilSoapPluginException
+	 * @throws ilSoapPluginException
 	 */
 	private function init($session_id) {
 		$this->initIliasAndCheckSession($session_id); // Throws exception if session is not valid

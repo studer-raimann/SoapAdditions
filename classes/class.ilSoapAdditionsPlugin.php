@@ -1,4 +1,7 @@
 <?php
+
+use srag\Plugins\SoapAdditions\RBAC\BlockRole;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
@@ -21,7 +24,9 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin {
 	 * @inheritdoc
 	 */
 	public function getSoapMethods() {
-		return array();
+		return array(
+			new BlockRole()
+		);
 	}
 
 
