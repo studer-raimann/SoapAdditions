@@ -13,6 +13,18 @@ As ILIAS administrator go to "Administration->Plugins" and install/activate the 
 
 ## Usage
 
+
+**Important! When using SOAP-Plugins in ILIAS you MUST append the client_id with every Request (this is a Limitation in SOAP-Plugins. E.g.:**
+
+`http://localhost:8053/webservice/soap/server.php`
+
+becomes
+
+`http://localhost:8053/webservice/soap/server.php?client_id=default`
+
+You find your client_id in the ILIAS-Administration in General Settings -> Server. 
+
+
 The method `blockRole` requires three parameters:
 * `sid`: A valid sesison-ID obtained via the `login` method
 * `role_id`: Obj-ID of a ILIAS role
