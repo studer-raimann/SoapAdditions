@@ -2,31 +2,28 @@
 
 /**
  * Interface Command
- *
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-interface Command {
+interface Command
+{
 
-	/**
-	 * @return void
-	 */
-	public function run();
+    /**
+     * @return void
+     */
+    public function run();
 
+    /**
+     * @return void
+     */
+    public function revert();
 
-	/**
-	 * @return void
-	 */
-	public function revert();
+    /**
+     * @return bool
+     */
+    public function wasSuccessful()/*:bool*/ ;
 
-
-	/**
-	 * @return bool
-	 */
-	public function wasSuccessful()/*:bool*/ ;
-
-
-	/**
-	 * @return string
-	 */
-	public function getUnsuccessfulReason();
+    /**
+     * @return string
+     */
+    public function getUnsuccessfulReason();
 }
