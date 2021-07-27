@@ -7,9 +7,6 @@
 interface Command
 {
 
-    /**
-     * @return void
-     */
     public function run();
 
     /**
@@ -20,10 +17,10 @@ interface Command
     /**
      * @return bool
      */
-    public function wasSuccessful()/*:bool*/ ;
+    public function wasSuccessful() : bool;
 
     /**
      * @return string
      */
-    public function getUnsuccessfulReason();
+    public function getUnsuccessfulReason() : string;
 }

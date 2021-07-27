@@ -3,12 +3,13 @@
 use Exception;
 use ilObject2;
 use srag\Plugins\SoapAdditions\Command\Command;
+use srag\Plugins\SoapAdditions\Command\Base;
 
 /**
  * Class
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class BlockRole implements Command
+class BlockRole extends Base implements Command
 {
 
     /**
@@ -19,14 +20,6 @@ class BlockRole implements Command
      * @var int
      */
     private $node_id = 0;
-    /**
-     * @var bool
-     */
-    private $status = true;
-    /**
-     * @var string
-     */
-    private $error_message = "";
 
     /**
      * BlockRole constructor.
@@ -52,35 +45,11 @@ class BlockRole implements Command
     }
 
     /**
-     * @inheritDoc
-     */
-    public function revert()
-    {
-        throw new \LogicException("unable to revert");
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function wasSuccessful()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getUnsuccessfulReason()
-    {
-        return $this->error_message;
-    }
-
-    /**
      * @param $role_id
      * @param $node_id
      * @return bool
      */
-    private function blockRole(/*int*/ $role_id, /*int*/ $node_id)/*:bool*/
+    private function blockRole(int $role_id, int $node_id) : bool
     {
         global $DIC;
         try {

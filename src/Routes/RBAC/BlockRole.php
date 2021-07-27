@@ -3,8 +3,8 @@
 namespace srag\Plugins\SoapAdditions\Routes\RBAC;
 
 use ilSoapPluginException;
-use srag\Plugins\SoapAdditions\Base;
 use srag\Plugins\SoapAdditions\Command\RBAC\BlockRole as BlockRoleCommand;
+use srag\Plugins\SoapAdditions\Routes\Base;
 
 /**
  * Class BlockRole
@@ -64,7 +64,7 @@ class BlockRole extends Base
     /**
      * @inheritdoc
      */
-    public function getDocumentation()
+    public function getShortDocumentation()
     {
         return "Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)";
     }

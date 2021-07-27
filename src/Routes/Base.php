@@ -1,4 +1,4 @@
-<?php namespace srag\Plugins\SoapAdditions;
+<?php namespace srag\Plugins\SoapAdditions\Routes;
 
 use ilAbstractSoapMethod;
 use ilSoapAdditionsPlugin;
@@ -43,11 +43,21 @@ abstract class Base extends ilAbstractSoapMethod
      */
     final public function getInputParams()
     {
-        return array_merge(
+        $array_merge = array_merge(
             array(
                 self::SID => self::TYPE_STRING,
             ), $this->getAdditionalInputParams()
         );
+        return $array_merge;
+    }
+
+    protected function checkParameters(array $params)
+    {
+        $needed_parameters = $this->getInputParams();
+        if (count($needed_parameters) !== count($params)) {
+            $keys_needed = implode(", ", array_keys($needed_parameters));
+            throw new ilSoapPluginException("Request is missing at least one of the following parameters: " . $keys_needed);
+        }
     }
 
     /**
@@ -64,10 +74,10 @@ abstract class Base extends ilAbstractSoapMethod
     public function execute(array $params)
     {
         $this->checkParameters($params);
-        $session_id = (isset($params[0])) ? $params[0] : '';
+        $session_id = $params[0] ?? '';
         $this->init($session_id);
 
-        $clean_params = array();
+        $clean_params = [];
         $i = 1;
         foreach ($this->getAdditionalInputParams() as $key => $type) {
             $clean_params[$key] = $params[$i];
@@ -93,5 +103,17 @@ abstract class Base extends ilAbstractSoapMethod
     private function init($session_id)
     {
         $this->initIliasAndCheckSession($session_id); // Throws exception if session is not valid
+    }
+
+    abstract protected function getShortDocumentation();
+
+    final public function getDocumentation()
+    {
+        return $this->getShortDocumentation() . $this->getSampleRequest();
+    }
+
+    protected function getSampleRequest()
+    {
+        return '';
     }
 }
