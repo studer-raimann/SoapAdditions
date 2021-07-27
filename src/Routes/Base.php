@@ -3,6 +3,8 @@
 use ilAbstractSoapMethod;
 use ilSoapAdditionsPlugin;
 use ilSoapPluginException;
+use srag\Plugins\SoapAdditions\Parameter\Factory;
+use srag\Plugins\SoapAdditions\Parameter\Parameter;
 
 /**
  * Class Base
@@ -20,10 +22,17 @@ abstract class Base extends ilAbstractSoapMethod
     const TYPE_BOOL = 'xsd:boolean';
     const TYPE_DOUBLE_ARRAY = 'tns:doubleArray';
     const SID = 'sid';
-    const ORGU_REF_ID = 'orgu_ref_id';
-    const POSITION_ID = 'position_id';
-    const USR_IDS = 'usr_ids';
-    const USR_ID = 'usr_id';
+
+    /**
+     * @var Factory
+     */
+    protected $param_factory;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->param_factory = new Factory();
+    }
 
     /**
      * @inheritdoc
@@ -34,21 +43,33 @@ abstract class Base extends ilAbstractSoapMethod
     }
 
     /**
-     * @return array
+     * @return Parameter[]
      */
-    protected abstract function getAdditionalInputParams();
+    protected abstract function getAdditionalInputParams() : array;
+
+    /**
+     * @return Parameter[]
+     */
+    public function getInputParamsObjects() : array
+    {
+        return array_merge([
+            $this->param_factory->string(self::SID)
+        ], $this->getAdditionalInputParams());
+    }
 
     /**
      * @inheritdoc
      */
     final public function getInputParams()
     {
-        $array_merge = array_merge(
-            array(
-                self::SID => self::TYPE_STRING,
-            ), $this->getAdditionalInputParams()
-        );
-        return $array_merge;
+        $params = [];
+        foreach ($this->getInputParamsObjects() as $p) {
+            if (!$p instanceof Parameter) {
+                throw new ilSoapPluginException("All parameters in getAdditionalInputParams() MUST be of type Paramteter");
+            }
+            $params[$p->getKey()] = $p->getType();
+        }
+        return $params;
     }
 
     protected function checkParameters(array $params)
@@ -109,7 +130,18 @@ abstract class Base extends ilAbstractSoapMethod
 
     final public function getDocumentation()
     {
-        return $this->getShortDocumentation() . $this->getSampleRequest();
+        $documentation = $this->getShortDocumentation();
+        foreach ($this->getInputParamsObjects() as $parameter) {
+            if (count($parameter->getPossibleValues()) > 0) {
+                $documentation .= "{$parameter->getKey()}: ";
+                foreach ($parameter->getPossibleValues() as $value) {
+                    $documentation .= "{$value->getValue()}: {$value->getDescription()}, ";
+                }
+                $documentation .= "<br>";
+            }
+        }
+
+        return $documentation;
     }
 
     protected function getSampleRequest()

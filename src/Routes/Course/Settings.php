@@ -74,47 +74,46 @@ class Settings extends Base
     /**
      * @return array
      */
-    protected function getAdditionalInputParams()
+    protected function getAdditionalInputParams() : array
     {
         return [
-            self::P_COURSE_REF_ID => Base::TYPE_INT,
-            // Ref-ID of course
-            self::P_SHOW_TITLE_AND_ICON => Base::TYPE_BOOL,
-            // true or false
-            self::P_SHOW_HEADER_ACTIONS => Base::TYPE_BOOL,
-            // true or false
-            self::P_PASSED_DETERMINATION => Base::TYPE_INT,
-            // 1: Through Learning Progress
-            // 2: Only Manual by Tutors
-            self::P_SORTING => Base::TYPE_INT,
-            // 0: Titles in Alphabetical Order
-            // 4: By Creation Date
-            // 2: Sort by Activation
-            // 1: Manually
-            self::P_SORTING_DIRECTION => Base::TYPE_STRING,
-            // asc (0) or desc (1)
-            self::P_ACTIVATE_ADD_TO_FAVOURITES => Base::TYPE_BOOL,
-            // true or false
-            self::P_POSITION_FOR_NEW_OBJECTS => Base::TYPE_STRING,
-            // top (0) or bottom (1)
-            self::P_ORDER_FOR_NEW_OBJECTS => Base::TYPE_INT,
-            // 0: Titles in Alphabetical Order
-            // 1: By Creation Date
-            // 2: Sort by Activation
-            self::P_LEARNING_PROGRESS_MODE => Base::TYPE_INT,
-            // 0: Learning Progress is Deactivated
-            // 11: Tutors Monitor and Set Status
-            // 5: Status is Determined by a Collection of Items
-            self::P_ACTIVATE_NEWS => Base::TYPE_BOOL,
-            // true or false
-            self::P_ACTIVATE_TIMELINE => Base::TYPE_BOOL,
-            // true or false
-            self::P_SHOW_NEW_AFTER => Base::TYPE_STRING,
-            // true or false
-            self::P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES => Base::TYPE_BOOL,
-            // true or false
-            self::P_ACTIVATE_TIMELINE_LANDINGS_PAGE => Base::TYPE_BOOL,
-            // true or false
+            $this->param_factory->int(self::P_COURSE_REF_ID),
+            $this->param_factory->bool(self::P_SHOW_TITLE_AND_ICON),
+            $this->param_factory->bool(self::P_SHOW_HEADER_ACTIONS),
+            $this->param_factory->int(self::P_PASSED_DETERMINATION, [
+                $this->param_factory->possibleValue(1, 'Through Learning Progress'),
+                $this->param_factory->possibleValue(2, 'Only Manual by Tutors'),
+            ]),
+            $this->param_factory->int(self::P_SORTING, [
+                $this->param_factory->possibleValue(0, 'Titles in Alphabetical Order'),
+                $this->param_factory->possibleValue(4, 'By Creation Date'),
+                $this->param_factory->possibleValue(2, 'Sort by Activation'),
+                $this->param_factory->possibleValue(1, 'Manually'),
+            ]),
+            $this->param_factory->string(self::P_SORTING_DIRECTION, [
+                $this->param_factory->possibleValue('asc', 'ASC'),
+                $this->param_factory->possibleValue('desc', 'DESC'),
+            ]),
+            $this->param_factory->bool(self::P_ACTIVATE_ADD_TO_FAVOURITES),
+            $this->param_factory->string(self::P_POSITION_FOR_NEW_OBJECTS, [
+                $this->param_factory->possibleValue('top', 'Top'),
+                $this->param_factory->possibleValue('bottom', 'Bottom'),
+            ]),
+            $this->param_factory->int(self::P_ORDER_FOR_NEW_OBJECTS, [
+                $this->param_factory->possibleValue(0, 'Titles in Alphabetical Order'),
+                $this->param_factory->possibleValue(1, 'By Creation Date'),
+                $this->param_factory->possibleValue(2, 'Sort by Activation'),
+            ]),
+            $this->param_factory->int(self::P_LEARNING_PROGRESS_MODE, [
+                $this->param_factory->possibleValue(0, 'Learning Progress is Deactivated'),
+                $this->param_factory->possibleValue(11, 'Tutors Monitor and Set Status'),
+                $this->param_factory->possibleValue(5, 'Status is Determined by a Collection of Items'),
+            ]),
+            $this->param_factory->bool(self::P_ACTIVATE_NEWS),
+            $this->param_factory->bool(self::P_ACTIVATE_TIMELINE),
+            $this->param_factory->string(self::P_POSITION_FOR_NEW_OBJECTS, []),
+            $this->param_factory->bool(self::P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES),
+            $this->param_factory->bool(self::P_ACTIVATE_TIMELINE_LANDINGS_PAGE),
         ];
     }
 

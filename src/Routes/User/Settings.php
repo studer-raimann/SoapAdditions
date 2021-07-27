@@ -1,20 +1,19 @@
 <?php
 
-namespace srag\Plugins\SoapAdditions\Routes\RBAC;
+namespace srag\Plugins\SoapAdditions\Routes\User;
 
 use ilSoapPluginException;
-use srag\Plugins\SoapAdditions\Command\RBAC\BlockRole as BlockRoleCommand;
+use srag\Plugins\SoapAdditions\Command\Course\Settings as SettingsCommand;
 use srag\Plugins\SoapAdditions\Routes\Base;
 
 /**
- * Class BlockRole
+ * Class Settings
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class BlockRole extends Base
+class Settings extends Base
 {
 
-    const P_ROLE_ID = 'role_id';
-    const P_NODE_ID = 'node_id';
+    const P_USER_ID = 'user_id';
 
     /**
      * @param array $params
@@ -23,16 +22,12 @@ class BlockRole extends Base
      */
     protected function run(array $params)
     {
-        $role_id = (int) $params[self::P_ROLE_ID];
-        $node_id = (int) $params[self::P_NODE_ID];
-
-        $command = new BlockRoleCommand($role_id, $node_id);
+        $command = new SettingsCommand((int) $params[self::P_COURSE_REF_ID]);
         $command->run();
         if ($command->wasSuccessful()) {
             return true;
-        } else {
-            $this->error($command->getUnsuccessfulReason());
         }
+        $this->error($command->getUnsuccessfulReason());
 
         return true;
     }
@@ -42,7 +37,7 @@ class BlockRole extends Base
      */
     public function getName()
     {
-        return "blockRole";
+        return "updateUserSettings";
     }
 
     /**
@@ -51,8 +46,7 @@ class BlockRole extends Base
     protected function getAdditionalInputParams() : array
     {
         return [
-            $this->param_factory->int(self::P_ROLE_ID),
-            $this->param_factory->int(self::P_NODE_ID),
+            $this->param_factory->int(self::P_USER_ID)
         ];
     }
 
@@ -69,6 +63,12 @@ class BlockRole extends Base
      */
     public function getShortDocumentation()
     {
-        return "Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)";
+        return "Updates the settings of a course to the data given";
     }
+
+    protected function getSampleRequest()
+    {
+        return "";
+    }
+
 }
