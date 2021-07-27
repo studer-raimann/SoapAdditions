@@ -68,7 +68,7 @@ abstract class Base extends ilAbstractSoapMethod
         $this->init($session_id);
 
         $clean_params = array();
-        $i            = 1;
+        $i = 1;
         foreach ($this->getAdditionalInputParams() as $key => $type) {
             $clean_params[$key] = $params[$i];
             $i++;

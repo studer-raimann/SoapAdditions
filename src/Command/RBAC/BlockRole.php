@@ -107,7 +107,7 @@ class BlockRole implements Command
                 true
             );
         } catch (Exception $e) {
-            $this->status        = false;
+            $this->status = false;
             $this->error_message = "There was an unexpected error blocking the role";
         }
 
