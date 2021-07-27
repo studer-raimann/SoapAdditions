@@ -28,9 +28,7 @@ class Documentation
                 new Settings()
             ];
         } catch (\Throwable $t) {
-            echo '<pre>' . print_r(array_map(function ($a) {
-                    return $a["file"];
-                }, $t->getTrace()), true) . '</pre>';
+            echo '<pre>' . print_r($t->getFile(), true) . '</pre>';
         }
         $docu = "";
         foreach ($soap_methods as $method) {
