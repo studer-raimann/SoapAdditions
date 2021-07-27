@@ -94,6 +94,7 @@ abstract class Base extends ilAbstractSoapMethod
      */
     public function execute(array $params)
     {
+        $this->prepare();
         $this->checkParameters($params);
         $session_id = $params[0] ?? '';
         $this->init($session_id);
@@ -126,7 +127,7 @@ abstract class Base extends ilAbstractSoapMethod
         $this->initIliasAndCheckSession($session_id); // Throws exception if session is not valid
     }
 
-    abstract protected function getShortDocumentation();
+    abstract public function getShortDocumentation();
 
     final public function getDocumentation()
     {
@@ -147,4 +148,7 @@ abstract class Base extends ilAbstractSoapMethod
     {
         return '';
     }
+
+    abstract public function prepare();
+
 }

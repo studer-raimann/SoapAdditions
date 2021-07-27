@@ -48,6 +48,11 @@ class Settings extends Base
         return true;
     }
 
+    public function prepare()
+    {
+
+    }
+
     /**
      * @return string
      */

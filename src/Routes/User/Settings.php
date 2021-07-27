@@ -20,9 +20,8 @@ class Settings extends Base
      */
     protected $user_settings_config;
 
-    public function __construct()
+    public function prepare()
     {
-        parent::__construct();
         $this->user_settings_config = new \ilUserSettingsConfig();
     }
 

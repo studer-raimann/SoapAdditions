@@ -32,4 +32,13 @@ The method `blockRole` requires three parameters:
 
 # Documentation
 <!-- BEGIN definitions -->
+ ### Route: blockRole
+Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)
+Parameters:
+- sid
+- role_id
+- node_id
+
+
+ 
 <!-- END definitions -->
