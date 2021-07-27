@@ -48,9 +48,12 @@ class BlockRole extends Base
     /**
      * @return array
      */
-    protected function getAdditionalInputParams()
+    protected function getAdditionalInputParams() : array
     {
-        return array(self::P_ROLE_ID => Base::TYPE_INT, self::P_NODE_ID => Base::TYPE_INT);
+        return [
+            $this->param_factory->int(self::P_ROLE_ID),
+            $this->param_factory->int(self::P_NODE_ID),
+        ];
     }
 
     /**
