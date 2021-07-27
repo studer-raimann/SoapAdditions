@@ -25,7 +25,7 @@ class Factory
     {
         return new BaseParameter(Type::TYPE_BOOL, $key, [
             $this->possibleValue(1, 'true'),
-            $this->possibleValue(1, 'false'),
+            $this->possibleValue(0, 'false'),
         ]);
     }
 

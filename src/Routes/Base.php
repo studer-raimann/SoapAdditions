@@ -100,8 +100,8 @@ abstract class Base extends ilAbstractSoapMethod
 
         $clean_params = [];
         $i = 1;
-        foreach ($this->getAdditionalInputParams() as $key => $type) {
-            $clean_params[$key] = $params[$i];
+        foreach ($this->getAdditionalInputParams() as $p) {
+            $clean_params[$p->getKey()] = $params[$i];
             $i++;
         }
 
@@ -133,11 +133,10 @@ abstract class Base extends ilAbstractSoapMethod
         $documentation = $this->getShortDocumentation();
         foreach ($this->getInputParamsObjects() as $parameter) {
             if (count($parameter->getPossibleValues()) > 0) {
-                $documentation .= "{$parameter->getKey()}: ";
+                $documentation .= "<br>{$parameter->getKey()}: ";
                 foreach ($parameter->getPossibleValues() as $value) {
                     $documentation .= "{$value->getValue()}: {$value->getDescription()}, ";
                 }
-                $documentation .= "<br>";
             }
         }
 
