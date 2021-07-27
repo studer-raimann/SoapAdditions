@@ -38,22 +38,7 @@ class Settings extends Base
      */
     protected function run(array $params)
     {
-        $command = new SettingsCommand((int) $params[self::P_COURSE_REF_ID]);
-        $command->setShowTitleAndIcon($params[self::P_SHOW_TITLE_AND_ICON]);
-        $command->setShowHeaderActions($params[self::P_SHOW_HEADER_ACTIONS]);
-        $command->setPassedDetermination($params[self::P_PASSED_DETERMINATION]);
-        $command->setSorting($params[self::P_SORTING]);
-        $command->setSortingDirection($params[self::P_SORTING_DIRECTION]);
-        $command->setPositionForNewObjects($params[self::P_POSITION_FOR_NEW_OBJECTS]);
-        $command->setOrderForNewObjects($params[self::P_ORDER_FOR_NEW_OBJECTS]);
-        $command->setActivateAddToFavourites($params[self::P_ACTIVATE_ADD_TO_FAVOURITES]);
-
-        $command->setLearningProgressMode($params[self::P_LEARNING_PROGRESS_MODE]);
-        $command->setActivateNews($params[self::P_ACTIVATE_NEWS]);
-        $command->setActivateNewsTimeline($params[self::P_ACTIVATE_TIMELINE]);
-        $command->setActivateNewsTimelineAutoEntries($params[self::P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES]);
-        $command->setActivateNewsTimelineLandingPage($params[self::P_ACTIVATE_TIMELINE_LANDINGS_PAGE]);
-
+        $command = new SettingsCommand((int) $params[self::P_COURSE_REF_ID], $params);
         $command->run();
         if ($command->wasSuccessful()) {
             return true;
