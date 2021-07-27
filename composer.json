@@ -19,6 +19,11 @@
   ],
   "require": {
   },
+  "scripts": {
+    "post-autoload-dump": [
+      "srag\\Plugins\\SoapAdditions\\Documentation::postAutoloadDump"
+    ]
+  },
   "autoload": {
     "psr-4": {
       "srag\\Plugins\\SoapAdditions\\": "src/"
