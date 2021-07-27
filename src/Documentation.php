@@ -25,10 +25,10 @@ class Documentation
             $soap_methods = [
                 new BlockRole(),
                 new \srag\Plugins\SoapAdditions\Routes\Course\Settings(),
-                new Settings()
+                // new Settings()
             ];
         } catch (\Throwable $t) {
-            echo '<pre>' . print_r($t->getFile(), true) . '</pre>';
+            //echo '<pre>' . print_r($t->getFile(), true) . '</pre>';
         }
         $docu = "";
         foreach ($soap_methods as $method) {
