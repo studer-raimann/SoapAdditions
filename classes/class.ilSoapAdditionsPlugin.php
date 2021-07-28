@@ -1,8 +1,8 @@
 <?php
 
 use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRole;
-use srag\Plugins\SoapAdditions\Routes\Course\Settings as CourseSettings;
-use srag\Plugins\SoapAdditions\Routes\User\Settings as UserSettings;
+use srag\Plugins\SoapAdditions\Routes\Container;
+use srag\Plugins\SoapAdditions\Routes\Course\Settings;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -28,9 +28,9 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
     public function getSoapMethods()
     {
         return [
-            new BlockRole(),
-            new CourseSettings(),
-            new UserSettings()
+            new Container(new BlockRole()),
+            new Container(new Settings()),
+            new Container(new \srag\Plugins\SoapAdditions\Routes\User\Settings()),
         ];
     }
 

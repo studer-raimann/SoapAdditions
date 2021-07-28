@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\RBAC;
 
-use ilSoapPluginException;
 use srag\Plugins\SoapAdditions\Command\RBAC\BlockRole as BlockRoleCommand;
 use srag\Plugins\SoapAdditions\Routes\Base;
 
@@ -16,62 +15,32 @@ class BlockRole extends Base
     const P_ROLE_ID = 'role_id';
     const P_NODE_ID = 'node_id';
 
-    /**
-     * @param array $params
-     * @return bool|mixed
-     * @throws ilSoapPluginException
-     */
-    protected function run(array $params)
+    public function getCommand(array $params)
     {
         $role_id = (int) $params[self::P_ROLE_ID];
         $node_id = (int) $params[self::P_NODE_ID];
 
-        $command = new BlockRoleCommand($role_id, $node_id);
-        $command->run();
-        if ($command->wasSuccessful()) {
-            return true;
-        } else {
-            $this->error($command->getUnsuccessfulReason());
-        }
-
-        return true;
+        return new BlockRoleCommand($role_id, $node_id);
     }
 
-    public function prepare()
-    {
-
-    }
-
-    /**
-     * @return string
-     */
     public function getName()
     {
         return "blockRole";
     }
 
-    /**
-     * @return array
-     */
-    protected function getAdditionalInputParams() : array
+    public function getAdditionalInputParams() : array
     {
         return [
-            $this->param_factory->int(self::P_ROLE_ID),
-            $this->param_factory->int(self::P_NODE_ID),
+            $this->param_factory->int(self::P_ROLE_ID, 'Internal ID of a Role'),
+            $this->param_factory->int(self::P_NODE_ID, 'ILIAS Ref-ID of the Object'),
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOutputParams()
+    public function getOutputParams() : array
     {
-        return ['success' => Base::TYPE_BOOL];
+        return [$this->param_factory->bool('success')];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getShortDocumentation()
     {
         return "Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)";

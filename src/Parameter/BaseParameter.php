@@ -15,6 +15,10 @@ class BaseParameter implements Parameter
      */
     protected $key;
     /**
+     * @var string
+     */
+    protected $description = '';
+    /**
      * @var array
      */
     protected $possible_values = [];
@@ -23,12 +27,18 @@ class BaseParameter implements Parameter
      * BaseParameter constructor.
      * @param string $type
      * @param string $key
+     * @param string $description
      * @param array  $possible_values
      */
-    public function __construct(string $type, string $key, array $possible_values)
-    {
+    public function __construct(
+        string $type,
+        string $key,
+        string $description,
+        array $possible_values
+    ) {
         $this->type = $type;
         $this->key = $key;
+        $this->description = $description;
         $this->possible_values = $possible_values;
     }
 
@@ -45,6 +55,11 @@ class BaseParameter implements Parameter
     public function getType() : string
     {
         return $this->type;
+    }
+
+    public function getDescription() : string
+    {
+        return $this->description;
     }
 
 }

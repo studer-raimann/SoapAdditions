@@ -25,26 +25,34 @@ class Documentation
             $soap_methods = [
                 new BlockRole(),
                 new \srag\Plugins\SoapAdditions\Routes\Course\Settings(),
-                // new Settings()
+                new Settings()
             ];
         } catch (\Throwable $t) {
-            //echo '<pre>' . print_r($t->getFile(), true) . '</pre>';
+            echo '<pre>' . print_r($t->getMessage() . '  ' . $t->getFile() . ':' . $t->getLine(), true) . '</pre>';
+            $soap_methods = [];
         }
         $docu = "";
         foreach ($soap_methods as $method) {
             if ($method instanceof Base) {
-                $docu .= " ### Route: " . $method->getName() . "\n";
+                $docu .= "### Route: " . $method->getName() . "\n";
                 $docu .= "" . $method->getShortDocumentation() . "\n";
                 $docu .= "Parameters:\n";
-                foreach ($method->getInputParamsObjects() as $p) {
-                    $docu .= "- {$p->getKey()}";
-                    $implode = implode(", ", array_map(function (PossibleValue $value) {
-                        return $value->getDescription();
-                    }, $p->getPossibleValues()));
-                    $docu .= $implode === '' ? $implode : 'none';
+                foreach ($method->getAdditionalInputParams() as $p) {
+                    $docu .= "- {$p->getKey()} ({$p->getType()})";
+                    if ($p->getDescription()) {
+                        $docu .= ": " . $p->getDescription();
+                    }
+                    $possible_values = $p->getPossibleValues();
+
+                    $possible_values_description = array_map(static function (PossibleValue $value) {
+                        return "{$value->getValue()}: {$value->getDescription()}";
+                    }, $possible_values);
+
+                    $implode = implode(", ", $possible_values_description);
+                    $docu .= $implode !== '' ? " " . $implode : '';
                     $docu .= "\n";
                 }
-                $docu .= "\n\n";
+                $docu .= "\n";
             }
         }
 

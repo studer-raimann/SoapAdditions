@@ -2,7 +2,6 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\User;
 
-use ilSoapPluginException;
 use srag\Plugins\SoapAdditions\Routes\Base;
 use srag\Plugins\SoapAdditions\Command\User\Settings as UserSettingsCommand;
 
@@ -20,40 +19,17 @@ class Settings extends Base
      */
     protected $user_settings_config;
 
-    public function prepare()
+    public function getCommand(array $params)
     {
-        $this->user_settings_config = new \ilUserSettingsConfig();
+        return new UserSettingsCommand((int) $params[self::P_USER_ID], $params);
     }
 
-    /**
-     * @param array $params
-     * @return bool|mixed
-     * @throws ilSoapPluginException
-     */
-    protected function run(array $params)
-    {
-        $command = new UserSettingsCommand((int) $params[self::P_USER_ID], $params);
-        $command->run();
-        if ($command->wasSuccessful()) {
-            return true;
-        }
-        $this->error($command->getUnsuccessfulReason());
-
-        return true;
-    }
-
-    /**
-     * @return string
-     */
     public function getName()
     {
         return "updateUserSettings";
     }
 
-    /**
-     * @return array
-     */
-    protected function getAdditionalInputParams() : array
+    public function getAdditionalInputParams() : array
     {
         $params = [
             $this->param_factory->int(self::P_USER_ID),
@@ -87,31 +63,23 @@ class Settings extends Base
         ];
 
         foreach ($possible_values as $possible_value) {
-            if ($this->user_settings_config->isVisible($possible_value)) {
-                $params[] = $this->param_factory->bool(self::PREFIX_SHOW . '' . $possible_value);
-            }
+            $params[] = $this->param_factory->bool(self::PREFIX_SHOW . '' . $possible_value);
         }
 
         return $params;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getOutputParams()
+    public function getOutputParams() : array
     {
-        return ['success' => Base::TYPE_BOOL];
+        return [$this->param_factory->bool('success')];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getShortDocumentation()
     {
         return "Updates the settings of a course to the data given";
     }
 
-    protected function getSampleRequest()
+    public function getSampleRequest()
     {
         return "";
     }
