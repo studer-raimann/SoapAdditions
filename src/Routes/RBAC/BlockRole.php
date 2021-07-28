@@ -45,4 +45,19 @@ class BlockRole extends Base
     {
         return "Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)";
     }
+
+    public function getSampleRequest()
+    {
+        return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:blockRole soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <sid xsi:type="xsd:string">?</sid>
+         <role_id xsi:type="xsd:int">?</role_id>
+         <node_id xsi:type="xsd:int">?</node_id>
+      </urn:blockRole>
+   </soapenv:Body>
+</soapenv:Envelope>';
+    }
+
 }

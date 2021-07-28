@@ -19,8 +19,8 @@ class Documentation
         $basedir = strstr($cwd, "Customizing", true);
         chdir($basedir);
 
-        require_once "$basedir/libs/composer/vendor/autoload.php";
         require_once "$basedir/Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/classes/class.ilSoapAdditionsPlugin.php";
+
         try {
             $soap_methods = [
                 new BlockRole(),
@@ -50,6 +50,12 @@ class Documentation
 
                     $implode = implode(", ", $possible_values_description);
                     $docu .= $implode !== '' ? " " . $implode : '';
+                    $docu .= "\n";
+                }
+                if($method->getSampleRequest()){
+                    $docu .= "```xml\n";
+                    $docu .= $method->getSampleRequest();
+                    $docu .= "\n```";
                     $docu .= "\n";
                 }
                 $docu .= "\n";
