@@ -2,7 +2,7 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\RBAC;
 
-use srag\Plugins\SoapAdditions\Command\RBAC\BlockRoleCommand as BlockRoleCommand;
+use srag\Plugins\SoapAdditions\Command\RBAC\BlockRoleCommand;
 use srag\Plugins\SoapAdditions\Routes\Base;
 
 /**

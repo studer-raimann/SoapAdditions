@@ -1,4 +1,6 @@
-<?php namespace srag\Plugins\SoapAdditions;
+<?php /** @noinspection PhpUndefinedNamespaceInspection */
+
+namespace srag\Plugins\SoapAdditions;
 
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
@@ -35,6 +37,7 @@ class Documentation
     }
 
     /**
+     * @param int $level
      * @return \Closure
      */
     protected static function paramToString(int $level = 1) : \Closure
@@ -94,7 +97,7 @@ class Documentation
     /**
      * @param string $docu
      */
-    protected static function saveFile(string $docu) : void
+    protected static function saveFile(string $docu)
     {
         self::initBaseDir();
         $readme_file = "./Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/README.md";
@@ -111,7 +114,7 @@ class Documentation
         file_put_contents($readme_file, $result);
     }
 
-    protected static function initBaseDir() : void
+    protected static function initBaseDir()
     {
         static $init;
         if (!isset($init)) {

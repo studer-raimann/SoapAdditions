@@ -1,6 +1,5 @@
 <?php namespace srag\Plugins\SoapAdditions\Command\Course;
 
-use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
 use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as SettingsRoute;
 
@@ -8,7 +7,7 @@ use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as Settin
  * Class UpdateCourseSettingsCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class UpdateCourseSettingsCommand extends Base implements Command
+class UpdateCourseSettingsCommand extends Base
 {
     /**
      * @var int
@@ -82,6 +81,7 @@ class UpdateCourseSettingsCommand extends Base implements Command
 
     protected function handleSortingSettings()
     {
+        /** @noinspection PhpParamsInspection */
         $cs = \ilContainerSortingSettings::getInstanceByObjId($this->obj_id);
         $sorting = $this->getParameterByKey(SettingsRoute::P_SORTING);
         $cs->setSortMode($sorting);
@@ -89,11 +89,12 @@ class UpdateCourseSettingsCommand extends Base implements Command
             $cs->setSortNewItemsOrder($this->getParameterByKey(SettingsRoute::P_ORDER_FOR_NEW_OBJECTS));
             $cs->setSortNewItemsPosition($this->getParameterByKey(SettingsRoute::P_POSITION_FOR_NEW_OBJECTS) === 'top' ? 0 : 1);
         }
+        /** @noinspection PhpParamsInspection */
         $cs->setSortDirection($this->getParameterByKey(SettingsRoute::P_SORTING_DIRECTION) === 'asc' ? 0 : 1);
         $cs->update();
     }
 
-    public function run() : ?array
+    public function run()
     {
         // Sorting UpdateUserSettingsRoute:
         $this->handleSortingSettings();

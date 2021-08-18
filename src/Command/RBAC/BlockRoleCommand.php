@@ -2,24 +2,23 @@
 
 use Exception;
 use ilObject2;
-use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
 
 /**
  * Class BlockRoleCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class BlockRoleCommand extends Base implements Command
+class BlockRoleCommand extends Base
 {
 
     /**
      * @var int
      */
-    private $role_id = 0;
+    private $role_id;
     /**
      * @var int
      */
-    private $node_id = 0;
+    private $node_id;
 
     /**
      * BlockRoleRoute constructor.
@@ -28,8 +27,8 @@ class BlockRoleCommand extends Base implements Command
      */
     public function __construct($role_id, $node_id)
     {
-        $this->isRole($role_id);
-        $this->isNode($node_id);
+        $this->checkRole($role_id);
+        $this->checkNode($node_id);
         $this->role_id = $role_id;
         $this->node_id = $node_id;
     }
@@ -37,7 +36,7 @@ class BlockRoleCommand extends Base implements Command
     /**
      * @inheritDoc
      */
-    public function run() : ?array
+    public function run()
     {
         if ($this->status === true) {
             $this->blockRole($this->role_id, $this->node_id);
@@ -48,9 +47,8 @@ class BlockRoleCommand extends Base implements Command
     /**
      * @param $role_id
      * @param $node_id
-     * @return bool
      */
-    private function blockRole(int $role_id, int $node_id) : bool
+    private function blockRole(int $role_id, int $node_id)
     {
         global $DIC;
         try {
@@ -58,9 +56,11 @@ class BlockRoleCommand extends Base implements Command
             $assign = $DIC->rbac()->review()->isAssignable($role_id, $node_id) ? 'y' : 'n';
 
             // Delete permissions
+            /** @noinspection PhpParamsInspection */
             $DIC->rbac()->admin()->revokeSubtreePermissions($node_id, $role_id);
 
             // Delete template permissions
+            /** @noinspection PhpParamsInspection */
             $DIC->rbac()->admin()->deleteSubtreeTemplates($node_id, $role_id);
 
             // Assign to Role Folder
@@ -71,6 +71,7 @@ class BlockRoleCommand extends Base implements Command
             );
 
             // finally set blocked status
+            /** @noinspection PhpParamsInspection */
             $DIC->rbac()->admin()->setBlockedStatus(
                 $role_id,
                 $node_id,
@@ -86,31 +87,33 @@ class BlockRoleCommand extends Base implements Command
 
     /**
      * @param int $role_id
-     * @return bool
+     * @return void
+     * @noinspection UnnecessaryCastingInspection
+     * @noinspection PhpCastIsUnnecessaryInspection
      */
-    private function isRole(/*int*/ $role_id)/*:bool*/
+    private function checkRole(int $role_id)
     {
         if ($this->status === true) {
             $b = (bool) (ilObject2::_exists($role_id, false) && ilObject2::_lookupType($role_id, false) === "role");
+            $this->status = $b;
             if (!$b) {
                 $this->error_message = "The role_id given ($role_id) is not a role";
             }
-            $this->status = $b;
         }
     }
 
     /**
      * @param int $node_id
-     * @return bool
+     * @noinspection PhpCastIsUnnecessaryInspection
      */
-    private function isNode(/*int*/ $node_id)/*:bool*/
+    private function checkNode(int $node_id)
     {
         if ($this->status === true) {
             $exists = (bool) (ilObject2::_exists($node_id, true));
+            $this->status = $exists;
             if (!$exists) {
                 $this->error_message = "The node_id given ($node_id) does not exist";
             }
-            $this->status = $exists;
         }
     }
 }

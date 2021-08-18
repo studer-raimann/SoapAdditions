@@ -7,7 +7,7 @@
 interface Command
 {
 
-    public function run() : ?array;
+    public function run();
 
     /**
      * @return void

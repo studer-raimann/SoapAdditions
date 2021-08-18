@@ -1,6 +1,5 @@
 <?php namespace srag\Plugins\SoapAdditions\Command\User;
 
-use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
 use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute as SettingsCommand;
 
@@ -8,7 +7,7 @@ use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute as SettingsCo
  * Class UpdateUserSettingsCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class UpdateUserSettingsCommand extends Base implements Command
+class UpdateUserSettingsCommand extends Base
 {
     protected $user_id = 0;
     protected $params = [];
@@ -35,7 +34,7 @@ class UpdateUserSettingsCommand extends Base implements Command
         return $this->user_object;
     }
 
-    public function run() : ?array
+    public function run()
     {
         $profile = $this->params[SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE] ?? 'n';
         $force_disable = false;
@@ -56,6 +55,7 @@ class UpdateUserSettingsCommand extends Base implements Command
             if ($k === 'sid' || $k === SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE || $k === 'user_id') {
                 continue;
             }
+            /** @noinspection DisconnectedForeachInstructionInspection */
             if ($force_disable) {
                 $param = false;
             }

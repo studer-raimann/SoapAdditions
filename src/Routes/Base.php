@@ -2,7 +2,6 @@
 
 use srag\Plugins\SoapAdditions\Parameter\Factory;
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
-use srag\Plugins\SoapAdditions\Command\Command;
 
 /**
  * Class Base

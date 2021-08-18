@@ -1,13 +1,12 @@
 <?php namespace srag\Plugins\SoapAdditions\Command\Favourites;
 
-use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
 
 /**
  * Class AddToFavouritesCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class AddToFavouritesCommand extends Base implements Command
+class AddToFavouritesCommand extends Base
 {
     private $ref_id;
     /**
@@ -37,7 +36,7 @@ class AddToFavouritesCommand extends Base implements Command
         $this->database = $DIC->database();
     }
 
-    public function run() : ?array
+    public function run()
     {
         $this->initUserIds();
         foreach ($this->user_ids as $user_id) {
@@ -46,7 +45,8 @@ class AddToFavouritesCommand extends Base implements Command
         return $this->user_ids;
     }
 
-    protected function initUserIds() : void
+    /** @noinspection PhpCastIsUnnecessaryInspection */
+    protected function initUserIds()
     {
         if ($this->inherit) {
             $object_id = (int) \ilObject2::_lookupObjId($this->ref_id);
@@ -56,6 +56,7 @@ class AddToFavouritesCommand extends Base implements Command
                 [$object_id]
             );
             $user_ids = [];
+            /** @noinspection PhpParamsInspection */
             while ($d = $this->database->fetchObject($r)) {
                 $user_ids[] = (int) $d->usr_id;
             }

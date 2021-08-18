@@ -1,6 +1,5 @@
 <?php namespace srag\Plugins\SoapAdditions\Command\User;
 
-use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
 use srag\Plugins\SoapAdditions\Routes\User\UserBase;
 
@@ -8,7 +7,7 @@ use srag\Plugins\SoapAdditions\Routes\User\UserBase;
  * Class GetUserSettingsCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class GetUserSettingsCommand extends Base implements Command
+class GetUserSettingsCommand extends Base
 {
     protected $user_id = 0;
 
@@ -33,7 +32,7 @@ class GetUserSettingsCommand extends Base implements Command
         return $this->user_object;
     }
 
-    public function run() : ?array
+    public function run()
     {
         $pref = $this->getUser()->getPref("public_profile") ?? 'n';
 

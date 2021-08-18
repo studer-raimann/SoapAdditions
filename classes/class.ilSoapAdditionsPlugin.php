@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection AutoloadingIssuesInspection */
 
 use srag\Plugins\SoapAdditions\Routes\RouteContainer;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;

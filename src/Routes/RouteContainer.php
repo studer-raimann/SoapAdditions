@@ -112,7 +112,7 @@ class RouteContainer extends ilAbstractSoapMethod
         } catch (\Throwable $t) {
             $this->error($t->getMessage());
         }
-
+        return [];
     }
 
     final public function getDocumentation()

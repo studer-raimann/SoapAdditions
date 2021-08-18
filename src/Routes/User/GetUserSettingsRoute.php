@@ -35,9 +35,4 @@ class GetUserSettingsRoute extends UserBase
         return "Shows the settings of a user to the user_id given";
     }
 
-    public function getSampleRequest() : string
-    {
-        return '';
-    }
-
 }
