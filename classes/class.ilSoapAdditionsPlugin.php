@@ -1,13 +1,9 @@
 <?php
 
-use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRoleRoute;
-use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute;
-use srag\Plugins\SoapAdditions\Routes\Favourites\AddToFavouritesRoute;
-use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute;
-use srag\Plugins\SoapAdditions\Routes\User\GetUserSettingsRoute;
 use srag\Plugins\SoapAdditions\Routes\RouteContainer;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 use srag\Plugins\SoapAdditions\Routes\ParameterContainer;
+use srag\Plugins\SoapAdditions\Routes\Route;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -18,6 +14,15 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
 {
 
     const PLUGIN_NAME = 'SoapAdditions';
+
+    /**
+     * @return mixed
+     */
+    protected function getRoutes()
+    {
+        $routes = include './Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/src/routes.php';
+        return $routes;
+    }
 
     /**
      * @return string
@@ -32,13 +37,9 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
      */
     public function getSoapMethods()
     {
-        return [
-            new RouteContainer(new BlockRoleRoute()),
-            new RouteContainer(new UpdateCourseSettingsRoute()),
-            new RouteContainer(new AddToFavouritesRoute()),
-            new RouteContainer(new UpdateUserSettingsRoute()),
-            new RouteContainer(new GetUserSettingsRoute()),
-        ];
+        return array_map(static function (Route $route) : RouteContainer {
+            return new RouteContainer($route);
+        }, $this->getRoutes());
     }
 
     /**
@@ -47,14 +48,13 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
     public function getWsdlTypes()
     {
         $types = [];
-        foreach ($this->getSoapMethods() as $method) {
-            $o = $method->getOriginalRoute();
-            foreach ($o->getAdditionalInputParams() as $parameter) {
+        foreach ($this->getRoutes() as $route) {
+            foreach ($route->getAdditionalInputParams() as $parameter) {
                 if ($parameter instanceof ComplexParameter) {
                     $types[$parameter->getKey()] = new ParameterContainer($parameter);
                 }
             }
-            foreach ($o->getOutputParams() as $parameter) {
+            foreach ($route->getOutputParams() as $parameter) {
                 if ($parameter instanceof ComplexParameter) {
                     $types[$parameter->getKey()] = new ParameterContainer($parameter);
                 }

@@ -3,11 +3,7 @@
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 use srag\Plugins\SoapAdditions\Routes\Base;
-use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRoleRoute;
 use srag\Plugins\SoapAdditions\Parameter\PossibleValue;
-use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute;
-use srag\Plugins\SoapAdditions\Routes\User\GetUserSettingsRoute;
-use srag\Plugins\SoapAdditions\Routes\Favourites\AddToFavouritesRoute;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
 
@@ -17,47 +13,90 @@ use srag\Plugins\SoapAdditions\Parameter\Parameter;
  */
 class Documentation
 {
+    /**
+     * @return array
+     */
+    protected static function getSoapRoutes() : array
+    {
+        return include 'routes.php';
+    }
+
     public static function postAutoloadDump(Event $event)
     {
-        $cwd = getcwd();
-        $basedir = strstr($cwd, "Customizing", true);
-        chdir($basedir);
+        $soap_routes = self::getSoapRoutes();
+        $docu = implode("\n\n", array_map(self::routeToString(), $soap_routes));
 
-        require_once "$basedir/Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/classes/class.ilSoapAdditionsPlugin.php";
+        self::saveFile($docu);
+    }
 
-        try {
-            $soap_methods = [
-                new BlockRoleRoute(),
-                new \srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute(),
-                new UpdateUserSettingsRoute(),
-                new GetUserSettingsRoute(),
-                new AddToFavouritesRoute(),
-            ];
-        } catch (\Throwable $t) {
-            echo '<pre>' . print_r($t->getMessage() . '  ' . $t->getFile() . ':' . $t->getLine(), true) . '</pre>';
-            $soap_methods = [];
-        }
+    protected static function paramsToString(array $ps, int $level = 1) : string
+    {
+        return implode("\n", array_map(self::paramToString($level), $ps));
+    }
 
-        $docu = "";
+    /**
+     * @return \Closure
+     */
+    protected static function paramToString(int $level = 1) : \Closure
+    {
+        return static function (Parameter $p) use ($level) : string {
+            $docu = str_repeat("\t", $level - 1);
+            $docu .= "* {$p->getKey()} ({$p->getType()}";
+            if ($p->isOptional()) {
+                $docu .= ", optional";
+            }
+            $docu .= ")";
+            if ($p->getDescription()) {
+                $docu .= ": " . $p->getDescription();
+            }
+            if ($p instanceof ComplexParameter) {
+                $docu .= "\n";
+                $docu .= self::paramsToString($p->getSubParameters(), $level + 1);
+            }
 
-        foreach ($soap_methods as $method) {
-            if ($method instanceof Base) {
-                $docu .= "### Route: " . $method->getName() . "\n";
-                $docu .= "" . $method->getShortDocumentation() . "\n";
-                $docu .= "Parameters:\n";
-                foreach ($method->getAdditionalInputParams() as $p) {
-                    $docu .= self::paramToString($p);
-                }
-                if ($method->getSampleRequest()) {
-                    $docu .= "```xml\n";
-                    $docu .= $method->getSampleRequest();
-                    $docu .= "\n```";
-                    $docu .= "\n";
-                }
+            $implode = implode(", ", array_map(self::possibleValueToString(), $p->getPossibleValues()));
+            $docu .= $implode !== '' ? " " . $implode : '';
+
+            return $docu;
+        };
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected static function routeToString() : \Closure
+    {
+        return static function (Base $r) : string {
+            $docu = "### Route: " . $r->getName() . "\n";
+            $docu .= "" . $r->getShortDocumentation() . "\n";
+            $docu .= "Parameters:\n";
+            $docu .= self::paramsToString($r->getAdditionalInputParams());
+
+            if ($r->getSampleRequest()) {
+                $docu .= "\n\n```xml\n";
+                $docu .= $r->getSampleRequest();
+                $docu .= "\n```";
                 $docu .= "\n";
             }
-        }
 
+            return $docu;
+        };
+    }
+
+    private static function possibleValueToString() : \Closure
+    {
+        return static function (PossibleValue $value) {
+            /** @noinspection ForgottenDebugOutputInspection */
+            return var_export($value->getValue(), true) . ": {$value->getDescription()}";
+        };
+    }
+
+    /**
+     * @param string $docu
+     */
+    protected static function saveFile(string $docu) : void
+    {
+        self::initBaseDir();
         $readme_file = "./Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/README.md";
         $content = file_get_contents($readme_file);
 
@@ -70,37 +109,17 @@ class Documentation
         $result = preg_replace($re, $subst, $content);
 
         file_put_contents($readme_file, $result);
-
     }
 
-    private static function paramToString(Parameter $p, int $level = 1) : string
+    protected static function initBaseDir() : void
     {
-        $docu = str_repeat("\t", $level - 1);
-        $docu .= "* {$p->getKey()} ({$p->getType()}";
-        if ($p->isOptional()) {
-            $docu .= ", optional";
+        static $init;
+        if (!isset($init)) {
+            $cwd = getcwd();
+            $basedir = strstr($cwd, "Customizing", true);
+            chdir($basedir);
+            $init = true;
         }
-        $docu .= ")";
-        if ($p->getDescription()) {
-            $docu .= ": " . $p->getDescription();
-        }
-        if ($p instanceof ComplexParameter) {
-            foreach ($p->getSubParameters() as $subParameter) {
-                $docu .= self::paramToString($subParameter, $level + 1);
-            }
-        }
-
-        $possible_values = $p->getPossibleValues();
-
-        $possible_values_description = array_map(static function (PossibleValue $value) {
-            /** @noinspection ForgottenDebugOutputInspection */
-            return var_export($value->getValue(), true) . ": {$value->getDescription()}";
-        }, $possible_values);
-
-        $implode = implode(", ", $possible_values_description);
-        $docu .= $implode !== '' ? " " . $implode : '';
-        $docu .= "\n";
-
-        return $docu;
     }
+
 }

@@ -30,6 +30,7 @@ Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)
 Parameters:
 * role_id (xsd:int): Internal ID of a Role
 * node_id (xsd:int): ILIAS Ref-ID of the Object
+
 ```xml
 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>
@@ -43,10 +44,12 @@ Parameters:
 </soapenv:Envelope>
 ```
 
+
 ### Route: updateCourseSettings
 Updates the settings of a course (ref_id) to the data given
 Parameters:
-* course_settings (tns:courseSettings)	* ref_id (xsd:int)
+* course_settings (tns:courseSettings)
+	* ref_id (xsd:int)
 	* show_title_and_icon (xsd:boolean, optional) true: Yes, false: No
 	* show_header_actions (xsd:boolean, optional) true: Yes, false: No
 	* passed_determination (xsd:int, optional) 1: Through Learning Progress, 2: Only Manual by Tutors
@@ -62,11 +65,36 @@ Parameters:
 	* activate_news_timeline_auto_entries (xsd:boolean, optional) true: Yes, false: No
 	* activate_news_timeline_landing_page (xsd:boolean, optional) true: Yes, false: No
 
+### Route: addToFavourites
+Adds the objects given (ref_id) as favourites to A) a list of users or B) to the inherited users (e.g. members of a course) if possible.
+Parameters:
+* ref_id (xsd:int): ILIAS Ref-ID of the Object
+* user_ids (tns:intArray, optional): List of user ids
+* inherit (xsd:boolean, optional): Inherit from object if possible true: Yes, false: No
+
+```xml
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:addToFavourites soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <sid xsi:type="xsd:string">637ec4aaad34be151b7e1548e0a7515f::default</sid>
+         <ref_id xsi:type="xsd:int">76</ref_id>
+         <user_ids xsi:type="urn:intArray" SOAP-ENC:arrayType="xsd:int[]" xmlns:urn="urn:ilUserAdministration">
+         		<item xsi:type="xsd:int">6</item>
+            <item xsi:type="xsd:int">256</item>
+         </user_ids>
+         <inherit xsi:type="xsd:boolean">true</inherit>
+      </urn:addToFavourites>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
 
 ### Route: updateUserSettings
 Updates the settings of a user to the data given
 Parameters:
-* user_settings (tns:userSettings, optional)	* user_id (xsd:int)
+* user_settings (tns:userSettings, optional)
+	* user_id (xsd:int)
 	* activate_public_profile (xsd:boolean, optional) true: Yes, false: No
 	* show_title (xsd:boolean, optional) true: Yes, false: No
 	* show_birthday (xsd:boolean, optional) true: Yes, false: No
@@ -153,33 +181,9 @@ Parameters:
 </soapenv:Envelope>
 ```
 
+
 ### Route: getUserSettings
 Shows the settings of a user to the user_id given
 Parameters:
-* user_id (xsd:int)
-
-### Route: addToFavourites
-Adds the objects given (ref_id) as favourites to A) a list of users or B) to the inherited users (e.g. members of a course) if possible.
-Parameters:
-* ref_id (xsd:int): ILIAS Ref-ID of the Object
-* user_ids (tns:intArray, optional): List of user ids
-* inherit (xsd:boolean, optional): Inherit from object if possible true: Yes, false: No
-```xml
-<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:addToFavourites soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-         <sid xsi:type="xsd:string">637ec4aaad34be151b7e1548e0a7515f::default</sid>
-         <ref_id xsi:type="xsd:int">76</ref_id>
-         <user_ids xsi:type="urn:intArray" SOAP-ENC:arrayType="xsd:int[]" xmlns:urn="urn:ilUserAdministration">
-         		<item xsi:type="xsd:int">6</item>
-            <item xsi:type="xsd:int">256</item>
-         </user_ids>
-         <inherit xsi:type="xsd:boolean">true</inherit>
-      </urn:addToFavourites>
-   </soapenv:Body>
-</soapenv:Envelope>
-```
-
- 
+* user_id (xsd:int) 
 <!-- END definitions -->
