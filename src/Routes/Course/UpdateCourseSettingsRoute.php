@@ -102,7 +102,44 @@ class UpdateCourseSettingsRoute extends Base
 
     public function getSampleRequest()
     {
-        return '';
+        return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:updateCourseSettings soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <sid xsi:type="xsd:string">976d27aa4ba2c532d8905945b363eb26::default</sid>
+         <course_settings xsi:type="urn:courseSettings" xmlns:urn="urn:ilUserAdministration">
+            <!--You may enter the following 14 items in any order-->
+            <ref_id xsi:type="xsd:int">76</ref_id>
+            <!--Optional:-->
+            <show_title_and_icon xsi:type="xsd:boolean">true</show_title_and_icon>
+            <!--Optional:-->
+            <show_header_actions xsi:type="xsd:boolean">true</show_header_actions>
+            <!--Optional:-->
+            <passed_determination xsi:type="xsd:int">2</passed_determination>
+            <!--Optional:-->
+            <sorting xsi:type="xsd:int">4</sorting>
+            <!--Optional:-->
+            <sorting_direction xsi:type="xsd:string">asc</sorting_direction>
+            <!--Optional:-->
+            <activate_add_to_favourites xsi:type="xsd:boolean">true</activate_add_to_favourites>
+            <!--Optional:-->
+            <position_for_new_objects xsi:type="xsd:string">top</position_for_new_objects>
+            <!--Optional:-->
+            <order_for_new_objects xsi:type="xsd:int">2</order_for_new_objects>
+            <!--Optional:-->
+            <learning_progress_mode xsi:type="xsd:int">5</learning_progress_mode>
+            <!--Optional:-->
+            <activate_news xsi:type="xsd:boolean">true</activate_news>
+            <!--Optional:-->
+            <activate_news_timeline xsi:type="xsd:boolean">true</activate_news_timeline>
+            <!--Optional:-->
+            <activate_news_timeline_auto_entries xsi:type="xsd:boolean">true</activate_news_timeline_auto_entries>
+            <!--Optional:-->
+            <activate_news_timeline_landing_page xsi:type="xsd:boolean">true</activate_news_timeline_landing_page>
+         </course_settings>
+      </urn:updateCourseSettings>
+   </soapenv:Body>
+</soapenv:Envelope>';
     }
 
 }
