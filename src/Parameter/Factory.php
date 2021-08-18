@@ -21,11 +21,17 @@ class Factory
         return new BaseParameter(Type::TYPE_INT, $key, $description, $possible_values);
     }
 
+    public function arrayOfInt(string $key, string $description = '', array $possible_values = []) : Parameter
+    {
+        $this->checkPossibleValues($possible_values);
+        return new BaseParameter(Type::TYPE_INT_ARRAY, $key, $description, $possible_values);
+    }
+
     public function bool(string $key, string $description = '') : Parameter
     {
         return new BaseParameter(Type::TYPE_BOOL, $key, $description, [
-            $this->possibleValue(1, 'true'),
-            $this->possibleValue(0, 'false'),
+            $this->possibleValue(true, 'Yes'),
+            $this->possibleValue(false, 'No'),
         ]);
     }
 
@@ -33,6 +39,37 @@ class Factory
     {
         $this->checkPossibleValues($possible_values);
         return new BaseParameter(Type::TYPE_STRING, $key, $description, $possible_values);
+    }
+
+    public function nested(
+        string $key,
+        array $nested,
+        string $description = '',
+        array $possible_values = []
+    ) : ComplexParameter {
+        return new BaseComplexParameter(
+            'userSettings',
+            $key,
+            $description,
+            $nested,
+            $possible_values
+        );
+    }
+
+    public function complex(
+        string $key,
+        string $type,
+        array $nested,
+        string $description = '',
+        array $possible_values = []
+    ) : ComplexParameter {
+        return new BaseComplexParameter(
+            $type,
+            $key,
+            $description,
+            $nested,
+            $possible_values
+        );
     }
 
     public function possibleValue($value, string $description) : PossibleValue

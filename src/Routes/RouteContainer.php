@@ -4,12 +4,13 @@ use ilAbstractSoapMethod;
 use ilSoapPluginException;
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
 use srag\Plugins\SoapAdditions\Parameter\Type;
+use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 
 /**
  * Class Base
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class Container extends ilAbstractSoapMethod
+class RouteContainer extends ilAbstractSoapMethod
 {
     /**
      * @var Base
@@ -17,13 +18,18 @@ class Container extends ilAbstractSoapMethod
     protected $route;
 
     /**
-     * Container constructor.
-     * @param Base $route
+     * RouteContainer constructor.
+     * @param Route $route
      */
-    public function __construct(Base $route)
+    public function __construct(Route $route)
     {
         $this->route = $route;
         parent::__construct();
+    }
+
+    public function getOriginalRoute() : Route
+    {
+        return $this->route;
     }
 
     /**
@@ -44,7 +50,7 @@ class Container extends ilAbstractSoapMethod
         ];
         foreach ($this->route->getAdditionalInputParams() as $p) {
             if (!$p instanceof Parameter) {
-                throw new ilSoapPluginException("All parameters in getAdditionalInputParams() MUST be of type Paramteter");
+                throw new ilSoapPluginException("All parameters in getAdditionalInputParams() MUST be of type Parameter");
             }
             $params[$p->getKey()] = $p->getType();
         }
@@ -76,7 +82,7 @@ class Container extends ilAbstractSoapMethod
 
     /**
      * @param array $params
-     * @return void
+     * @return array
      * @throws ilSoapPluginException
      */
     public function execute(array $params)
@@ -88,15 +94,19 @@ class Container extends ilAbstractSoapMethod
         $clean_params = [];
         $i = 1;
         foreach ($this->route->getAdditionalInputParams() as $p) {
-            $clean_params[$p->getKey()] = $params[$i];
+            if ($p instanceof ComplexParameter) {
+                $elements = (array) $params[$i];
+                $clean_params[$p->getKey()] = $elements;
+            } else {
+                $clean_params[$p->getKey()] = $params[$i];
+            }
             $i++;
         }
         try {
             $command = $this->route->getCommand($clean_params);
-
-            $command->run();
+            $return = $command->run();
             if ($command->wasSuccessful()) {
-                return;
+                return $return;
             }
             $this->error($command->getUnsuccessfulReason());
         } catch (\Throwable $t) {

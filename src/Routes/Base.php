@@ -31,7 +31,7 @@ abstract class Base implements Route
         $needed_parameters = $this->getAdditionalInputParams();
         if (count($needed_parameters) !== count($params) - 1) {
             $keys_needed = implode(", ", array_keys($needed_parameters));
-            throw new ilSoapPluginException("Request is missing at least one of the following parameters: " . $keys_needed);
+            //throw new ilSoapPluginException("Request is missing at least one of the following parameters: " . $keys_needed);
         }
     }
 

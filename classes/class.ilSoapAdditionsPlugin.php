@@ -1,8 +1,13 @@
 <?php
 
-use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRole;
-use srag\Plugins\SoapAdditions\Routes\Container;
-use srag\Plugins\SoapAdditions\Routes\Course\Settings;
+use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRoleRoute;
+use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute;
+use srag\Plugins\SoapAdditions\Routes\Favourites\AddToFavouritesRoute;
+use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute;
+use srag\Plugins\SoapAdditions\Routes\User\GetUserSettingsRoute;
+use srag\Plugins\SoapAdditions\Routes\RouteContainer;
+use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
+use srag\Plugins\SoapAdditions\Routes\ParameterContainer;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -28,9 +33,11 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
     public function getSoapMethods()
     {
         return [
-            new Container(new BlockRole()),
-            new Container(new Settings()),
-            new Container(new \srag\Plugins\SoapAdditions\Routes\User\Settings()),
+            new RouteContainer(new BlockRoleRoute()),
+            new RouteContainer(new UpdateCourseSettingsRoute()),
+            new RouteContainer(new AddToFavouritesRoute()),
+            new RouteContainer(new UpdateUserSettingsRoute()),
+            new RouteContainer(new GetUserSettingsRoute()),
         ];
     }
 
@@ -39,6 +46,22 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
      */
     public function getWsdlTypes()
     {
-        return array();
+        $types = [];
+        foreach ($this->getSoapMethods() as $method) {
+            $o = $method->getOriginalRoute();
+            foreach ($o->getAdditionalInputParams() as $parameter) {
+                if ($parameter instanceof ComplexParameter) {
+                    $types[$parameter->getKey()] = new ParameterContainer($parameter);
+                }
+            }
+            foreach ($o->getOutputParams() as $parameter) {
+                if ($parameter instanceof ComplexParameter) {
+                    $types[$parameter->getKey()] = new ParameterContainer($parameter);
+                }
+            }
+
+        }
+
+        return $types;
     }
 }

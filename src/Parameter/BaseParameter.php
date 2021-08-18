@@ -22,6 +22,10 @@ class BaseParameter implements Parameter
      * @var array
      */
     protected $possible_values = [];
+    /**
+     * @var bool
+     */
+    protected $optional = true;
 
     /**
      * BaseParameter constructor.
@@ -60,6 +64,21 @@ class BaseParameter implements Parameter
     public function getDescription() : string
     {
         return $this->description;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOptional() : bool
+    {
+        return $this->optional;
+    }
+
+    public function setOptional(bool $optional) : Parameter
+    {
+        $this->optional = $optional;
+
+        return $this;
     }
 
 }

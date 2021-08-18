@@ -3,9 +3,13 @@
 use Composer\Script\Event;
 use Composer\Installer\PackageEvent;
 use srag\Plugins\SoapAdditions\Routes\Base;
-use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRole;
+use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRoleRoute;
 use srag\Plugins\SoapAdditions\Parameter\PossibleValue;
-use srag\Plugins\SoapAdditions\Routes\User\Settings;
+use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute;
+use srag\Plugins\SoapAdditions\Routes\User\GetUserSettingsRoute;
+use srag\Plugins\SoapAdditions\Routes\Favourites\AddToFavouritesRoute;
+use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
+use srag\Plugins\SoapAdditions\Parameter\Parameter;
 
 /**
  * Class Documentation
@@ -23,36 +27,28 @@ class Documentation
 
         try {
             $soap_methods = [
-                new BlockRole(),
-                new \srag\Plugins\SoapAdditions\Routes\Course\Settings(),
-                new Settings()
+                new BlockRoleRoute(),
+                new \srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute(),
+                new UpdateUserSettingsRoute(),
+                new GetUserSettingsRoute(),
+                new AddToFavouritesRoute(),
             ];
         } catch (\Throwable $t) {
             echo '<pre>' . print_r($t->getMessage() . '  ' . $t->getFile() . ':' . $t->getLine(), true) . '</pre>';
             $soap_methods = [];
         }
+
         $docu = "";
+
         foreach ($soap_methods as $method) {
             if ($method instanceof Base) {
                 $docu .= "### Route: " . $method->getName() . "\n";
                 $docu .= "" . $method->getShortDocumentation() . "\n";
                 $docu .= "Parameters:\n";
                 foreach ($method->getAdditionalInputParams() as $p) {
-                    $docu .= "- {$p->getKey()} ({$p->getType()})";
-                    if ($p->getDescription()) {
-                        $docu .= ": " . $p->getDescription();
-                    }
-                    $possible_values = $p->getPossibleValues();
-
-                    $possible_values_description = array_map(static function (PossibleValue $value) {
-                        return "{$value->getValue()}: {$value->getDescription()}";
-                    }, $possible_values);
-
-                    $implode = implode(", ", $possible_values_description);
-                    $docu .= $implode !== '' ? " " . $implode : '';
-                    $docu .= "\n";
+                    $docu .= self::paramToString($p);
                 }
-                if($method->getSampleRequest()){
+                if ($method->getSampleRequest()) {
                     $docu .= "```xml\n";
                     $docu .= $method->getSampleRequest();
                     $docu .= "\n```";
@@ -75,5 +71,36 @@ class Documentation
 
         file_put_contents($readme_file, $result);
 
+    }
+
+    private static function paramToString(Parameter $p, int $level = 1) : string
+    {
+        $docu = str_repeat("\t", $level - 1);
+        $docu .= "* {$p->getKey()} ({$p->getType()}";
+        if ($p->isOptional()) {
+            $docu .= ", optional";
+        }
+        $docu .= ")";
+        if ($p->getDescription()) {
+            $docu .= ": " . $p->getDescription();
+        }
+        if ($p instanceof ComplexParameter) {
+            foreach ($p->getSubParameters() as $subParameter) {
+                $docu .= self::paramToString($subParameter, $level + 1);
+            }
+        }
+
+        $possible_values = $p->getPossibleValues();
+
+        $possible_values_description = array_map(static function (PossibleValue $value) {
+            /** @noinspection ForgottenDebugOutputInspection */
+            return var_export($value->getValue(), true) . ": {$value->getDescription()}";
+        }, $possible_values);
+
+        $implode = implode(", ", $possible_values_description);
+        $docu .= $implode !== '' ? " " . $implode : '';
+        $docu .= "\n";
+
+        return $docu;
     }
 }

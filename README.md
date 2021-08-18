@@ -21,15 +21,15 @@ becomes
 
 `http://localhost:8053/webservice/soap/server.php?client_id=default`
 
-You find your client_id in the ILIAS-Administration in General Settings -> Server. 
+You find your client_id in the ILIAS-Administration in General UpdateUserSettingsRoute -> Server. 
 
 ## Documentation
 <!-- BEGIN definitions -->
 ### Route: blockRole
 Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)
 Parameters:
-- role_id (xsd:int): Internal ID of a Role
-- node_id (xsd:int): ILIAS Ref-ID of the Object
+* role_id (xsd:int): Internal ID of a Role
+* node_id (xsd:int): ILIAS Ref-ID of the Object
 ```xml
 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>
@@ -44,108 +44,139 @@ Parameters:
 ```
 
 ### Route: updateCourseSettings
-Updates the settings of a course to the data given
+Updates the settings of a course (ref_id) to the data given
 Parameters:
-- ref_id (xsd:int)
-- show_title_and_icon (xsd:boolean) 1: true, 0: false
-- show_header_actions (xsd:boolean) 1: true, 0: false
-- passed_determination (xsd:int) 1: Through Learning Progress, 2: Only Manual by Tutors
-- sorting (xsd:int) 0: Titles in Alphabetical Order, 4: By Creation Date, 2: Sort by Activation, 1: Manually
-- sorting_direction (xsd:string) asc: ASC, desc: DESC
-- activate_add_to_favourites (xsd:boolean) 1: true, 0: false
-- position_for_new_objects (xsd:string) top: Top, bottom: Bottom
-- order_for_new_objects (xsd:int) 0: Titles in Alphabetical Order, 1: By Creation Date, 2: Sort by Activation
-- learning_progress_mode (xsd:int) 0: Learning Progress is Deactivated, 11: Tutors Monitor and Set Status, 5: Status is Determined by a Collection of Items
-- activate_news (xsd:boolean) 1: true, 0: false
-- activate_news_timeline (xsd:boolean) 1: true, 0: false
-- position_for_new_objects (xsd:string) top: Top, bottom: Bottom
-- activate_news_timeline_auto_entries (xsd:boolean) 1: true, 0: false
-- activate_news_timeline_landing_page (xsd:boolean) 1: true, 0: false
-```xml
-<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <urn:updateCourseSettings soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-         <sid xsi:type="xsd:string">?</sid>
-         <ref_id xsi:type="xsd:int">?</ref_id>
-         <show_title_and_icon xsi:type="xsd:boolean">?</show_title_and_icon>
-         <show_header_actions xsi:type="xsd:boolean">?</show_header_actions>
-         <passed_determination xsi:type="xsd:int">?</passed_determination>
-         <sorting xsi:type="xsd:int">?</sorting>
-         <sorting_direction xsi:type="xsd:string">?</sorting_direction>
-         <activate_add_to_favourites xsi:type="xsd:boolean">?</activate_add_to_favourites>
-         <position_for_new_objects xsi:type="xsd:string">?</position_for_new_objects>
-         <order_for_new_objects xsi:type="xsd:int">?</order_for_new_objects>
-         <learning_progress_mode xsi:type="xsd:int">?</learning_progress_mode>
-         <activate_news xsi:type="xsd:boolean">?</activate_news>
-         <activate_news_timeline xsi:type="xsd:boolean">?</activate_news_timeline>
-         <activate_news_timeline_auto_entries xsi:type="xsd:boolean">?</activate_news_timeline_auto_entries>
-         <activate_news_timeline_landing_page xsi:type="xsd:boolean">?</activate_news_timeline_landing_page>
-      </urn:updateCourseSettings>
-   </soapenv:Body>
-</soapenv:Envelope>
-```
+* course_settings (tns:courseSettings)	* ref_id (xsd:int)
+	* show_title_and_icon (xsd:boolean, optional) true: Yes, false: No
+	* show_header_actions (xsd:boolean, optional) true: Yes, false: No
+	* passed_determination (xsd:int, optional) 1: Through Learning Progress, 2: Only Manual by Tutors
+	* sorting (xsd:int, optional) 0: Titles in Alphabetical Order, 4: By Creation Date, 2: Sort by Activation, 1: Manually
+	* sorting_direction (xsd:string, optional) 'asc': ASC, 'desc': DESC
+	* activate_add_to_favourites (xsd:boolean, optional) true: Yes, false: No
+	* position_for_new_objects (xsd:string, optional) 'top': Top, 'bottom': Bottom
+	* order_for_new_objects (xsd:int, optional) 0: Titles in Alphabetical Order, 1: By Creation Date, 2: Sort by Activation
+	* learning_progress_mode (xsd:int, optional) 0: Learning Progress is Deactivated, 11: Tutors Monitor and Set Status, 5: Status is Determined by a Collection of Items
+	* activate_news (xsd:boolean, optional) true: Yes, false: No
+	* activate_news_timeline (xsd:boolean, optional) true: Yes, false: No
+	* position_for_new_objects (xsd:string, optional) 'top': Top, 'bottom': Bottom
+	* activate_news_timeline_auto_entries (xsd:boolean, optional) true: Yes, false: No
+	* activate_news_timeline_landing_page (xsd:boolean, optional) true: Yes, false: No
+
 
 ### Route: updateUserSettings
-Updates the settings of a course to the data given
+Updates the settings of a user to the data given
 Parameters:
-- user_id (xsd:int)
-- activate_public_profile (xsd:boolean) 1: true, 0: false
-- show_title (xsd:boolean) 1: true, 0: false
-- show_birthday (xsd:boolean) 1: true, 0: false
-- show_gender (xsd:boolean) 1: true, 0: false
-- show_upload (xsd:boolean) 1: true, 0: false
-- show_interests_general (xsd:boolean) 1: true, 0: false
-- show_interests_help_offered (xsd:boolean) 1: true, 0: false
-- show_interests_help_looking (xsd:boolean) 1: true, 0: false
-- show_org_units (xsd:boolean) 1: true, 0: false
-- show_institution (xsd:boolean) 1: true, 0: false
-- show_department (xsd:boolean) 1: true, 0: false
-- show_street (xsd:boolean) 1: true, 0: false
-- show_zipcode (xsd:boolean) 1: true, 0: false
-- show_city (xsd:boolean) 1: true, 0: false
-- show_country (xsd:boolean) 1: true, 0: false
-- show_sel_country (xsd:boolean) 1: true, 0: false
-- show_phone_office (xsd:boolean) 1: true, 0: false
-- show_phone_home (xsd:boolean) 1: true, 0: false
-- show_phone_mobile (xsd:boolean) 1: true, 0: false
-- show_fax (xsd:boolean) 1: true, 0: false
-- show_email (xsd:boolean) 1: true, 0: false
-- show_second_email (xsd:boolean) 1: true, 0: false
-- show_hobby (xsd:boolean) 1: true, 0: false
-- show_matriculation (xsd:boolean) 1: true, 0: false
+* user_settings (tns:userSettings, optional)	* user_id (xsd:int)
+	* activate_public_profile (xsd:boolean, optional) true: Yes, false: No
+	* show_title (xsd:boolean, optional) true: Yes, false: No
+	* show_birthday (xsd:boolean, optional) true: Yes, false: No
+	* show_gender (xsd:boolean, optional) true: Yes, false: No
+	* show_upload (xsd:boolean, optional) true: Yes, false: No
+	* show_interests_general (xsd:boolean, optional) true: Yes, false: No
+	* show_interests_help_offered (xsd:boolean, optional) true: Yes, false: No
+	* show_interests_help_looking (xsd:boolean, optional) true: Yes, false: No
+	* show_org_units (xsd:boolean, optional) true: Yes, false: No
+	* show_institution (xsd:boolean, optional) true: Yes, false: No
+	* show_department (xsd:boolean, optional) true: Yes, false: No
+	* show_street (xsd:boolean, optional) true: Yes, false: No
+	* show_zipcode (xsd:boolean, optional) true: Yes, false: No
+	* show_city (xsd:boolean, optional) true: Yes, false: No
+	* show_country (xsd:boolean, optional) true: Yes, false: No
+	* show_sel_country (xsd:boolean, optional) true: Yes, false: No
+	* show_phone_office (xsd:boolean, optional) true: Yes, false: No
+	* show_phone_home (xsd:boolean, optional) true: Yes, false: No
+	* show_phone_mobile (xsd:boolean, optional) true: Yes, false: No
+	* show_fax (xsd:boolean, optional) true: Yes, false: No
+	* show_email (xsd:boolean, optional) true: Yes, false: No
+	* show_second_email (xsd:boolean, optional) true: Yes, false: No
+	* show_hobby (xsd:boolean, optional) true: Yes, false: No
+	* show_matriculation (xsd:boolean, optional) true: Yes, false: No
+
 ```xml
 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:updateUserSettings soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-         <sid xsi:type="xsd:string">?</sid>
-         <user_id xsi:type="xsd:int">?</user_id>
-         <activate_public_profile xsi:type="xsd:boolean">?</activate_public_profile>
-         <show_title xsi:type="xsd:boolean">?</show_title>
-         <show_birthday xsi:type="xsd:boolean">?</show_birthday>
-         <show_gender xsi:type="xsd:boolean">?</show_gender>
-         <show_upload xsi:type="xsd:boolean">?</show_upload>
-         <show_interests_general xsi:type="xsd:boolean">?</show_interests_general>
-         <show_interests_help_offered xsi:type="xsd:boolean">?</show_interests_help_offered>
-         <show_interests_help_looking xsi:type="xsd:boolean">?</show_interests_help_looking>
-         <show_org_units xsi:type="xsd:boolean">?</show_org_units>
-         <show_institution xsi:type="xsd:boolean">?</show_institution>
-         <show_department xsi:type="xsd:boolean">?</show_department>
-         <show_street xsi:type="xsd:boolean">?</show_street>
-         <show_zipcode xsi:type="xsd:boolean">?</show_zipcode>
-         <show_city xsi:type="xsd:boolean">?</show_city>
-         <show_country xsi:type="xsd:boolean">?</show_country>
-         <show_sel_country xsi:type="xsd:boolean">?</show_sel_country>
-         <show_phone_office xsi:type="xsd:boolean">?</show_phone_office>
-         <show_phone_home xsi:type="xsd:boolean">?</show_phone_home>
-         <show_phone_mobile xsi:type="xsd:boolean">?</show_phone_mobile>
-         <show_fax xsi:type="xsd:boolean">?</show_fax>
-         <show_email xsi:type="xsd:boolean">?</show_email>
-         <show_second_email xsi:type="xsd:boolean">?</show_second_email>
-         <show_hobby xsi:type="xsd:boolean">?</show_hobby>
-         <show_matriculation xsi:type="xsd:boolean">?</show_matriculation>
+         <sid xsi:type="xsd:string">637ec4aaad34be151b7e1548e0a7515f::default</sid>
+         <user_settings xsi:type="ns2:userSettings" xmlns:urn="urn:ilUserAdministration">
+            <!--You may enter the following 25 items in any order-->
+            <user_id xsi:type="xsd:int">6</user_id>
+            <!--Optional:-->
+            <activate_public_profile xsi:type="xsd:boolean">true</activate_public_profile>
+            <!--Optional:-->
+            <show_title xsi:type="xsd:boolean">true</show_title>
+            <!--Optional:-->
+            <show_birthday xsi:type="xsd:boolean">false</show_birthday>
+            <!--Optional:-->
+            <show_gender xsi:type="xsd:boolean">true</show_gender>
+            <!--Optional:-->
+            <show_interests_general xsi:type="xsd:boolean">true</show_interests_general>
+            <!--Optional:-->
+            <show_interests_help_offered xsi:type="xsd:boolean">true</show_interests_help_offered>
+            <!--Optional:-->
+            <show_interests_help_looking xsi:type="xsd:boolean">true</show_interests_help_looking>
+            <!--Optional:-->
+            <show_org_units xsi:type="xsd:boolean">true</show_org_units>
+            <!--Optional:-->
+            <show_institution xsi:type="xsd:boolean">true</show_institution>
+            <!--Optional:-->
+            <show_department xsi:type="xsd:boolean">true</show_department>
+            <!--Optional:-->
+            <show_street xsi:type="xsd:boolean">true</show_street>
+            <!--Optional:-->
+            <show_zipcode xsi:type="xsd:boolean">true</show_zipcode>
+            <!--Optional:-->
+            <show_city xsi:type="xsd:boolean">true</show_city>
+            <!--Optional:-->
+            <show_country xsi:type="xsd:boolean">true</show_country>
+            <!--Optional:-->
+            <show_sel_country xsi:type="xsd:boolean">true</show_sel_country>
+            <!--Optional:-->
+            <show_phone_office xsi:type="xsd:boolean">true</show_phone_office>
+            <!--Optional:-->
+            <show_phone_home xsi:type="xsd:boolean">true</show_phone_home>
+            <!--Optional:-->
+            <show_phone_mobile xsi:type="xsd:boolean">true</show_phone_mobile>
+            <!--Optional:-->
+            <show_fax xsi:type="xsd:boolean">true</show_fax>
+            <!--Optional:-->
+            <show_email xsi:type="xsd:boolean">true</show_email>
+            <!--Optional:-->
+            <show_second_email xsi:type="xsd:boolean">true</show_second_email>
+            <!--Optional:-->
+            <show_hobby xsi:type="xsd:boolean">true</show_hobby>
+            <!--Optional:-->
+            <show_matriculation xsi:type="xsd:boolean">true</show_matriculation>
+         </user_settings>
       </urn:updateUserSettings>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### Route: getUserSettings
+Shows the settings of a user to the user_id given
+Parameters:
+* user_id (xsd:int)
+
+### Route: addToFavourites
+Adds the objects given (ref_id) as favourites to A) a list of users or B) to the inherited users (e.g. members of a course) if possible.
+Parameters:
+* ref_id (xsd:int): ILIAS Ref-ID of the Object
+* user_ids (tns:intArray, optional): List of user ids
+* inherit (xsd:boolean, optional): Inherit from object if possible true: Yes, false: No
+```xml
+<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <urn:addToFavourites soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+         <sid xsi:type="xsd:string">637ec4aaad34be151b7e1548e0a7515f::default</sid>
+         <ref_id xsi:type="xsd:int">76</ref_id>
+         <user_ids xsi:type="urn:intArray" SOAP-ENC:arrayType="xsd:int[]" xmlns:urn="urn:ilUserAdministration">
+         		<item xsi:type="xsd:int">6</item>
+            <item xsi:type="xsd:int">256</item>
+         </user_ids>
+         <inherit xsi:type="xsd:boolean">true</inherit>
+      </urn:addToFavourites>
    </soapenv:Body>
 </soapenv:Envelope>
 ```

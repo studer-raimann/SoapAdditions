@@ -18,5 +18,9 @@ interface Parameter
 
     public function getDescription() : string;
 
+    public function isOptional() : bool;
+
+    public function setOptional(bool $optional) : self;
+
 }
 

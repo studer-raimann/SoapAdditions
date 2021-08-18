@@ -2,13 +2,13 @@
 
 use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
-use srag\Plugins\SoapAdditions\Routes\Course\Settings as SettingsRoute;
+use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as SettingsRoute;
 
 /**
- * Class Settings
+ * Class UpdateCourseSettingsCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class Settings extends Base implements Command
+class UpdateCourseSettingsCommand extends Base implements Command
 {
     /**
      * @var int
@@ -24,7 +24,7 @@ class Settings extends Base implements Command
     protected $parameters;
 
     /**
-     * Settings constructor.
+     * UpdateUserSettingsRoute constructor.
      * @param int   $ref_id
      * @param array $parameters
      */
@@ -93,18 +93,20 @@ class Settings extends Base implements Command
         $cs->update();
     }
 
-    public function run()
+    public function run() : ?array
     {
-        // Sorting Settings:
+        // Sorting UpdateUserSettingsRoute:
         $this->handleSortingSettings();
-        // Container Settings
+        // RouteContainer UpdateUserSettingsRoute
         $this->handleContainerSetting();
-        // Course Settings
+        // Course UpdateUserSettingsRoute
         $this->handleCourseSettings();
-        // News Settings
+        // News UpdateUserSettingsRoute
         $this->handleNewsSettings();
         // Save Course Object
         $this->getCourseObject()->update();
+
+        return [true];
     }
 
 }

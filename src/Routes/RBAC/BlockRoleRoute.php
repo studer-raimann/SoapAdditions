@@ -2,14 +2,14 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\RBAC;
 
-use srag\Plugins\SoapAdditions\Command\RBAC\BlockRole as BlockRoleCommand;
+use srag\Plugins\SoapAdditions\Command\RBAC\BlockRoleCommand as BlockRoleCommand;
 use srag\Plugins\SoapAdditions\Routes\Base;
 
 /**
- * Class BlockRole
+ * Class BlockRoleRoute
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class BlockRole extends Base
+class BlockRoleRoute extends Base
 {
 
     const P_ROLE_ID = 'role_id';
@@ -31,8 +31,8 @@ class BlockRole extends Base
     public function getAdditionalInputParams() : array
     {
         return [
-            $this->param_factory->int(self::P_ROLE_ID, 'Internal ID of a Role'),
-            $this->param_factory->int(self::P_NODE_ID, 'ILIAS Ref-ID of the Object'),
+            $this->param_factory->int(self::P_ROLE_ID, 'Internal ID of a Role')->setOptional(false),
+            $this->param_factory->int(self::P_NODE_ID, 'ILIAS Ref-ID of the Object')->setOptional(false),
         ];
     }
 

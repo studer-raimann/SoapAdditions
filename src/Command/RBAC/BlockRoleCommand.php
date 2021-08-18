@@ -6,10 +6,10 @@ use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
 
 /**
- * Class
+ * Class BlockRoleCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class BlockRole extends Base implements Command
+class BlockRoleCommand extends Base implements Command
 {
 
     /**
@@ -22,7 +22,7 @@ class BlockRole extends Base implements Command
     private $node_id = 0;
 
     /**
-     * BlockRole constructor.
+     * BlockRoleRoute constructor.
      * @param int $role_id
      * @param int $node_id
      */
@@ -37,11 +37,12 @@ class BlockRole extends Base implements Command
     /**
      * @inheritDoc
      */
-    public function run()
+    public function run() : ?array
     {
         if ($this->status === true) {
             $this->blockRole($this->role_id, $this->node_id);
         }
+        return [true];
     }
 
     /**

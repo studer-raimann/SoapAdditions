@@ -2,26 +2,26 @@
 
 use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Base;
-use srag\Plugins\SoapAdditions\Routes\User\Settings as SettingsCommand;
+use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute as SettingsCommand;
 
 /**
- * Class Settings
+ * Class UpdateUserSettingsCommand
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
-class Settings extends Base implements Command
+class UpdateUserSettingsCommand extends Base implements Command
 {
     protected $user_id = 0;
     protected $params = [];
 
     /**
-     * Settings constructor.
+     * UpdateUserSettingsRoute constructor.
      * @param int   $user_id
      * @param array $params
      */
     public function __construct(int $user_id, array $params)
     {
         $this->user_id = $user_id;
-        $this->params = $params;
+        $this->params = $params ?? [];
     }
 
     /**
@@ -35,24 +35,26 @@ class Settings extends Base implements Command
         return $this->user_object;
     }
 
-    public function run()
+    public function run() : ?array
     {
         if (!$this->params[SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE]) {
             $this->getUser()->setPref("public_profile", 'n');
             $this->getUser()->update();
-            return;
+            return [true];
         }
 
         $this->getUser()->setPref("public_profile", 'y');
 
         foreach ($this->params as $k => $param) {
-            if ($k === SettingsCommand::SID || $k === SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE) {
+            if ($k === 'sid' || $k === SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE || $k === 'user_id') {
                 continue;
             }
             $k = str_replace(SettingsCommand::PREFIX_SHOW, "", $k);
             $this->getUser()->setPref("public_" . $k, $param ? "y" : "n");
         }
         $this->getUser()->update();
+
+        return [true];
     }
 
 }
