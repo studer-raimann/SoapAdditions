@@ -43,7 +43,11 @@ abstract class UserBase extends Base
     {
         $params = [
             $this->param_factory->int(self::P_USER_ID)->setOptional(false),
-            $this->param_factory->bool(self::P_ACTIVATE_PUBLIC_PROFILE)
+            $this->param_factory->string(self::P_ACTIVATE_PUBLIC_PROFILE, '', [
+                $this->param_factory->possibleValue('n', 'Deactivated'),
+                $this->param_factory->possibleValue('y', 'Internally activated'),
+                $this->param_factory->possibleValue('g', 'Globally activated'),
+            ])
         ];
 
         foreach (self::$possible_values as $possible_value) {

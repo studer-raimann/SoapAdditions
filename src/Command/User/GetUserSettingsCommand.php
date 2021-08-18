@@ -35,9 +35,11 @@ class GetUserSettingsCommand extends Base implements Command
 
     public function run() : ?array
     {
+        $pref = $this->getUser()->getPref("public_profile") ?? 'n';
+
         $basic = [
             UserBase::P_USER_ID => $this->user_id,
-            UserBase::P_ACTIVATE_PUBLIC_PROFILE => $this->getUser()->getPref("public_profile") === 'y'
+            UserBase::P_ACTIVATE_PUBLIC_PROFILE => $pref
         ];
 
         foreach (UserBase::$possible_values as $possible_value) {

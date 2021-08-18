@@ -37,17 +37,27 @@ class UpdateUserSettingsCommand extends Base implements Command
 
     public function run() : ?array
     {
-        if (!$this->params[SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE]) {
-            $this->getUser()->setPref("public_profile", 'n');
-            $this->getUser()->update();
-            return [true];
+        $profile = $this->params[SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE] ?? 'n';
+        $force_disable = false;
+        switch ($profile) {
+            case 'y':
+            case 'g':
+                $this->getUser()->setPref("public_profile", $profile);
+                break;
+            case 'n':
+            default:
+                $this->getUser()->setPref("public_profile", 'n');
+                $this->getUser()->update();
+                $force_disable = true;
+                break;
         }
-
-        $this->getUser()->setPref("public_profile", 'y');
 
         foreach ($this->params as $k => $param) {
             if ($k === 'sid' || $k === SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE || $k === 'user_id') {
                 continue;
+            }
+            if ($force_disable) {
+                $param = false;
             }
             $k = str_replace(SettingsCommand::PREFIX_SHOW, "", $k);
             $this->getUser()->setPref("public_" . $k, $param ? "y" : "n");

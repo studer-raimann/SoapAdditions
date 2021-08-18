@@ -137,7 +137,7 @@ Updates the settings of a user to the data given
 Parameters:
 * user_settings (tns:userSettings, optional)
 	* user_id (xsd:int)
-	* activate_public_profile (xsd:boolean, optional) true: Yes, false: No
+	* activate_public_profile (xsd:string, optional) 'n': Deactivated, 'y': Internally activated, 'g': Globally activated
 	* show_title (xsd:boolean, optional) true: Yes, false: No
 	* show_birthday (xsd:boolean, optional) true: Yes, false: No
 	* show_gender (xsd:boolean, optional) true: Yes, false: No
