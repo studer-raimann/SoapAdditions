@@ -1,7 +1,6 @@
 <?php namespace srag\Plugins\SoapAdditions\Routes;
 
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
-use srag\Plugins\SoapAdditions\Command\Command;
 
 /**
  * Interface Route
@@ -21,13 +20,9 @@ interface Route
 
     public function checkParameters(array $params);
 
-    /**
-     * @param array $params
-     * @return Command
-     */
-    public function getCommand(array $params);
+    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command;
 
-    public function getShortDocumentation();
+    public function getShortDocumentation() : string;
 
-    public function getSampleRequest();
+    public function getSampleRequest() : string;
 }

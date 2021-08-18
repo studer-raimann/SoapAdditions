@@ -30,7 +30,7 @@ class UpdateCourseSettingsRoute extends Base
     const P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES = 'activate_news_timeline_auto_entries';
     const P_ACTIVATE_TIMELINE_LANDINGS_PAGE = 'activate_news_timeline_landing_page';
 
-    public function getCommand(array $params)
+    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
         return new SettingsCommand((int) $params['course_settings'][self::P_COURSE_REF_ID], $params['course_settings']);
     }
@@ -95,12 +95,12 @@ class UpdateCourseSettingsRoute extends Base
         return [$this->param_factory->bool('success')];
     }
 
-    public function getShortDocumentation()
+    public function getShortDocumentation() : string
     {
         return "Updates the settings of a course (ref_id) to the data given";
     }
 
-    public function getSampleRequest()
+    public function getSampleRequest() : string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>

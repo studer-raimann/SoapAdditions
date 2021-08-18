@@ -8,7 +8,7 @@ namespace srag\Plugins\SoapAdditions\Routes\User;
  */
 class GetUserSettingsRoute extends UserBase
 {
-    public function getCommand(array $params)
+    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
         return new \srag\Plugins\SoapAdditions\Command\User\GetUserSettingsCommand((int) $params[self::P_USER_ID]);
     }
@@ -30,12 +30,12 @@ class GetUserSettingsRoute extends UserBase
         return $this->getParams();
     }
 
-    public function getShortDocumentation()
+    public function getShortDocumentation() : string
     {
         return "Shows the settings of a user to the user_id given";
     }
 
-    public function getSampleRequest()
+    public function getSampleRequest() : string
     {
         return '';
     }

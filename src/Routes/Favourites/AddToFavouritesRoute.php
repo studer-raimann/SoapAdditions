@@ -14,7 +14,7 @@ class AddToFavouritesRoute extends Base
 
     const REF_ID = 'ref_id';
 
-    public function getCommand(array $params)
+    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
         return new AddToFavouritesCommand($params[self::REF_ID], $params);
     }
@@ -40,12 +40,12 @@ class AddToFavouritesRoute extends Base
         ];
     }
 
-    public function getShortDocumentation()
+    public function getShortDocumentation() : string
     {
         return "Adds the objects given (ref_id) as favourites to A) a list of users or B) to the inherited users (e.g. members of a course) if possible.";
     }
 
-    public function getSampleRequest()
+    public function getSampleRequest() : string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
    <soapenv:Header/>

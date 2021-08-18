@@ -15,7 +15,7 @@ class BlockRoleRoute extends Base
     const P_ROLE_ID = 'role_id';
     const P_NODE_ID = 'node_id';
 
-    public function getCommand(array $params)
+    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
         $role_id = (int) $params[self::P_ROLE_ID];
         $node_id = (int) $params[self::P_NODE_ID];
@@ -41,12 +41,12 @@ class BlockRoleRoute extends Base
         return [$this->param_factory->bool('success')];
     }
 
-    public function getShortDocumentation()
+    public function getShortDocumentation() : string
     {
         return "Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)";
     }
 
-    public function getSampleRequest()
+    public function getSampleRequest() : string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>

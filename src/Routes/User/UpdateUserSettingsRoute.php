@@ -18,7 +18,7 @@ class UpdateUserSettingsRoute extends UserBase
      */
     protected $user_settings_config;
 
-    public function getCommand(array $params)
+    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
         return new UserSettingsCommand((int) $params['user_settings'][self::P_USER_ID], $params['user_settings']);
     }
@@ -38,12 +38,12 @@ class UpdateUserSettingsRoute extends UserBase
         return [$this->param_factory->bool('success')];
     }
 
-    public function getShortDocumentation()
+    public function getShortDocumentation() : string
     {
         return "Updates the settings of a user to the data given";
     }
 
-    public function getSampleRequest()
+    public function getSampleRequest() : string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>

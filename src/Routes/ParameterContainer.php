@@ -72,42 +72,6 @@ class ParameterContainer implements \ilWsdlType
         return $elements;
     }
 
-    /*
-     * addComplexType($name,$typeClass='complexType',$phpType='array',$compositor='',$restrictionBase='',$elements=array(),$attrs=array(),$arrayType='') {
-     *
-     *
-     * $this->server->wsdl->addComplexType(
-            'ilUserData',
-            'complexType',
-            'struct',
-            'all',
-            '',
-            array('usr_id' => array('name' => 'usr_id','type' => 'xsd:int'),
-                                                  'login' => array('name' => 'login', 'type' =
-     *
-     *
-     *  $this->server->wsdl->addComplexType(
-                $type->getName(), 'ilUserData',
-                $type->getTypeClass(), 'complexType',
-                $type->getPhpType(), 'struct',
-                $type->getCompositor(), 'all',
-                $type->getRestrictionBase(), '',
-                $type->getElements(),   array('usr_id' => array('name' => 'usr_id','type' => 'xsd:int'),
-                                                  'login' => array('name' => 'login', 'type' => 'xsd:string'),
-                $type->getAttributes(),
-                $type->getArrayType()
-            );
-     *
-     *
-     *
-     *   $this->server->wsdl->addComplexType(
-
-
-
-
-
-     */
-
     public function getAttributes()
     {
         return [];
