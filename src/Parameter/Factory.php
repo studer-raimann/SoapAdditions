@@ -41,21 +41,6 @@ class Factory
         return new BaseParameter(Type::TYPE_STRING, $key, $description, $possible_values);
     }
 
-    public function nested(
-        string $key,
-        array $nested,
-        string $description = '',
-        array $possible_values = []
-    ) : ComplexParameter {
-        return new BaseComplexParameter(
-            'userSettings',
-            $key,
-            $description,
-            $nested,
-            $possible_values
-        );
-    }
-
     public function complex(
         string $key,
         string $type,

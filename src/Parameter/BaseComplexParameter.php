@@ -35,6 +35,11 @@ class BaseComplexParameter extends BaseParameter implements ComplexParameter
             $key,
             $description,
             $possible_values);
+        foreach ($sub_parameters as $sub_parameter) {
+            if (!$sub_parameter instanceof Parameter || $sub_parameter instanceof ComplexParameter) {
+                throw new \LogicException('a ComplexParamater currently only holds Parameters');
+            }
+        }
         $this->sub_parameters = $sub_parameters;
         $this->type_without_prefix = $type;
     }
