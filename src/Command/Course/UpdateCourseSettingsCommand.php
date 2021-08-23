@@ -94,6 +94,24 @@ class UpdateCourseSettingsCommand extends Base
         $cs->update();
     }
 
+    protected function handleLearningProgressSettings()
+    {
+        $mode = $this->getParameterByKey(SettingsRoute::P_LEARNING_PROGRESS_MODE);
+        if (in_array(
+            $mode,
+            [
+                SettingsRoute::LP_OPTION_OBJECTS,
+                SettingsRoute::LP_OPTION_OFF,
+                SettingsRoute::LP_OPTION_TUTOR
+            ],
+            true)
+        ) {
+            $settings = new \ilLPObjSettings($this->obj_id);
+            $settings->setMode($mode);
+            $settings->update(false);
+        }
+    }
+
     public function run()
     {
         // Sorting UpdateUserSettingsRoute:
@@ -104,6 +122,8 @@ class UpdateCourseSettingsCommand extends Base
         $this->handleCourseSettings();
         // News UpdateUserSettingsRoute
         $this->handleNewsSettings();
+        // Handle LearningProgress
+        $this->handleLearningProgressSettings();
         // Save Course Object
         $this->getCourseObject()->update();
 

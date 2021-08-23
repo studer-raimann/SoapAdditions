@@ -29,6 +29,9 @@ class UpdateCourseSettingsRoute extends Base
     const P_SHOW_NEW_AFTER = 'show_news_after_date';
     const P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES = 'activate_news_timeline_auto_entries';
     const P_ACTIVATE_TIMELINE_LANDINGS_PAGE = 'activate_news_timeline_landing_page';
+    const LP_OPTION_OFF = 0;
+    const LP_OPTION_TUTOR = 11;
+    const LP_OPTION_OBJECTS = 5;
 
     public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
@@ -71,9 +74,9 @@ class UpdateCourseSettingsRoute extends Base
                 $this->param_factory->possibleValue(2, 'Sort by Activation'),
             ]),
             $this->param_factory->int(self::P_LEARNING_PROGRESS_MODE, '', [
-                $this->param_factory->possibleValue(0, 'Learning Progress is Deactivated'),
-                $this->param_factory->possibleValue(11, 'Tutors Monitor and Set Status'),
-                $this->param_factory->possibleValue(5, 'Status is Determined by a Collection of Items'),
+                $this->param_factory->possibleValue(self::LP_OPTION_OFF, 'Learning Progress is Deactivated'),
+                $this->param_factory->possibleValue(self::LP_OPTION_TUTOR, 'Tutors Monitor and Set Status'),
+                $this->param_factory->possibleValue(self::LP_OPTION_OBJECTS, 'Status is Determined by a Collection of Items'),
             ]),
             $this->param_factory->bool(self::P_ACTIVATE_NEWS),
             $this->param_factory->bool(self::P_ACTIVATE_TIMELINE),
