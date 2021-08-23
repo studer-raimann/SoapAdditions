@@ -9,6 +9,7 @@ use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as Settin
  */
 class UpdateCourseSettingsCommand extends Base
 {
+    const FORMAT = 'Y-m-d H:i:s';
     /**
      * @var int
      */
@@ -42,14 +43,33 @@ class UpdateCourseSettingsCommand extends Base
     protected function handleNewsSettings()
     {
         $course = $this->getCourseObject();
-        $course->setUseNews($this->getParameterByKey(SettingsRoute::P_ACTIVATE_NEWS));
-        $course->setNewsTimeline($this->getParameterByKey(SettingsRoute::P_ACTIVATE_TIMELINE));
-        $course->setNewsTimelineLandingPage($this->getParameterByKey(SettingsRoute::P_ACTIVATE_TIMELINE_LANDINGS_PAGE));
-        $course->setNewsTimelineAutoEntries($this->getParameterByKey(SettingsRoute::P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES));
-
-        $show_news_after = $this->getParameterByKey(SettingsRoute::P_SHOW_NEW_AFTER);
-        \ilBlockSetting::_write('news', 'hide_news_per_date', $show_news_after ? 1 : 0, 0, $this->obj_id);
-        \ilBlockSetting::_write('news', 'hide_news_date', $show_news_after, 0, $this->obj_id);
+        $activate_news = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_NEWS);
+        if ($activate_news !== null) {
+            $course->setUseNews($activate_news);
+        }
+        $activate_timeline = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_TIMELINE);
+        if ($activate_timeline !== null) {
+            $course->setNewsTimeline($activate_timeline);
+        }
+        $activate_new_timeline_landing_page = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_TIMELINE_LANDINGS_PAGE);
+        if ($activate_new_timeline_landing_page !== null) {
+            $course->setNewsTimelineLandingPage($activate_new_timeline_landing_page);
+        }
+        $show_news_timeline_auto = $this->getParameterByKey(SettingsRoute::P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES);
+        if ($show_news_timeline_auto !== null) {
+            $course->setNewsTimelineAutoEntries($show_news_timeline_auto);
+        }
+        $show_news_after_input = $this->getParameterByKey(SettingsRoute::P_SHOW_NEW_AFTER);
+        if ($show_news_after_input !== null) {
+            $date = new \DateTimeImmutable($show_news_after_input);
+            $show_news_after = $date->format(self::FORMAT);
+            if ($show_news_after === $show_news_after_input) {
+                \ilBlockSetting::_write('news', 'hide_news_per_date', $show_news_after ? 1 : 0, 0, $this->obj_id);
+                \ilBlockSetting::_write('news', 'hide_news_date', $show_news_after, 0, $this->obj_id);
+            }
+        } else {
+            \ilBlockSetting::_write('news', 'hide_news_per_date', 0, 0, $this->obj_id);
+        }
     }
 
     /**
@@ -66,17 +86,33 @@ class UpdateCourseSettingsCommand extends Base
     protected function handleCourseSettings()
     {
         $course = $this->getCourseObject();
-        $course->setStatusDetermination($this->getParameterByKey(SettingsRoute::P_PASSED_DETERMINATION) === 1 ? 1 : 2);
-        $course->setAboStatus((int) $this->getParameterByKey(SettingsRoute::P_ACTIVATE_ADD_TO_FAVOURITES));
+        $passed_determination = $this->getParameterByKey(SettingsRoute::P_PASSED_DETERMINATION);
+        if ($passed_determination !== null) {
+            $course->setStatusDetermination($passed_determination === 1 ? 1 : 2);
+        }
+
+        $add_to_favourites = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_ADD_TO_FAVOURITES);
+        if ($add_to_favourites !== null) {
+            $course->setAboStatus((int) $add_to_favourites);
+        }
+
     }
 
     protected function handleContainerSetting()
     {
-        \ilContainer::_writeContainerSetting($this->obj_id, 'hide_header_icon_and_title',
-            !$this->getParameterByKey(SettingsRoute::P_SHOW_TITLE_AND_ICON));
+        $show_title_and_icon = $this->getParameterByKey(SettingsRoute::P_SHOW_TITLE_AND_ICON);
+        if ($show_title_and_icon !== null) {
+            \ilContainer::_writeContainerSetting($this->obj_id, 'hide_header_icon_and_title',
+                !$show_title_and_icon);
 
-        \ilContainer::_writeContainerSetting($this->obj_id, 'hide_top_actions',
-            !$this->getParameterByKey(SettingsRoute::P_SHOW_HEADER_ACTIONS));
+        }
+
+        $show_top_actions = $this->getParameterByKey(SettingsRoute::P_SHOW_HEADER_ACTIONS);
+        if ($show_top_actions !== null) {
+            \ilContainer::_writeContainerSetting($this->obj_id, 'hide_top_actions',
+                !$show_top_actions);
+        }
+
     }
 
     protected function handleSortingSettings()
@@ -84,14 +120,16 @@ class UpdateCourseSettingsCommand extends Base
         /** @noinspection PhpParamsInspection */
         $cs = \ilContainerSortingSettings::getInstanceByObjId($this->obj_id);
         $sorting = $this->getParameterByKey(SettingsRoute::P_SORTING);
-        $cs->setSortMode($sorting);
-        if ($sorting === 1) { // Manually
-            $cs->setSortNewItemsOrder($this->getParameterByKey(SettingsRoute::P_ORDER_FOR_NEW_OBJECTS));
-            $cs->setSortNewItemsPosition($this->getParameterByKey(SettingsRoute::P_POSITION_FOR_NEW_OBJECTS) === 'top' ? 0 : 1);
+        if ($sorting !== null) {
+            $cs->setSortMode($sorting);
+            if ($sorting === 1) { // Manually
+                $cs->setSortNewItemsOrder($this->getParameterByKey(SettingsRoute::P_ORDER_FOR_NEW_OBJECTS));
+                $cs->setSortNewItemsPosition($this->getParameterByKey(SettingsRoute::P_POSITION_FOR_NEW_OBJECTS) === 'top' ? 0 : 1);
+            }
+            /** @noinspection PhpParamsInspection */
+            $cs->setSortDirection($this->getParameterByKey(SettingsRoute::P_SORTING_DIRECTION) === 'asc' ? 0 : 1);
+            $cs->update();
         }
-        /** @noinspection PhpParamsInspection */
-        $cs->setSortDirection($this->getParameterByKey(SettingsRoute::P_SORTING_DIRECTION) === 'asc' ? 0 : 1);
-        $cs->update();
     }
 
     protected function handleLearningProgressSettings()

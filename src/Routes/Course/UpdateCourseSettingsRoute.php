@@ -26,7 +26,7 @@ class UpdateCourseSettingsRoute extends Base
     const P_LEARNING_PROGRESS_MODE = 'learning_progress_mode';
     const P_ACTIVATE_NEWS = 'activate_news';
     const P_ACTIVATE_TIMELINE = 'activate_news_timeline';
-    const P_SHOW_NEW_AFTER = 'show_news_after_date';
+    const P_SHOW_NEW_AFTER = 'show_news_after';
     const P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES = 'activate_news_timeline_auto_entries';
     const P_ACTIVATE_TIMELINE_LANDINGS_PAGE = 'activate_news_timeline_landing_page';
     const LP_OPTION_OFF = 0;
@@ -76,7 +76,8 @@ class UpdateCourseSettingsRoute extends Base
             $this->param_factory->int(self::P_LEARNING_PROGRESS_MODE, '', [
                 $this->param_factory->possibleValue(self::LP_OPTION_OFF, 'Learning Progress is Deactivated'),
                 $this->param_factory->possibleValue(self::LP_OPTION_TUTOR, 'Tutors Monitor and Set Status'),
-                $this->param_factory->possibleValue(self::LP_OPTION_OBJECTS, 'Status is Determined by a Collection of Items'),
+                $this->param_factory->possibleValue(self::LP_OPTION_OBJECTS,
+                    'Status is Determined by a Collection of Items'),
             ]),
             $this->param_factory->bool(self::P_ACTIVATE_NEWS),
             $this->param_factory->bool(self::P_ACTIVATE_TIMELINE),
@@ -86,6 +87,7 @@ class UpdateCourseSettingsRoute extends Base
             ]),
             $this->param_factory->bool(self::P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES),
             $this->param_factory->bool(self::P_ACTIVATE_TIMELINE_LANDINGS_PAGE),
+            $this->param_factory->dateTime(self::P_SHOW_NEW_AFTER, 'Format ' . SettingsCommand::FORMAT . ' needed'),
         ];
 
         return [
@@ -109,36 +111,38 @@ class UpdateCourseSettingsRoute extends Base
    <soapenv:Header/>
    <soapenv:Body>
       <urn:updateCourseSettings soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-         <sid xsi:type="xsd:string">976d27aa4ba2c532d8905945b363eb26::default</sid>
+         <sid xsi:type="xsd:string">?</sid>
          <course_settings xsi:type="urn:courseSettings" xmlns:urn="urn:ilUserAdministration">
-            <!--You may enter the following 14 items in any order-->
-            <ref_id xsi:type="xsd:int">76</ref_id>
+            <!--You may enter the following 15 items in any order-->
+            <ref_id xsi:type="xsd:int">?</ref_id>
             <!--Optional:-->
-            <show_title_and_icon xsi:type="xsd:boolean">true</show_title_and_icon>
+            <show_title_and_icon xsi:type="xsd:boolean">?</show_title_and_icon>
             <!--Optional:-->
-            <show_header_actions xsi:type="xsd:boolean">true</show_header_actions>
+            <show_header_actions xsi:type="xsd:boolean">?</show_header_actions>
             <!--Optional:-->
-            <passed_determination xsi:type="xsd:int">2</passed_determination>
+            <passed_determination xsi:type="xsd:int">?</passed_determination>
             <!--Optional:-->
-            <sorting xsi:type="xsd:int">4</sorting>
+            <sorting xsi:type="xsd:int">?</sorting>
             <!--Optional:-->
-            <sorting_direction xsi:type="xsd:string">asc</sorting_direction>
+            <sorting_direction xsi:type="xsd:string">?</sorting_direction>
             <!--Optional:-->
-            <activate_add_to_favourites xsi:type="xsd:boolean">true</activate_add_to_favourites>
+            <activate_add_to_favourites xsi:type="xsd:boolean">?</activate_add_to_favourites>
             <!--Optional:-->
-            <position_for_new_objects xsi:type="xsd:string">top</position_for_new_objects>
+            <position_for_new_objects xsi:type="xsd:string">?</position_for_new_objects>
             <!--Optional:-->
-            <order_for_new_objects xsi:type="xsd:int">2</order_for_new_objects>
+            <order_for_new_objects xsi:type="xsd:int">?</order_for_new_objects>
             <!--Optional:-->
-            <learning_progress_mode xsi:type="xsd:int">5</learning_progress_mode>
+            <learning_progress_mode xsi:type="xsd:int">?</learning_progress_mode>
             <!--Optional:-->
-            <activate_news xsi:type="xsd:boolean">true</activate_news>
+            <activate_news xsi:type="xsd:boolean">?</activate_news>
             <!--Optional:-->
-            <activate_news_timeline xsi:type="xsd:boolean">true</activate_news_timeline>
+            <activate_news_timeline xsi:type="xsd:boolean">?</activate_news_timeline>
             <!--Optional:-->
-            <activate_news_timeline_auto_entries xsi:type="xsd:boolean">true</activate_news_timeline_auto_entries>
+            <activate_news_timeline_auto_entries xsi:type="xsd:boolean">?</activate_news_timeline_auto_entries>
             <!--Optional:-->
-            <activate_news_timeline_landing_page xsi:type="xsd:boolean">true</activate_news_timeline_landing_page>
+            <activate_news_timeline_landing_page xsi:type="xsd:boolean">?</activate_news_timeline_landing_page>
+            <!--Optional:-->
+            <show_news_after xsi:type="xsd:dateTime">?</show_news_after>
          </course_settings>
       </urn:updateCourseSettings>
    </soapenv:Body>

@@ -11,6 +11,7 @@ interface Type
      */
     const TYPE_INT_ARRAY = 'tns:intArray';
     const TYPE_STRING = 'xsd:string';
+    const TYPE_DATE_TIME = 'xsd:dateTime';
     const TYPE_INT = 'xsd:int';
     const TYPE_BOOL = 'xsd:boolean';
     const TYPE_DOUBLE_ARRAY = 'tns:doubleArray';

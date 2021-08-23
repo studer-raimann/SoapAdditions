@@ -64,42 +64,45 @@ Parameters:
 	* position_for_new_objects (xsd:string, optional) 'top': Top, 'bottom': Bottom
 	* activate_news_timeline_auto_entries (xsd:boolean, optional) true: Yes, false: No
 	* activate_news_timeline_landing_page (xsd:boolean, optional) true: Yes, false: No
+	* show_news_after (xsd:dateTime, optional): Format Y-m-d H:i:s needed
 
 ```xml
 <soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>
    <soapenv:Body>
       <urn:updateCourseSettings soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-         <sid xsi:type="xsd:string">976d27aa4ba2c532d8905945b363eb26::default</sid>
+         <sid xsi:type="xsd:string">?</sid>
          <course_settings xsi:type="urn:courseSettings" xmlns:urn="urn:ilUserAdministration">
-            <!--You may enter the following 14 items in any order-->
-            <ref_id xsi:type="xsd:int">76</ref_id>
+            <!--You may enter the following 15 items in any order-->
+            <ref_id xsi:type="xsd:int">?</ref_id>
             <!--Optional:-->
-            <show_title_and_icon xsi:type="xsd:boolean">true</show_title_and_icon>
+            <show_title_and_icon xsi:type="xsd:boolean">?</show_title_and_icon>
             <!--Optional:-->
-            <show_header_actions xsi:type="xsd:boolean">true</show_header_actions>
+            <show_header_actions xsi:type="xsd:boolean">?</show_header_actions>
             <!--Optional:-->
-            <passed_determination xsi:type="xsd:int">2</passed_determination>
+            <passed_determination xsi:type="xsd:int">?</passed_determination>
             <!--Optional:-->
-            <sorting xsi:type="xsd:int">4</sorting>
+            <sorting xsi:type="xsd:int">?</sorting>
             <!--Optional:-->
-            <sorting_direction xsi:type="xsd:string">asc</sorting_direction>
+            <sorting_direction xsi:type="xsd:string">?</sorting_direction>
             <!--Optional:-->
-            <activate_add_to_favourites xsi:type="xsd:boolean">true</activate_add_to_favourites>
+            <activate_add_to_favourites xsi:type="xsd:boolean">?</activate_add_to_favourites>
             <!--Optional:-->
-            <position_for_new_objects xsi:type="xsd:string">top</position_for_new_objects>
+            <position_for_new_objects xsi:type="xsd:string">?</position_for_new_objects>
             <!--Optional:-->
-            <order_for_new_objects xsi:type="xsd:int">2</order_for_new_objects>
+            <order_for_new_objects xsi:type="xsd:int">?</order_for_new_objects>
             <!--Optional:-->
-            <learning_progress_mode xsi:type="xsd:int">5</learning_progress_mode>
+            <learning_progress_mode xsi:type="xsd:int">?</learning_progress_mode>
             <!--Optional:-->
-            <activate_news xsi:type="xsd:boolean">true</activate_news>
+            <activate_news xsi:type="xsd:boolean">?</activate_news>
             <!--Optional:-->
-            <activate_news_timeline xsi:type="xsd:boolean">true</activate_news_timeline>
+            <activate_news_timeline xsi:type="xsd:boolean">?</activate_news_timeline>
             <!--Optional:-->
-            <activate_news_timeline_auto_entries xsi:type="xsd:boolean">true</activate_news_timeline_auto_entries>
+            <activate_news_timeline_auto_entries xsi:type="xsd:boolean">?</activate_news_timeline_auto_entries>
             <!--Optional:-->
-            <activate_news_timeline_landing_page xsi:type="xsd:boolean">true</activate_news_timeline_landing_page>
+            <activate_news_timeline_landing_page xsi:type="xsd:boolean">?</activate_news_timeline_landing_page>
+            <!--Optional:-->
+            <show_news_after xsi:type="xsd:dateTime">?</show_news_after>
          </course_settings>
       </urn:updateCourseSettings>
    </soapenv:Body>

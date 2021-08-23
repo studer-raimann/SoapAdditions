@@ -35,6 +35,11 @@ class Factory
         ]);
     }
 
+    public function dateTime(string $key, string $description = '') : Parameter
+    {
+        return new BaseParameter(Type::TYPE_DATE_TIME, $key, $description, []);
+    }
+
     public function string(string $key, string $description = '', array $possible_values = []) : Parameter
     {
         $this->checkPossibleValues($possible_values);
