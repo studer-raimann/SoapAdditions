@@ -8,7 +8,14 @@ use srag\Plugins\SoapAdditions\Command\Base;
  */
 class AddToFavouritesCommand extends Base
 {
+    /**
+     * @var int
+     */
     private $ref_id;
+    /**
+     * @var int
+     */
+    private $object_id;
     /**
      * @var array
      */
@@ -38,6 +45,7 @@ class AddToFavouritesCommand extends Base
 
     public function run()
     {
+        $this->initObjectId();
         $this->initUserIds();
         foreach ($this->user_ids as $user_id) {
             $this->manager->add($user_id, $this->ref_id);
@@ -46,15 +54,28 @@ class AddToFavouritesCommand extends Base
     }
 
     /** @noinspection PhpCastIsUnnecessaryInspection */
+    protected function initObjectId()
+    {
+        if (!\ilObject2::_exists($this->ref_id, true)) {
+            throw new \ilSoapPluginException('no object found for ref_id ' . $this->ref_id);
+        }
+        $this->object_id = (int) \ilObject2::_lookupObjId($this->ref_id);
+        if ($this->object_id === 0) {
+            throw new \ilSoapPluginException('no object found for ref_id ' . $this->ref_id);
+        }
+    }
+
+    /** @noinspection PhpCastIsUnnecessaryInspection */
     protected function initUserIds()
     {
         if ($this->inherit) {
-            $object_id = (int) \ilObject2::_lookupObjId($this->ref_id);
-            $r = $this->database->queryF(
-                "SELECT usr_id FROM obj_members WHERE obj_id = %s",
-                ['integer'],
-                [$object_id]
-            );
+            if ($this->object_id) {
+                $r = $this->database->queryF(
+                    "SELECT usr_id FROM obj_members WHERE obj_id = %s",
+                    ['integer'],
+                    [$this->object_id]
+                );
+            }
             $user_ids = [];
             /** @noinspection PhpParamsInspection */
             while ($d = $this->database->fetchObject($r)) {
@@ -63,6 +84,9 @@ class AddToFavouritesCommand extends Base
             $this->user_ids = array_merge($this->user_ids, $user_ids);
         }
         $this->user_ids = array_unique($this->user_ids);
+        $this->user_ids = array_filter($this->user_ids, static function ($user_id) : bool {
+            return \ilObjUser::_exists($user_id, false);
+        });
     }
 
 }
