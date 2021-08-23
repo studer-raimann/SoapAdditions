@@ -2,6 +2,7 @@
 
 use srag\Plugins\SoapAdditions\Parameter\Factory;
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
+use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 
 /**
  * Class Base
@@ -30,8 +31,24 @@ abstract class Base implements Route
         $needed_parameters = $this->getAdditionalInputParams();
         if (count($needed_parameters) !== count($params) - 1) {
             $keys_needed = implode(", ", array_keys($needed_parameters));
-            // TODO: we should check optional paramters first, currently this leads to an ilSoapPluginException
-            // throw new ilSoapPluginException("Request is missing at least one of the following parameters: " . $keys_needed);
+            throw new \ilSoapPluginException("Request is missing at least one of the following parameters: " . $keys_needed);
+        }
+        $k = 1;
+        foreach ($needed_parameters as $needed_parameter) {
+            if ($needed_parameter instanceof ComplexParameter) {
+                $required_fields = array_map(function (Parameter $p) : string {
+                    return $p->getKey();
+                }, array_filter($needed_parameter->getSubParameters(), function (Parameter $p) : bool {
+                    return !$p->isOptional();
+                }));
+                $sent_parameters = array_keys((array) $params[$k]);
+                $missing_fields = array_diff($required_fields, $sent_parameters);
+                if (count($missing_fields) > 0) {
+                    $keys_needed = implode(", ", $required_fields);
+                    throw new \ilSoapPluginException("Request is missing at least one of the following parameters: " . $keys_needed);
+                }
+            }
+            $k++;
         }
     }
 
