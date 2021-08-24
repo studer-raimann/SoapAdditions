@@ -43,10 +43,27 @@ class UpdateCourseSettingsCommand extends Base
     protected function handleNewsSettings()
     {
         $course = $this->getCourseObject();
+
         $activate_news = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_NEWS);
         if ($activate_news !== null) {
             $course->setUseNews($activate_news);
         }
+
+        $activate_new_block = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_NEWS_BLOCK);
+        if ($activate_news !== null) {
+            $course->setNewsBlockActivated($activate_new_block);
+        }
+
+        $news_block_default_visibility = $this->getParameterByKey(SettingsRoute::P_NEWS_BLOCK_DEFAULT_ACCESS);
+        if ($news_block_default_visibility !== null) {
+            \ilBlockSetting::_write('news', 'default_visibility', $news_block_default_visibility, 0, $this->obj_id);
+        }
+
+        $news_block_rss = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_NEWS_BLOCK_RSS);
+        if ($news_block_rss !== null) {
+            \ilBlockSetting::_write('news', 'public_feed', $news_block_rss, 0, $this->obj_id);
+        }
+
         $activate_timeline = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_TIMELINE);
         if ($activate_timeline !== null) {
             $course->setNewsTimeline($activate_timeline);

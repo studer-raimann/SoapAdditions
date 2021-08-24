@@ -32,6 +32,9 @@ class UpdateCourseSettingsRoute extends Base
     const LP_OPTION_OFF = 0;
     const LP_OPTION_TUTOR = 11;
     const LP_OPTION_OBJECTS = 5;
+    const P_ACTIVATE_NEWS_BLOCK = 'activate_news_block';
+    const P_NEWS_BLOCK_DEFAULT_ACCESS = 'news_block_default_access';
+    const P_ACTIVATE_NEWS_BLOCK_RSS = 'activate_news_block_rss';
 
     public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
     {
@@ -80,6 +83,12 @@ class UpdateCourseSettingsRoute extends Base
                     'Status is Determined by a Collection of Items'),
             ]),
             $this->param_factory->bool(self::P_ACTIVATE_NEWS),
+            $this->param_factory->bool(self::P_ACTIVATE_NEWS_BLOCK),
+            $this->param_factory->string(self::P_NEWS_BLOCK_DEFAULT_ACCESS, '', [
+                $this->param_factory->possibleValue('users', 'Authenticated Users'),
+                $this->param_factory->possibleValue('public', 'Public'),
+            ]),
+            $this->param_factory->bool(self::P_ACTIVATE_NEWS_BLOCK_RSS),
             $this->param_factory->bool(self::P_ACTIVATE_TIMELINE),
             $this->param_factory->string(self::P_POSITION_FOR_NEW_OBJECTS, '', [
                 $this->param_factory->possibleValue('top', 'Top'),
