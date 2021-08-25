@@ -60,6 +60,9 @@ Parameters:
 	* order_for_new_objects (xsd:int, optional) 0: Titles in Alphabetical Order, 1: By Creation Date, 2: Sort by Activation
 	* learning_progress_mode (xsd:int, optional) 0: Learning Progress is Deactivated, 11: Tutors Monitor and Set Status, 5: Status is Determined by a Collection of Items
 	* activate_news (xsd:boolean, optional) true: Yes, false: No
+	* activate_news_block (xsd:boolean, optional) true: Yes, false: No
+	* news_block_default_access (xsd:string, optional) 'users': Authenticated Users, 'public': Public
+	* activate_news_block_rss (xsd:boolean, optional) true: Yes, false: No
 	* activate_news_timeline (xsd:boolean, optional) true: Yes, false: No
 	* position_for_new_objects (xsd:string, optional) 'top': Top, 'bottom': Bottom
 	* activate_news_timeline_auto_entries (xsd:boolean, optional) true: Yes, false: No
