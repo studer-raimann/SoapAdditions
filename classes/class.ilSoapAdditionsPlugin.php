@@ -1,6 +1,9 @@
-<?php
+<?php /** @noinspection AutoloadingIssuesInspection */
 
-use srag\Plugins\SoapAdditions\Routes\RBAC\BlockRole;
+use srag\Plugins\SoapAdditions\Routes\RouteContainer;
+use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
+use srag\Plugins\SoapAdditions\Routes\ParameterContainer;
+use srag\Plugins\SoapAdditions\Routes\Route;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -11,6 +14,15 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
 {
 
     const PLUGIN_NAME = 'SoapAdditions';
+
+    /**
+     * @return mixed
+     */
+    protected function getRoutes()
+    {
+        $routes = include './Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/src/routes.php';
+        return $routes;
+    }
 
     /**
      * @return string
@@ -25,9 +37,9 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
      */
     public function getSoapMethods()
     {
-        return array(
-            new BlockRole()
-        );
+        return array_map(static function (Route $route) : RouteContainer {
+            return new RouteContainer($route);
+        }, $this->getRoutes());
     }
 
     /**
@@ -35,6 +47,21 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
      */
     public function getWsdlTypes()
     {
-        return array();
+        $types = [];
+        foreach ($this->getRoutes() as $route) {
+            foreach ($route->getAdditionalInputParams() as $parameter) {
+                if ($parameter instanceof ComplexParameter) {
+                    $types[$parameter->getKey()] = new ParameterContainer($parameter);
+                }
+            }
+            foreach ($route->getOutputParams() as $parameter) {
+                if ($parameter instanceof ComplexParameter) {
+                    $types[$parameter->getKey()] = new ParameterContainer($parameter);
+                }
+            }
+
+        }
+
+        return $types;
     }
 }
