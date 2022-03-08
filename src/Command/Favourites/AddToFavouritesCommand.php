@@ -68,21 +68,20 @@ class AddToFavouritesCommand extends Base
     /** @noinspection PhpCastIsUnnecessaryInspection */
     protected function initUserIds()
     {
-        if ($this->inherit) {
-            if ($this->object_id) {
-                $r = $this->database->queryF(
-                    "SELECT usr_id FROM obj_members WHERE obj_id = %s",
+        if ($this->inherit && $this->object_id) {
+            $results = $this->database->fetchAssoc(
+                $this->database->queryF(
+                    "SELECT usr_id FROM obj_members WHERE obj_id = %s;",
                     ['integer'],
                     [$this->object_id]
-                );
+                )
+            );
+
+            foreach ($results as $result) {
+                $this->user_ids[] = (int) $result['usr_id'];
             }
-            $user_ids = [];
-            /** @noinspection PhpParamsInspection */
-            while ($d = $this->database->fetchObject($r)) {
-                $user_ids[] = (int) $d->usr_id;
-            }
-            $this->user_ids = array_merge($this->user_ids, $user_ids);
         }
+
         $this->user_ids = array_unique($this->user_ids);
         $this->user_ids = array_filter($this->user_ids, static function ($user_id) : bool {
             return \ilObjUser::_exists($user_id, false, 'usr');
