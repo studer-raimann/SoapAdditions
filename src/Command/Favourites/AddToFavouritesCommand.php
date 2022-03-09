@@ -1,6 +1,7 @@
 <?php namespace srag\Plugins\SoapAdditions\Command\Favourites;
 
 use srag\Plugins\SoapAdditions\Command\Base;
+use ILIAS\BackgroundTasks\Exceptions\InvalidArgumentException;
 
 /**
  * Class AddToFavouritesCommand
@@ -68,17 +69,15 @@ class AddToFavouritesCommand extends Base
     /** @noinspection PhpCastIsUnnecessaryInspection */
     protected function initUserIds()
     {
-        if ($this->inherit && $this->object_id) {
-            $results = $this->database->fetchAssoc(
-                $this->database->queryF(
-                    "SELECT usr_id FROM obj_members WHERE obj_id = %s;",
-                    ['integer'],
-                    [$this->object_id]
-                )
-            );
+        if ($this->inherit && $this->ref_id) {
+            try {
+                $participants = \ilParticipants::getInstance($this->ref_id);
+            } catch (InvalidArgumentException $e) {
+                throw new \ilSoapPluginException('no participants found for ref_id' . $this->ref_id);
+            }
 
-            foreach ($results as $result) {
-                $this->user_ids[] = (int) $result['usr_id'];
+            foreach ($participants->getParticipants() as $user_id) {
+                $this->user_ids[] = (int) $user_id;
             }
         }
 
