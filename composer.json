@@ -7,13 +7,13 @@
     "Plugin"
   ],
   "support": {
-    "email": "support-core1@studer-raimann.ch"
+    "email": "support@sr.solutions"
   },
   "authors": [
     {
-      "name": "studer + raimann ag - Team Core 1",
-      "email": "support-core1@studer-raimann.ch",
-      "homepage": "https://studer-raimann.ch",
+      "name": "sr solutions ag1",
+      "email": "support@sr.solutions",
+      "homepage": "https://sr.solutions",
       "role": "Developer"
     }
   ],
