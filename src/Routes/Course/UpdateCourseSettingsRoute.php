@@ -41,7 +41,7 @@ class UpdateCourseSettingsRoute extends Base
         return new SettingsCommand((int) $params['course_settings'][self::P_COURSE_REF_ID], $params['course_settings']);
     }
 
-    public function getName()
+    public function getName() : string
     {
         return "updateCourseSettings";
     }

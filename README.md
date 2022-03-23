@@ -146,6 +146,35 @@ Parameters:
 ```
 
 
+### Route: addToItemGroup
+Adds the given objects (ref_ids) to the given ItemGroup target (ref_id).
+Parameters:
+* target_ref_id (xsd:int): ILIAS Ref-ID of the ItemGroup Object
+* ref_ids (tns:intArray): List of Object Ref-IDs for the ItemGroup
+
+```xml
+
+            <soapenv:Envelope
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                xmlns:urn="urn:SoapAdditions"
+                xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
+                <soapenv:Header/>
+                <soapenv:Body>
+                    <urn:addToItemGroup soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+                        <sid xsi:type="xsd:string">?</sid>
+                        <target_ref_id xsi:type="xsd:int">?</target_ref_id>
+                        <ref_ids xsi:type="urn:intArray" SOAP-ENC:arrayType="xsd:int[]" xmlns:urn="urn:ilUserAdministration">
+                            <item xsi:type="xsd:int">?</item>
+                        </ref_ids>
+                    </urn:addToItemGroup>
+                </soapenv:Body>
+            </soapenv:Envelope>
+        
+```
+
+
 ### Route: updateUserSettings
 Updates the settings of a user to the data given
 Parameters:

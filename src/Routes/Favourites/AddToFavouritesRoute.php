@@ -19,7 +19,7 @@ class AddToFavouritesRoute extends Base
         return new AddToFavouritesCommand($params[self::REF_ID], $params);
     }
 
-    public function getName()
+    public function getName() : string
     {
         return "addToFavourites";
     }

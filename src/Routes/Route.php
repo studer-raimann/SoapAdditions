@@ -20,6 +20,8 @@ interface Route
 
     public function checkParameters(array $params);
 
+    public function getName() : string;
+
     public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command;
 
     public function getShortDocumentation() : string;

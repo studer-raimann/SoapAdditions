@@ -23,7 +23,7 @@ class BlockRoleRoute extends Base
         return new BlockRoleCommand($role_id, $node_id);
     }
 
-    public function getName()
+    public function getName() : string
     {
         return "blockRole";
     }
