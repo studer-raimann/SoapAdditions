@@ -23,7 +23,7 @@ class UpdateUserSettingsRoute extends UserBase
         return new UpdateUserSettingsCommand((int) $params['user_settings'][self::P_USER_ID], $params['user_settings']);
     }
 
-    public function getName()
+    public function getName() : string
     {
         return "updateUserSettings";
     }

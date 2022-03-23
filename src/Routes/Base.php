@@ -71,14 +71,4 @@ abstract class Base implements Route
             $k++;
         }
     }
-
-    abstract public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command;
-
-    abstract public function getShortDocumentation() : string;
-
-    public function getSampleRequest() : string
-    {
-        return '';
-    }
-
 }

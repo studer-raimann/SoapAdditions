@@ -13,7 +13,7 @@ class GetUserSettingsRoute extends UserBase
         return new \srag\Plugins\SoapAdditions\Command\User\GetUserSettingsCommand((int) $params[self::P_USER_ID]);
     }
 
-    public function getName()
+    public function getName() : string
     {
         return "getUserSettings";
     }
