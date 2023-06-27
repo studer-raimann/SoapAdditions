@@ -1,4 +1,6 @@
-<?php namespace srag\Plugins\SoapAdditions\Routes;
+<?php
+
+namespace srag\Plugins\SoapAdditions\Routes;
 
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
@@ -22,7 +24,7 @@ class ParameterContainer implements \ilWsdlType
         $this->parameter = $parameter;
     }
 
-    public function getName()
+    public function getName(): string
     {
         if ($this->parameter instanceof ComplexParameter) {
             return $this->parameter->getTypeWithoutPrefix();
@@ -30,7 +32,7 @@ class ParameterContainer implements \ilWsdlType
         return $this->parameter->getKey();
     }
 
-    public function getTypeClass()
+    public function getTypeClass(): string
     {
         if ($this->parameter instanceof ComplexParameter) {
             return 'complexType';
@@ -38,22 +40,22 @@ class ParameterContainer implements \ilWsdlType
         return $this->parameter->getType();
     }
 
-    public function getPhpType()
+    public function getPhpType(): string
     {
         return 'struct';
     }
 
-    public function getCompositor()
+    public function getCompositor(): string
     {
         return 'all';
     }
 
-    public function getRestrictionBase()
+    public function getRestrictionBase(): string
     {
         return '';
     }
 
-    public function getElements()
+    public function getElements(): array
     {
         $elements = [];
         if ($this->parameter instanceof ComplexParameter) {
@@ -72,12 +74,12 @@ class ParameterContainer implements \ilWsdlType
         return $elements;
     }
 
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return [];
     }
 
-    public function getArrayType()
+    public function getArrayType(): string
     {
         return '';
     }

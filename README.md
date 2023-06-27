@@ -11,7 +11,7 @@ Please note that we only guarantee support and release maintenance for instituti
 ## Installation
 Start at your ILIAS root directory 
 
-```
+```bash
 mkdir -p Customizing/global/plugins/Services/WebServices/SoapHook
 cd Customizing/global/plugins/Services/WebServices/SoapHook
 git clone https://github.com/studer-raimann/SoapAdditions.git

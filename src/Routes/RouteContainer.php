@@ -1,4 +1,6 @@
-<?php namespace srag\Plugins\SoapAdditions\Routes;
+<?php
+
+namespace srag\Plugins\SoapAdditions\Routes;
 
 use ilAbstractSoapMethod;
 use ilSoapPluginException;
@@ -27,7 +29,7 @@ class RouteContainer extends ilAbstractSoapMethod
         parent::__construct();
     }
 
-    public function getOriginalRoute() : Route
+    public function getOriginalRoute(): Route
     {
         return $this->route;
     }
@@ -35,7 +37,7 @@ class RouteContainer extends ilAbstractSoapMethod
     /**
      * @inheritdoc
      */
-    public function getServiceNamespace()
+    public function getServiceNamespace(): string
     {
         return 'urn:' . \ilSoapAdditionsPlugin::PLUGIN_NAME;
     }
@@ -43,21 +45,23 @@ class RouteContainer extends ilAbstractSoapMethod
     /**
      * @inheritdoc
      */
-    final public function getInputParams()
+    final public function getInputParams(): array
     {
         $params = [
             'sid' => Type::TYPE_STRING
         ];
         foreach ($this->route->getAdditionalInputParams() as $p) {
             if (!$p instanceof Parameter) {
-                throw new ilSoapPluginException("All parameters in getAdditionalInputParams() MUST be of type Parameter");
+                throw new ilSoapPluginException(
+                    "All parameters in getAdditionalInputParams() MUST be of type Parameter"
+                );
             }
             $params[$p->getKey()] = $p->getType();
         }
         return $params;
     }
 
-    protected function checkParameters(array $params)
+    protected function checkParameters(array $params): void
     {
         $this->route->checkParameters($params);
     }
@@ -115,7 +119,7 @@ class RouteContainer extends ilAbstractSoapMethod
         return [];
     }
 
-    final public function getDocumentation()
+    final public function getDocumentation(): string
     {
         $documentation = $this->route->getShortDocumentation();
         foreach ($this->route->getAdditionalInputParams() as $parameter) {
@@ -125,13 +129,12 @@ class RouteContainer extends ilAbstractSoapMethod
                     $documentation .= "{$value->getValue()}: {$value->getDescription()}, ";
                 }
             }
-
         }
 
         return $documentation;
     }
 
-    public function getOutputParams()
+    public function getOutputParams(): array
     {
         $params = [];
         foreach ($this->route->getOutputParams() as $param) {
@@ -141,7 +144,7 @@ class RouteContainer extends ilAbstractSoapMethod
         return $params;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->route->getName();
     }

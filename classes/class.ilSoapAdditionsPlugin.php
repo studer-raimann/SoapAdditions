@@ -1,19 +1,18 @@
-<?php /** @noinspection AutoloadingIssuesInspection */
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use srag\Plugins\SoapAdditions\Routes\RouteContainer;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 use srag\Plugins\SoapAdditions\Routes\ParameterContainer;
 use srag\Plugins\SoapAdditions\Routes\Route;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 /**
- * Class ilSoapAdditionsPlugin
+ * @noinspection AutoloadingIssuesInspection
  */
 class ilSoapAdditionsPlugin extends ilSoapHookPlugin
 {
-
-    const PLUGIN_NAME = 'SoapAdditions';
+    public const PLUGIN_NAME = 'SoapAdditions';
 
     /**
      * @return mixed
@@ -25,19 +24,11 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
     }
 
     /**
-     * @return string
-     */
-    public function getPluginName()
-    {
-        return self::PLUGIN_NAME;
-    }
-
-    /**
      * @inheritdoc
      */
-    public function getSoapMethods()
+    public function getSoapMethods(): array
     {
-        return array_map(static function (Route $route) : RouteContainer {
+        return array_map(static function (Route $route): RouteContainer {
             return new RouteContainer($route);
         }, $this->getRoutes());
     }
@@ -45,7 +36,7 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
     /**
      * @inheritdoc
      */
-    public function getWsdlTypes()
+    public function getWsdlTypes(): array
     {
         $types = [];
         foreach ($this->getRoutes() as $route) {
@@ -59,7 +50,6 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
                     $types[$parameter->getKey()] = new ParameterContainer($parameter);
                 }
             }
-
         }
 
         return $types;
