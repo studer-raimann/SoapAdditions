@@ -56,7 +56,7 @@ abstract class Base implements Route
                         $possible_values = array_map(function (PossibleValue $v) {
                             return $v->getValue();
                         }, $p->getPossibleValues());
-                        $needle = $params[$k]->{$p->getKey()};
+                        $needle = $params[$k]->{$p->getKey()} ?? null;
                         if ($needle === null && $p->isOptional()) {
                             return;
                         }
