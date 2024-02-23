@@ -79,7 +79,7 @@ class RouteContainer extends ilAbstractSoapMethod
      * @param $session_id
      * @throws ilSoapPluginException
      */
-    private function init($session_id)
+    private function init(string $session_id): void
     {
         $this->initIliasAndCheckSession($session_id); // Throws exception if session is not valid
     }
