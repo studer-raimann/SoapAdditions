@@ -83,7 +83,11 @@ class AddToFavouritesCommand extends Base
 
         $this->user_ids = array_unique($this->user_ids);
         $this->user_ids = array_filter($this->user_ids, static function ($user_id) : bool {
-            return \ilObjUser::_exists($user_id, false, 'usr');
+            if ($user_id !== NULL && $user_id !== FALSE && $user_id !== "") {
+                return \ilObjUser::_exists($user_id, false, 'usr');
+            } else {
+                return false;
+            }
         });
     }
 
