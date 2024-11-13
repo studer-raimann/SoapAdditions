@@ -82,9 +82,30 @@ class AddToFavouritesCommand extends Base
         }
 
         $this->user_ids = array_unique($this->user_ids);
-        $this->user_ids = array_filter($this->user_ids, static function ($user_id) : bool {
-            return \ilObjUser::_exists($user_id, false, 'usr');
+        $this->user_ids = array_filter($this->user_ids, function ($user_id) : bool {
+            return $this->isUserIdValid($user_id);
         });
     }
 
+    /**
+     * Checks if the given value is a valid $user_id and returns whether the
+     * user exists or not. (Considers a referential integrity issue inside
+     * ILIAS by trying to create an instance)
+     *
+     * @param mixed $user_id
+     */
+    protected function isUserIdValid($user_id): bool
+    {
+        // checks for null, false or ''
+        if (!$user_id) {
+            return false;
+        }
+
+        try {
+            $user = new \ilObjUser($user_id);
+            return true;
+        } catch (\Throwable $any) {
+            return false;
+        }
+    }
 }
