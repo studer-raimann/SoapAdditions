@@ -18,31 +18,19 @@ use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute as SettingsCo
  */
 class UpdateUserSettingsCommand extends Base
 {
-    public $user_object;
-    protected array $params;
+    protected ?\ilObjUser $user_object = null;
 
-    /**
-     * UpdateUserSettingsRoute constructor.
-     * @param int   $user_id
-     * @param array $params
-     */
-    public function __construct(protected int $user_id, array $params)
+    public function __construct(protected int $user_id, protected array $params)
     {
-        $this->params = $params ?? [];
     }
 
-    /**
-     * @return \ilObjUser
-     */
+
     protected function getUser(): \ilObjUser
     {
-        if (!property_exists($this, 'user_object') || $this->user_object === null) {
-            $this->user_object = new \ilObjUser($this->user_id);
-        }
-        return $this->user_object;
+        return $this->user_object ?? $this->user_object = new \ilObjUser($this->user_id);
     }
 
-    public function run(): array
+    public function run(): mixed
     {
         $profile = $this->params[SettingsCommand::P_ACTIVATE_PUBLIC_PROFILE] ?? 'n';
         $force_disable = false;

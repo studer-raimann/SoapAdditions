@@ -16,30 +16,20 @@ use srag\Plugins\SoapAdditions\Routes\Route;
 /**
  * @noinspection AutoloadingIssuesInspection
  */
-
 class ilSoapAdditionsPlugin extends ilSoapHookPlugin
 {
     public const PLUGIN_NAME = 'SoapAdditions';
 
-    /**
-     * @return mixed
-     */
-    protected function getRoutes()
+    protected function getRoutes(): array
     {
-        return include './Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/src/routes.php';
+        return (array) ((include '../src/routes.php') ?? []);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getSoapMethods(): array
     {
         return array_map(static fn(Route $route): RouteContainer => new RouteContainer($route), $this->getRoutes());
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getWsdlTypes(): array
     {
         $types = [];

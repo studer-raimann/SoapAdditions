@@ -39,7 +39,7 @@ class AddToItemGroupCommand extends Base
     /**
      * @throws ilSoapPluginException
      */
-    public function run(): array
+    public function run(): mixed
     {
         $this->checkTargetRefId();
         $this->checkRefIds();

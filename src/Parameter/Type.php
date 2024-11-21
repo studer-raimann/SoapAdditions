@@ -15,9 +15,6 @@ namespace srag\Plugins\SoapAdditions\Parameter;
  */
 interface Type
 {
-    /**
-     * @inheritdoc
-     */
     public const TYPE_INT_ARRAY = 'tns:intArray';
     public const TYPE_STRING = 'xsd:string';
     public const TYPE_DATE_TIME = 'xsd:dateTime';

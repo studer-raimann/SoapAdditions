@@ -19,18 +19,11 @@ use ILIAS\BackgroundTasks\Exceptions\InvalidArgumentException;
 class AddToFavouritesCommand extends Base
 {
     private ?int $object_id = null;
-    /**
-     * @var array
-     */
-    protected $user_ids = [];
-    /**
-     * @var false|mixed
-     */
+
+    protected array $user_ids = [];
+
     protected bool $inherit;
-    /**
-     * @var \ilDBInterface
-     */
-    protected $database;
+    protected \ilDBInterface $database;
     protected \ilFavouritesManager $manager;
 
     public function __construct(private int $ref_id, array $data)
@@ -42,7 +35,7 @@ class AddToFavouritesCommand extends Base
         $this->database = $DIC->database();
     }
 
-    public function run()
+    public function run(): mixed
     {
         $this->initObjectId();
         $this->initUserIds();
@@ -53,7 +46,7 @@ class AddToFavouritesCommand extends Base
     }
 
     /** @noinspection PhpCastIsUnnecessaryInspection */
-    protected function initObjectId()
+    protected function initObjectId(): void
     {
         if (!\ilObject2::_exists($this->ref_id, true)) {
             throw new \ilSoapPluginException('no object found for ref_id ' . $this->ref_id);
@@ -65,7 +58,7 @@ class AddToFavouritesCommand extends Base
     }
 
     /** @noinspection PhpCastIsUnnecessaryInspection */
-    protected function initUserIds()
+    protected function initUserIds(): void
     {
         if ($this->inherit && $this->ref_id) {
             try {

@@ -15,20 +15,11 @@ namespace srag\Plugins\SoapAdditions\Command;
  */
 interface Command
 {
-    public function run();
+    public function run(): mixed;
 
-    /**
-     * @return void
-     */
-    public function revert();
+    public function revert(): void;
 
-    /**
-     * @return bool
-     */
     public function wasSuccessful(): bool;
 
-    /**
-     * @return string
-     */
     public function getUnsuccessfulReason(): string;
 }

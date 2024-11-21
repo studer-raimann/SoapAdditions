@@ -35,12 +35,10 @@ class BlockRoleCommand extends Base
         $this->node_id = $node_id;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function run(): array
+
+    public function run(): mixed
     {
-        if ($this->status === true) {
+        if ($this->status) {
             $this->blockRole($this->role_id, $this->node_id);
         }
         return [true];
@@ -95,7 +93,7 @@ class BlockRoleCommand extends Base
      */
     private function checkRole(int $role_id): void
     {
-        if ($this->status === true) {
+        if ($this->status) {
             $b = (bool) (ilObject2::_exists($role_id, false) && ilObject2::_lookupType($role_id, false) === "role");
             $this->status = $b;
             if (!$b) {
@@ -110,7 +108,7 @@ class BlockRoleCommand extends Base
      */
     private function checkNode(int $node_id): void
     {
-        if ($this->status === true) {
+        if ($this->status) {
             $exists = (bool) (ilObject2::_exists($node_id, true));
             $this->status = $exists;
             if (!$exists) {

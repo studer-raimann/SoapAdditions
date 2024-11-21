@@ -15,34 +15,19 @@ namespace srag\Plugins\SoapAdditions\Command;
  */
 abstract class Base implements Command
 {
-    /**
-     * @var bool
-     */
-    protected $status = true;
-    /**
-     * @var string
-     */
-    protected $error_message = "";
+    protected bool $status = true;
+    protected string $error_message = "";
 
-    /**
-     * @inheritDoc
-     */
-    public function revert()
+    public function revert(): void
     {
         throw new \LogicException("unable to revert");
     }
 
-    /**
-     * @inheritDoc
-     */
     public function wasSuccessful(): bool
     {
         return $this->status;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getUnsuccessfulReason(): string
     {
         return $this->error_message;

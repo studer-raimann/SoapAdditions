@@ -18,13 +18,13 @@ use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as Settin
  */
 class UpdateCourseSettingsCommand extends Base
 {
-    public $course_object;
     public const FORMAT = 'Y-m-d H:i:s';
     protected int $obj_id;
+    protected ?\ilObjCourse $course_object = null;
 
     /**
      * UpdateUserSettingsRoute constructor.
-     * @param int $ref_id
+     * @param int   $ref_id
      * @param array $parameters
      */
     public function __construct(protected int $ref_id, protected array $parameters)
@@ -37,7 +37,7 @@ class UpdateCourseSettingsCommand extends Base
         return $this->parameters[$key] ?? null;
     }
 
-    protected function handleNewsSettings()
+    protected function handleNewsSettings(): void
     {
         $course = $this->getCourseObject();
 
@@ -88,18 +88,12 @@ class UpdateCourseSettingsCommand extends Base
         }
     }
 
-    /**
-     * @return \ilObjCourse
-     */
     protected function getCourseObject(): \ilObjCourse
     {
-        if (!property_exists($this, 'course_object') || $this->course_object === null) {
-            $this->course_object = new \ilObjCourse($this->ref_id, true);
-        }
-        return $this->course_object;
+        return $this->course_object ?? $this->course_object = new \ilObjCourse($this->ref_id, true);
     }
 
-    protected function handleCourseSettings()
+    protected function handleCourseSettings(): void
     {
         $course = $this->getCourseObject();
         $passed_determination = $this->getParameterByKey(SettingsRoute::P_PASSED_DETERMINATION);
@@ -113,7 +107,7 @@ class UpdateCourseSettingsCommand extends Base
         }
     }
 
-    protected function handleContainerSetting()
+    protected function handleContainerSetting(): void
     {
         $show_title_and_icon = $this->getParameterByKey(SettingsRoute::P_SHOW_TITLE_AND_ICON);
         if ($show_title_and_icon !== null) {
@@ -134,7 +128,7 @@ class UpdateCourseSettingsCommand extends Base
         }
     }
 
-    protected function handleSortingSettings()
+    protected function handleSortingSettings(): void
     {
         /** @noinspection PhpParamsInspection */
         $cs = \ilContainerSortingSettings::getInstanceByObjId($this->obj_id);
@@ -153,7 +147,7 @@ class UpdateCourseSettingsCommand extends Base
         }
     }
 
-    protected function handleLearningProgressSettings()
+    protected function handleLearningProgressSettings(): void
     {
         $mode = $this->getParameterByKey(SettingsRoute::P_LEARNING_PROGRESS_MODE);
         if (in_array(
@@ -172,7 +166,7 @@ class UpdateCourseSettingsCommand extends Base
         }
     }
 
-    public function run(): array
+    public function run(): mixed
     {
         // Sorting UpdateUserSettingsRoute:
         $this->handleSortingSettings();
