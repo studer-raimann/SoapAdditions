@@ -19,11 +19,10 @@ use srag\Plugins\SoapAdditions\Routes\Base;
  */
 class BlockRoleRoute extends Base
 {
+    public const P_ROLE_ID = 'role_id';
+    public const P_NODE_ID = 'node_id';
 
-    const P_ROLE_ID = 'role_id';
-    const P_NODE_ID = 'node_id';
-
-    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
     {
         $role_id = (int) $params[self::P_ROLE_ID];
         $node_id = (int) $params[self::P_NODE_ID];
@@ -31,12 +30,12 @@ class BlockRoleRoute extends Base
         return new BlockRoleCommand($role_id, $node_id);
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return "blockRole";
     }
 
-    public function getAdditionalInputParams() : array
+    public function getAdditionalInputParams(): array
     {
         return [
             $this->param_factory->int(self::P_ROLE_ID, 'Internal ID of a Role')->setOptional(false),
@@ -44,17 +43,17 @@ class BlockRoleRoute extends Base
         ];
     }
 
-    public function getOutputParams() : array
+    public function getOutputParams(): array
     {
         return [$this->param_factory->bool('success')];
     }
 
-    public function getShortDocumentation() : string
+    public function getShortDocumentation(): string
     {
         return "Block a ILIAS Role (role_id) at the given node (node_id, e.g. a Course-Ref-ID)";
     }
 
-    public function getSampleRequest() : string
+    public function getSampleRequest(): string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>

@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -90,7 +91,7 @@ class AddToFavouritesCommand extends Base
         }
 
         $this->user_ids = array_unique($this->user_ids);
-        $this->user_ids = array_filter($this->user_ids, function ($user_id) : bool {
+        $this->user_ids = array_filter($this->user_ids, function ($user_id): bool {
             return $this->isUserIdValid($user_id);
         });
     }

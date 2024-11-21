@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -18,7 +19,6 @@ use srag\Plugins\SoapAdditions\Command\Base;
  */
 class BlockRoleCommand extends Base
 {
-
     /**
      * @var int
      */

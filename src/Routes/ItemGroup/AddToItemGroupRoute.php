@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -23,12 +24,12 @@ class AddToItemGroupRoute extends Base
     public const OBJECT_REF_IDS = 'ref_ids';
     public const APPEND_OBJECTS = 'append';
 
-    public function getName() : string
+    public function getName(): string
     {
         return 'addToItemGroup';
     }
 
-    public function getCommand(array $params) : Command
+    public function getCommand(array $params): Command
     {
         return new AddToItemGroupCommand(
             $params[self::ITEM_GROUP_REF_ID],
@@ -37,7 +38,7 @@ class AddToItemGroupRoute extends Base
         );
     }
 
-    public function getAdditionalInputParams() : array
+    public function getAdditionalInputParams(): array
     {
         return [
             $this->param_factory->int(
@@ -57,19 +58,19 @@ class AddToItemGroupRoute extends Base
         ];
     }
 
-    public function getOutputParams() : array
+    public function getOutputParams(): array
     {
         return [
             $this->param_factory->arrayOfInt(self::OBJECT_REF_IDS),
         ];
     }
 
-    public function getShortDocumentation() : string
+    public function getShortDocumentation(): string
     {
         return 'Adds the given objects (ref_ids) to the given ItemGroup target (ref_id).';
     }
 
-    public function getSampleRequest() : string
+    public function getSampleRequest(): string
     {
         return '
             <soapenv:Envelope

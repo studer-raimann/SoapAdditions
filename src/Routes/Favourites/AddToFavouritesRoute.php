@@ -19,20 +19,19 @@ use srag\Plugins\SoapAdditions\Command\Favourites\AddToFavouritesCommand;
  */
 class AddToFavouritesRoute extends Base
 {
+    public const REF_ID = 'ref_id';
 
-    const REF_ID = 'ref_id';
-
-    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
     {
         return new AddToFavouritesCommand($params[self::REF_ID], $params);
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return "addToFavourites";
     }
 
-    public function getAdditionalInputParams() : array
+    public function getAdditionalInputParams(): array
     {
         return [
             $this->param_factory->int(self::REF_ID, 'ILIAS Ref-ID of the Object')->setOptional(false),
@@ -41,19 +40,19 @@ class AddToFavouritesRoute extends Base
         ];
     }
 
-    public function getOutputParams() : array
+    public function getOutputParams(): array
     {
         return [
             $this->param_factory->arrayOfInt('user_ids')
         ];
     }
 
-    public function getShortDocumentation() : string
+    public function getShortDocumentation(): string
     {
         return "Adds the objects given (ref_id) as favourites to A) a list of users or B) to the inherited users (e.g. members of a course) if possible.";
     }
 
-    public function getSampleRequest() : string
+    public function getSampleRequest(): string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/">
    <soapenv:Header/>

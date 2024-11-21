@@ -16,34 +16,34 @@ namespace srag\Plugins\SoapAdditions\Routes\User;
  */
 class GetUserSettingsRoute extends UserBase
 {
-    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
     {
         return new \srag\Plugins\SoapAdditions\Command\User\GetUserSettingsCommand((int) $params[self::P_USER_ID]);
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return "getUserSettings";
     }
 
-    public function getAdditionalInputParams() : array
+    public function getAdditionalInputParams(): array
     {
         return [
             $this->param_factory->int(self::P_USER_ID)->setOptional(false)
         ];
     }
 
-    public function getOutputParams() : array
+    public function getOutputParams(): array
     {
         return $this->getParams();
     }
 
-    public function getShortDocumentation() : string
+    public function getShortDocumentation(): string
     {
         return "Shows the settings of a user to the user_id given";
     }
 
-    public function getSampleRequest() : string
+    public function getSampleRequest(): string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>

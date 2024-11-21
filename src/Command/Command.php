@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -14,7 +15,6 @@ namespace srag\Plugins\SoapAdditions\Command;
  */
 interface Command
 {
-
     public function run();
 
     /**
@@ -25,10 +25,10 @@ interface Command
     /**
      * @return bool
      */
-    public function wasSuccessful() : bool;
+    public function wasSuccessful(): bool;
 
     /**
      * @return string
      */
-    public function getUnsuccessfulReason() : string;
+    public function getUnsuccessfulReason(): string;
 }

@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -59,17 +60,17 @@ class BaseParameter implements Parameter
         return $this->key;
     }
 
-    public function getPossibleValues() : array
+    public function getPossibleValues(): array
     {
         return $this->possible_values;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -77,12 +78,12 @@ class BaseParameter implements Parameter
     /**
      * @return bool
      */
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->optional;
     }
 
-    public function setOptional(bool $optional) : Parameter
+    public function setOptional(bool $optional): Parameter
     {
         $this->optional = $optional;
 

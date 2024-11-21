@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -34,7 +35,7 @@ class UpdateUserSettingsCommand extends Base
     /**
      * @return \ilObjUser
      */
-    protected function getUser() : \ilObjUser
+    protected function getUser(): \ilObjUser
     {
         if (!isset($this->user_object)) {
             $this->user_object = new \ilObjUser($this->user_id);

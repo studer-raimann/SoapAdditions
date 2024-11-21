@@ -19,42 +19,41 @@ use srag\Plugins\SoapAdditions\Routes\Base;
  */
 class UpdateCourseSettingsRoute extends Base
 {
+    public const P_COURSE_REF_ID = 'ref_id';
+    public const P_SHOW_TITLE_AND_ICON = 'show_title_and_icon';
+    public const P_SHOW_HEADER_ACTIONS = 'show_header_actions';
+    public const P_PASSED_DETERMINATION = 'passed_determination';
+    public const P_SORTING = 'sorting';
+    public const P_SORTING_DIRECTION = 'sorting_direction';
+    public const P_ACTIVATE_ADD_TO_FAVOURITES = 'activate_add_to_favourites';
+    public const P_POSITION_FOR_NEW_OBJECTS = 'position_for_new_objects';
+    public const P_ORDER_FOR_NEW_OBJECTS = 'order_for_new_objects';
+    public const P_SORTING_DIRECTION_FOR_NEW_OBJECTS = 'sorting_direction_for_new_objects';
 
-    const P_COURSE_REF_ID = 'ref_id';
-    const P_SHOW_TITLE_AND_ICON = 'show_title_and_icon';
-    const P_SHOW_HEADER_ACTIONS = 'show_header_actions';
-    const P_PASSED_DETERMINATION = 'passed_determination';
-    const P_SORTING = 'sorting';
-    const P_SORTING_DIRECTION = 'sorting_direction';
-    const P_ACTIVATE_ADD_TO_FAVOURITES = 'activate_add_to_favourites';
-    const P_POSITION_FOR_NEW_OBJECTS = 'position_for_new_objects';
-    const P_ORDER_FOR_NEW_OBJECTS = 'order_for_new_objects';
-    const P_SORTING_DIRECTION_FOR_NEW_OBJECTS = 'sorting_direction_for_new_objects';
+    public const P_LEARNING_PROGRESS_MODE = 'learning_progress_mode';
+    public const P_ACTIVATE_NEWS = 'activate_news';
+    public const P_ACTIVATE_TIMELINE = 'activate_news_timeline';
+    public const P_SHOW_NEW_AFTER = 'show_news_after';
+    public const P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES = 'activate_news_timeline_auto_entries';
+    public const P_ACTIVATE_TIMELINE_LANDINGS_PAGE = 'activate_news_timeline_landing_page';
+    public const LP_OPTION_OFF = 0;
+    public const LP_OPTION_TUTOR = 11;
+    public const LP_OPTION_OBJECTS = 5;
+    public const P_ACTIVATE_NEWS_BLOCK = 'activate_news_block';
+    public const P_NEWS_BLOCK_DEFAULT_ACCESS = 'news_block_default_access';
+    public const P_ACTIVATE_NEWS_BLOCK_RSS = 'activate_news_block_rss';
 
-    const P_LEARNING_PROGRESS_MODE = 'learning_progress_mode';
-    const P_ACTIVATE_NEWS = 'activate_news';
-    const P_ACTIVATE_TIMELINE = 'activate_news_timeline';
-    const P_SHOW_NEW_AFTER = 'show_news_after';
-    const P_SHOW_NEWS_TIMELINE_AUTO_ENTRIES = 'activate_news_timeline_auto_entries';
-    const P_ACTIVATE_TIMELINE_LANDINGS_PAGE = 'activate_news_timeline_landing_page';
-    const LP_OPTION_OFF = 0;
-    const LP_OPTION_TUTOR = 11;
-    const LP_OPTION_OBJECTS = 5;
-    const P_ACTIVATE_NEWS_BLOCK = 'activate_news_block';
-    const P_NEWS_BLOCK_DEFAULT_ACCESS = 'news_block_default_access';
-    const P_ACTIVATE_NEWS_BLOCK_RSS = 'activate_news_block_rss';
-
-    public function getCommand(array $params) : \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
     {
         return new SettingsCommand((int) $params['course_settings'][self::P_COURSE_REF_ID], $params['course_settings']);
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return "updateCourseSettings";
     }
 
-    public function getAdditionalInputParams() : array
+    public function getAdditionalInputParams(): array
     {
         $fields = [
             $this->param_factory->int(self::P_COURSE_REF_ID)->setOptional(false),
@@ -87,8 +86,10 @@ class UpdateCourseSettingsRoute extends Base
             $this->param_factory->int(self::P_LEARNING_PROGRESS_MODE, '', [
                 $this->param_factory->possibleValue(self::LP_OPTION_OFF, 'Learning Progress is Deactivated'),
                 $this->param_factory->possibleValue(self::LP_OPTION_TUTOR, 'Tutors Monitor and Set Status'),
-                $this->param_factory->possibleValue(self::LP_OPTION_OBJECTS,
-                    'Status is Determined by a Collection of Items'),
+                $this->param_factory->possibleValue(
+                    self::LP_OPTION_OBJECTS,
+                    'Status is Determined by a Collection of Items'
+                ),
             ]),
             $this->param_factory->bool(self::P_ACTIVATE_NEWS),
             $this->param_factory->bool(self::P_ACTIVATE_NEWS_BLOCK),
@@ -112,17 +113,17 @@ class UpdateCourseSettingsRoute extends Base
         ];
     }
 
-    public function getOutputParams() : array
+    public function getOutputParams(): array
     {
         return [$this->param_factory->bool('success')];
     }
 
-    public function getShortDocumentation() : string
+    public function getShortDocumentation(): string
     {
         return "Updates the settings of a course (ref_id) to the data given";
     }
 
-    public function getSampleRequest() : string
+    public function getSampleRequest(): string
     {
         return '<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:SoapAdditions">
    <soapenv:Header/>

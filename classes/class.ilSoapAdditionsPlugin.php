@@ -18,6 +18,7 @@ use srag\Plugins\SoapAdditions\Routes\Route;
 /**
  * @noinspection AutoloadingIssuesInspection
  */
+
 class ilSoapAdditionsPlugin extends ilSoapHookPlugin
 {
     public const PLUGIN_NAME = 'SoapAdditions';

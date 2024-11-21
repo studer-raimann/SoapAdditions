@@ -43,11 +43,11 @@ abstract class UserBase extends Base
         "hobby",
         "matriculation"
     ];
-    const P_USER_ID = 'user_id';
-    const PREFIX_SHOW = 'show_';
-    const P_ACTIVATE_PUBLIC_PROFILE = 'activate_public_profile';
+    public const P_USER_ID = 'user_id';
+    public const PREFIX_SHOW = 'show_';
+    public const P_ACTIVATE_PUBLIC_PROFILE = 'activate_public_profile';
 
-    protected function getParams() : array
+    protected function getParams(): array
     {
         $params = [
             $this->param_factory->int(self::P_USER_ID)->setOptional(false),

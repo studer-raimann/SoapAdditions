@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -7,10 +8,10 @@
  *********************************************************************/
 
 /** @noinspection PhpUndefinedNamespaceInspection */
+
 namespace srag\Plugins\SoapAdditions;
 
 use Composer\Script\Event;
-use Composer\Installer\PackageEvent;
 use srag\Plugins\SoapAdditions\Routes\Base;
 use srag\Plugins\SoapAdditions\Parameter\PossibleValue;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
@@ -25,7 +26,7 @@ class Documentation
     /**
      * @return array
      */
-    protected static function getSoapRoutes() : array
+    protected static function getSoapRoutes(): array
     {
         return include 'routes.php';
     }
@@ -38,7 +39,7 @@ class Documentation
         self::saveFile($docu);
     }
 
-    protected static function paramsToString(array $ps, int $level = 1) : string
+    protected static function paramsToString(array $ps, int $level = 1): string
     {
         return implode("\n", array_map(self::paramToString($level), $ps));
     }
@@ -47,9 +48,9 @@ class Documentation
      * @param int $level
      * @return \Closure
      */
-    protected static function paramToString(int $level = 1) : \Closure
+    protected static function paramToString(int $level = 1): \Closure
     {
-        return static function (Parameter $p) use ($level) : string {
+        return static function (Parameter $p) use ($level): string {
             $docu = str_repeat("\t", $level - 1);
             $docu .= "* {$p->getKey()} ({$p->getType()}";
             if ($p->isOptional()) {
@@ -74,9 +75,9 @@ class Documentation
     /**
      * @return \Closure
      */
-    protected static function routeToString() : \Closure
+    protected static function routeToString(): \Closure
     {
-        return static function (Base $r) : string {
+        return static function (Base $r): string {
             $docu = "### Route: " . $r->getName() . "\n";
             $docu .= "" . $r->getShortDocumentation() . "\n";
             $docu .= "Parameters:\n";
@@ -93,7 +94,7 @@ class Documentation
         };
     }
 
-    private static function possibleValueToString() : \Closure
+    private static function possibleValueToString(): \Closure
     {
         return static function (PossibleValue $value) {
             /** @noinspection ForgottenDebugOutputInspection */

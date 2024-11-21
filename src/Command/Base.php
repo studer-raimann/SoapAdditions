@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -34,7 +35,7 @@ abstract class Base implements Command
     /**
      * @inheritDoc
      */
-    public function wasSuccessful() : bool
+    public function wasSuccessful(): bool
     {
         return $this->status;
     }
@@ -42,7 +43,7 @@ abstract class Base implements Command
     /**
      * @inheritDoc
      */
-    public function getUnsuccessfulReason() : string
+    public function getUnsuccessfulReason(): string
     {
         return $this->error_message;
     }

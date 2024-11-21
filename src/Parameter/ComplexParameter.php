@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -17,9 +18,8 @@ interface ComplexParameter extends Parameter
     /**
      * @return Parameter[]
      */
-    public function getSubParameters() : array;
+    public function getSubParameters(): array;
 
-    public function getTypeWithoutPrefix() : string;
+    public function getTypeWithoutPrefix(): string;
 
 }
-

@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -17,7 +18,7 @@ use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as Settin
  */
 class UpdateCourseSettingsCommand extends Base
 {
-    const FORMAT = 'Y-m-d H:i:s';
+    public const FORMAT = 'Y-m-d H:i:s';
     /**
      * @var int
      */
@@ -33,7 +34,7 @@ class UpdateCourseSettingsCommand extends Base
 
     /**
      * UpdateUserSettingsRoute constructor.
-     * @param int   $ref_id
+     * @param int $ref_id
      * @param array $parameters
      */
     public function __construct(int $ref_id, array $parameters)
@@ -76,7 +77,9 @@ class UpdateCourseSettingsCommand extends Base
         if ($activate_timeline !== null) {
             $course->setNewsTimeline($activate_timeline);
         }
-        $activate_new_timeline_landing_page = $this->getParameterByKey(SettingsRoute::P_ACTIVATE_TIMELINE_LANDINGS_PAGE);
+        $activate_new_timeline_landing_page = $this->getParameterByKey(
+            SettingsRoute::P_ACTIVATE_TIMELINE_LANDINGS_PAGE
+        );
         if ($activate_new_timeline_landing_page !== null) {
             $course->setNewsTimelineLandingPage($activate_new_timeline_landing_page);
         }
@@ -100,7 +103,7 @@ class UpdateCourseSettingsCommand extends Base
     /**
      * @return \ilObjCourse
      */
-    protected function getCourseObject() : \ilObjCourse
+    protected function getCourseObject(): \ilObjCourse
     {
         if (!isset($this->course_object)) {
             $this->course_object = new \ilObjCourse($this->ref_id, true);
@@ -120,24 +123,27 @@ class UpdateCourseSettingsCommand extends Base
         if ($add_to_favourites !== null) {
             $course->setAboStatus((int) $add_to_favourites);
         }
-
     }
 
     protected function handleContainerSetting()
     {
         $show_title_and_icon = $this->getParameterByKey(SettingsRoute::P_SHOW_TITLE_AND_ICON);
         if ($show_title_and_icon !== null) {
-            \ilContainer::_writeContainerSetting($this->obj_id, 'hide_header_icon_and_title',
-                !$show_title_and_icon);
-
+            \ilContainer::_writeContainerSetting(
+                $this->obj_id,
+                'hide_header_icon_and_title',
+                !$show_title_and_icon
+            );
         }
 
         $show_top_actions = $this->getParameterByKey(SettingsRoute::P_SHOW_HEADER_ACTIONS);
         if ($show_top_actions !== null) {
-            \ilContainer::_writeContainerSetting($this->obj_id, 'hide_top_actions',
-                !$show_top_actions);
+            \ilContainer::_writeContainerSetting(
+                $this->obj_id,
+                'hide_top_actions',
+                !$show_top_actions
+            );
         }
-
     }
 
     protected function handleSortingSettings()
@@ -149,7 +155,9 @@ class UpdateCourseSettingsCommand extends Base
             $cs->setSortMode($sorting);
             if ($sorting === 1) { // Manually
                 $cs->setSortNewItemsOrder($this->getParameterByKey(SettingsRoute::P_ORDER_FOR_NEW_OBJECTS));
-                $cs->setSortNewItemsPosition($this->getParameterByKey(SettingsRoute::P_POSITION_FOR_NEW_OBJECTS) === 'top' ? 0 : 1);
+                $cs->setSortNewItemsPosition(
+                    $this->getParameterByKey(SettingsRoute::P_POSITION_FOR_NEW_OBJECTS) === 'top' ? 0 : 1
+                );
             }
             /** @noinspection PhpParamsInspection */
             $cs->setSortDirection($this->getParameterByKey(SettingsRoute::P_SORTING_DIRECTION) === 'asc' ? 0 : 1);
@@ -167,7 +175,8 @@ class UpdateCourseSettingsCommand extends Base
                 SettingsRoute::LP_OPTION_OFF,
                 SettingsRoute::LP_OPTION_TUTOR
             ],
-            true)
+            true
+        )
         ) {
             $settings = new \ilLPObjSettings($this->obj_id);
             $settings->setMode($mode);

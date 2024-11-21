@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -23,19 +24,19 @@ class Factory
         }
     }
 
-    public function int(string $key, string $description = '', array $possible_values = []) : Parameter
+    public function int(string $key, string $description = '', array $possible_values = []): Parameter
     {
         $this->checkPossibleValues($possible_values);
         return new BaseParameter(Type::TYPE_INT, $key, $description, $possible_values);
     }
 
-    public function arrayOfInt(string $key, string $description = '', array $possible_values = []) : Parameter
+    public function arrayOfInt(string $key, string $description = '', array $possible_values = []): Parameter
     {
         $this->checkPossibleValues($possible_values);
         return new BaseParameter(Type::TYPE_INT_ARRAY, $key, $description, $possible_values);
     }
 
-    public function bool(string $key, string $description = '') : Parameter
+    public function bool(string $key, string $description = ''): Parameter
     {
         return new BaseParameter(Type::TYPE_BOOL, $key, $description, [
             $this->possibleValue(true, 'Yes'),
@@ -43,12 +44,12 @@ class Factory
         ]);
     }
 
-    public function dateTime(string $key, string $description = '') : Parameter
+    public function dateTime(string $key, string $description = ''): Parameter
     {
         return new BaseParameter(Type::TYPE_DATE_TIME, $key, $description, []);
     }
 
-    public function string(string $key, string $description = '', array $possible_values = []) : Parameter
+    public function string(string $key, string $description = '', array $possible_values = []): Parameter
     {
         $this->checkPossibleValues($possible_values);
         return new BaseParameter(Type::TYPE_STRING, $key, $description, $possible_values);
@@ -60,7 +61,7 @@ class Factory
         array $nested,
         string $description = '',
         array $possible_values = []
-    ) : ComplexParameter {
+    ): ComplexParameter {
         return new BaseComplexParameter(
             $type,
             $key,
@@ -70,7 +71,7 @@ class Factory
         );
     }
 
-    public function possibleValue($value, string $description) : PossibleValue
+    public function possibleValue($value, string $description): PossibleValue
     {
         return new PossibleValue($value, $description);
     }

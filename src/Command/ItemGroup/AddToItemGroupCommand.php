@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -73,7 +74,7 @@ class AddToItemGroupCommand extends Base
     /**
      * @throws ilSoapPluginException
      */
-    protected function checkTargetRefId() : void
+    protected function checkTargetRefId(): void
     {
         if (!ilObject2::_exists($this->target_ref_id, true) ||
             'itgr' !== ilObject2::_lookupType($this->target_ref_id, true)
@@ -85,7 +86,7 @@ class AddToItemGroupCommand extends Base
     /**
      * @throws ilSoapPluginException
      */
-    protected function checkRefIds() : void
+    protected function checkRefIds(): void
     {
         foreach ($this->ref_ids as $ref_id) {
             if (!ilObject2::_exists($ref_id, true)) {

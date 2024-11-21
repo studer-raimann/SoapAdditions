@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -42,7 +43,8 @@ class BaseComplexParameter extends BaseParameter implements ComplexParameter
             'tns:' . $type,
             $key,
             $description,
-            $possible_values);
+            $possible_values
+        );
         foreach ($sub_parameters as $sub_parameter) {
             if (!$sub_parameter instanceof Parameter || $sub_parameter instanceof ComplexParameter) {
                 throw new \LogicException('a ComplexParamater currently only holds Parameters');
@@ -52,12 +54,12 @@ class BaseComplexParameter extends BaseParameter implements ComplexParameter
         $this->type_without_prefix = $type;
     }
 
-    public function getSubParameters() : array
+    public function getSubParameters(): array
     {
         return $this->sub_parameters;
     }
 
-    public function getTypeWithoutPrefix() : string
+    public function getTypeWithoutPrefix(): string
     {
         return $this->type_without_prefix;
     }

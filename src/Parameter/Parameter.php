@@ -1,4 +1,5 @@
-<?php /*********************************************************************
+<?php
+/*********************************************************************
  * This Code is licensed under the GPL-3.0 License and is Part of a
  * ILIAS Plugin developed by sr solutions ag in Switzerland.
  *
@@ -14,21 +15,19 @@ namespace srag\Plugins\SoapAdditions\Parameter;
  */
 interface Parameter
 {
-
     public function getKey();
 
     /**
      * @return PossibleValue[]
      */
-    public function getPossibleValues() : array;
+    public function getPossibleValues(): array;
 
-    public function getType() : string;
+    public function getType(): string;
 
-    public function getDescription() : string;
+    public function getDescription(): string;
 
-    public function isOptional() : bool;
+    public function isOptional(): bool;
 
-    public function setOptional(bool $optional) : self;
+    public function setOptional(bool $optional): self;
 
 }
-

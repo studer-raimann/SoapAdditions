@@ -12,7 +12,7 @@ $ilias_min_version = "8.000";
 $ilias_max_version = "8.999";
 
 // optional, but useful: Add one or more responsible persons and a contact email
-$responsible      = "sr solutions ag";
+$responsible = "sr solutions ag";
 $responsible_mail = "support1@sr.solutions";
 
 // enable plugin management via cli for ilias >=7
