@@ -10,6 +10,7 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\Course;
 
+use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\Course\UpdateCourseSettingsCommand as SettingsCommand;
 use srag\Plugins\SoapAdditions\Routes\Base;
 
@@ -43,7 +44,7 @@ class UpdateCourseSettingsRoute extends Base
     public const P_NEWS_BLOCK_DEFAULT_ACCESS = 'news_block_default_access';
     public const P_ACTIVATE_NEWS_BLOCK_RSS = 'activate_news_block_rss';
 
-    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): Command
     {
         return new SettingsCommand((int) $params['course_settings'][self::P_COURSE_REF_ID], $params['course_settings']);
     }

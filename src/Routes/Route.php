@@ -9,6 +9,7 @@
 
 namespace srag\Plugins\SoapAdditions\Routes;
 
+use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Parameter\Parameter;
 
 /**
@@ -31,7 +32,7 @@ interface Route
 
     public function getName(): string;
 
-    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command;
+    public function getCommand(array $params): Command;
 
     public function getShortDocumentation(): string;
 

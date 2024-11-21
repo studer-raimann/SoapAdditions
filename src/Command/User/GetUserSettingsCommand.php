@@ -18,7 +18,8 @@ use srag\Plugins\SoapAdditions\Routes\User\UserBase;
  */
 class GetUserSettingsCommand extends Base
 {
-    protected $user_id = 0;
+    public $user_object;
+    protected int $user_id;
 
     /**
      * UpdateUserSettingsRoute constructor.
@@ -35,13 +36,13 @@ class GetUserSettingsCommand extends Base
      */
     protected function getUser(): \ilObjUser
     {
-        if (!isset($this->user_object)) {
+        if (!property_exists($this, 'user_object') || $this->user_object === null) {
             $this->user_object = new \ilObjUser($this->user_id);
         }
         return $this->user_object;
     }
 
-    public function run()
+    public function run(): array
     {
         $pref = $this->getUser()->getPref("public_profile") ?? 'n';
 

@@ -10,6 +10,7 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\RBAC;
 
+use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\RBAC\BlockRoleCommand;
 use srag\Plugins\SoapAdditions\Routes\Base;
 
@@ -22,7 +23,7 @@ class BlockRoleRoute extends Base
     public const P_ROLE_ID = 'role_id';
     public const P_NODE_ID = 'node_id';
 
-    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): Command
     {
         $role_id = (int) $params[self::P_ROLE_ID];
         $node_id = (int) $params[self::P_NODE_ID];

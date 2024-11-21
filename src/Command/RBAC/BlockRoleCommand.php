@@ -19,21 +19,15 @@ use srag\Plugins\SoapAdditions\Command\Base;
  */
 class BlockRoleCommand extends Base
 {
-    /**
-     * @var int
-     */
-    private $role_id;
-    /**
-     * @var int
-     */
-    private $node_id;
+    private int $role_id;
+    private int $node_id;
 
     /**
      * BlockRoleRoute constructor.
      * @param int $role_id
      * @param int $node_id
      */
-    public function __construct($role_id, $node_id)
+    public function __construct(int $role_id, int $node_id)
     {
         $this->checkRole($role_id);
         $this->checkNode($node_id);
@@ -44,7 +38,7 @@ class BlockRoleCommand extends Base
     /**
      * @inheritDoc
      */
-    public function run()
+    public function run(): array
     {
         if ($this->status === true) {
             $this->blockRole($this->role_id, $this->node_id);
@@ -56,7 +50,7 @@ class BlockRoleCommand extends Base
      * @param $role_id
      * @param $node_id
      */
-    private function blockRole(int $role_id, int $node_id)
+    private function blockRole(int $role_id, int $node_id): void
     {
         global $DIC;
         try {
@@ -99,7 +93,7 @@ class BlockRoleCommand extends Base
      * @noinspection UnnecessaryCastingInspection
      * @noinspection PhpCastIsUnnecessaryInspection
      */
-    private function checkRole(int $role_id)
+    private function checkRole(int $role_id): void
     {
         if ($this->status === true) {
             $b = (bool) (ilObject2::_exists($role_id, false) && ilObject2::_lookupType($role_id, false) === "role");
@@ -114,7 +108,7 @@ class BlockRoleCommand extends Base
      * @param int $node_id
      * @noinspection PhpCastIsUnnecessaryInspection
      */
-    private function checkNode(int $node_id)
+    private function checkNode(int $node_id): void
     {
         if ($this->status === true) {
             $exists = (bool) (ilObject2::_exists($node_id, true));

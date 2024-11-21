@@ -8,8 +8,6 @@
  *
  *********************************************************************/
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 use srag\Plugins\SoapAdditions\Routes\RouteContainer;
 use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 use srag\Plugins\SoapAdditions\Routes\ParameterContainer;
@@ -28,8 +26,7 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
      */
     protected function getRoutes()
     {
-        $routes = include './Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/src/routes.php';
-        return $routes;
+        return include './Customizing/global/plugins/Services/WebServices/SoapHook/SoapAdditions/src/routes.php';
     }
 
     /**
@@ -37,9 +34,7 @@ class ilSoapAdditionsPlugin extends ilSoapHookPlugin
      */
     public function getSoapMethods(): array
     {
-        return array_map(static function (Route $route): RouteContainer {
-            return new RouteContainer($route);
-        }, $this->getRoutes());
+        return array_map(static fn(Route $route): RouteContainer => new RouteContainer($route), $this->getRoutes());
     }
 
     /**

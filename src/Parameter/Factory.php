@@ -15,7 +15,7 @@ namespace srag\Plugins\SoapAdditions\Parameter;
  */
 class Factory
 {
-    private function checkPossibleValues(array $possible_values)
+    private function checkPossibleValues(array $possible_values): void
     {
         foreach ($possible_values as $possible_value) {
             if (!$possible_value instanceof PossibleValue) {

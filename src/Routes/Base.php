@@ -20,10 +20,7 @@ use srag\Plugins\SoapAdditions\Parameter\PossibleValue;
  */
 abstract class Base implements Route
 {
-    /**
-     * @var Factory
-     */
-    protected $param_factory;
+    protected Factory $param_factory;
 
     public function __construct()
     {
@@ -35,7 +32,7 @@ abstract class Base implements Route
      */
     abstract public function getAdditionalInputParams(): array;
 
-    public function checkParameters(array $params)
+    public function checkParameters(array $params): void
     {
         $needed_parameters = $this->getAdditionalInputParams();
         if (count($needed_parameters) !== count($params) - 1) {
@@ -48,14 +45,10 @@ abstract class Base implements Route
         foreach ($needed_parameters as $needed_parameter) {
             if ($needed_parameter instanceof ComplexParameter) {
                 $parameters = $needed_parameter->getSubParameters();
-                $required_fields = array_map(function (Parameter $p): string {
-                    return $p->getKey();
-                }, array_filter($parameters, function (Parameter $p): bool {
-                    return !$p->isOptional();
-                }));
+                $required_fields = array_map(fn(Parameter $p): string => $p->getKey(), array_filter($parameters, fn(Parameter $p): bool => !$p->isOptional()));
                 $sent_parameters = array_keys((array) $params[$k]);
                 $missing_fields = array_diff($required_fields, $sent_parameters);
-                if (count($missing_fields) > 0) {
+                if ($missing_fields !== []) {
                     $keys_needed = implode(", ", $required_fields);
                     throw new \ilSoapPluginException(
                         "Request is missing at least one of the following parameters: " . $keys_needed
@@ -63,11 +56,9 @@ abstract class Base implements Route
                 }
 
                 // check possible values
-                array_walk($parameters, static function (Parameter $p) use ($params, $k) {
-                    if (count($p->getPossibleValues()) > 0) {
-                        $possible_values = array_map(function (PossibleValue $v) {
-                            return $v->getValue();
-                        }, $p->getPossibleValues());
+                array_walk($parameters, static function (Parameter $p) use ($params, $k): void {
+                    if ($p->getPossibleValues() !== []) {
+                        $possible_values = array_map(fn(PossibleValue $v) => $v->getValue(), $p->getPossibleValues());
                         $needle = $params[$k]->{$p->getKey()} ?? null;
                         if ($needle === null && $p->isOptional()) {
                             return;

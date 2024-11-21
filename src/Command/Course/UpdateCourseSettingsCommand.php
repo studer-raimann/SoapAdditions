@@ -18,19 +18,11 @@ use srag\Plugins\SoapAdditions\Routes\Course\UpdateCourseSettingsRoute as Settin
  */
 class UpdateCourseSettingsCommand extends Base
 {
+    public $course_object;
     public const FORMAT = 'Y-m-d H:i:s';
-    /**
-     * @var int
-     */
-    protected $obj_id = 0;
-    /**
-     * @var int
-     */
-    protected $ref_id = 0;
-    /**
-     * @var array
-     */
-    protected $parameters;
+    protected int $obj_id;
+    protected int $ref_id;
+    protected array $parameters;
 
     /**
      * UpdateUserSettingsRoute constructor.
@@ -105,7 +97,7 @@ class UpdateCourseSettingsCommand extends Base
      */
     protected function getCourseObject(): \ilObjCourse
     {
-        if (!isset($this->course_object)) {
+        if (!property_exists($this, 'course_object') || $this->course_object === null) {
             $this->course_object = new \ilObjCourse($this->ref_id, true);
         }
         return $this->course_object;
@@ -184,7 +176,7 @@ class UpdateCourseSettingsCommand extends Base
         }
     }
 
-    public function run()
+    public function run(): array
     {
         // Sorting UpdateUserSettingsRoute:
         $this->handleSortingSettings();

@@ -31,7 +31,7 @@ class Documentation
         return include 'routes.php';
     }
 
-    public static function postAutoloadDump(Event $event)
+    public static function postAutoloadDump(Event $event): void
     {
         $soap_routes = self::getSoapRoutes();
         $docu = implode("\n\n", array_map(self::routeToString(), $soap_routes));
@@ -57,7 +57,7 @@ class Documentation
                 $docu .= ", optional";
             }
             $docu .= ")";
-            if ($p->getDescription()) {
+            if ($p->getDescription() !== '' && $p->getDescription() !== '0') {
                 $docu .= ": " . $p->getDescription();
             }
             if ($p instanceof ComplexParameter) {
@@ -66,9 +66,8 @@ class Documentation
             }
 
             $implode = implode(", ", array_map(self::possibleValueToString(), $p->getPossibleValues()));
-            $docu .= $implode !== '' ? " " . $implode : '';
 
-            return $docu;
+            return $docu . ($implode !== '' ? " " . $implode : '');
         };
     }
 
@@ -83,7 +82,7 @@ class Documentation
             $docu .= "Parameters:\n";
             $docu .= self::paramsToString($r->getAdditionalInputParams());
 
-            if ($r->getSampleRequest()) {
+            if ($r->getSampleRequest() !== '' && $r->getSampleRequest() !== '0') {
                 $docu .= "\n\n```xml\n";
                 $docu .= $r->getSampleRequest();
                 $docu .= "\n```";
@@ -96,10 +95,9 @@ class Documentation
 
     private static function possibleValueToString(): \Closure
     {
-        return static function (PossibleValue $value) {
+        return static fn(PossibleValue $value): string =>
             /** @noinspection ForgottenDebugOutputInspection */
-            return var_export($value->getValue(), true) . ": {$value->getDescription()}";
-        };
+            var_export($value->getValue(), true) . ": {$value->getDescription()}";
     }
 
     /**

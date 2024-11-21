@@ -10,6 +10,7 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\Favourites;
 
+use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Routes\Base;
 use srag\Plugins\SoapAdditions\Command\Favourites\AddToFavouritesCommand;
 
@@ -21,7 +22,7 @@ class AddToFavouritesRoute extends Base
 {
     public const REF_ID = 'ref_id';
 
-    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): Command
     {
         return new AddToFavouritesCommand($params[self::REF_ID], $params);
     }

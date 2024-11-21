@@ -19,10 +19,7 @@ class PossibleValue
      * @var mixed
      */
     protected $value;
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
     /**
      * PossibleValue constructor.

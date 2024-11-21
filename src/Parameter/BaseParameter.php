@@ -15,22 +15,10 @@ namespace srag\Plugins\SoapAdditions\Parameter;
  */
 class BaseParameter implements Parameter
 {
-    /**
-     * @var string
-     */
-    protected $type;
-    /**
-     * @var string
-     */
-    protected $key;
-    /**
-     * @var string
-     */
-    protected $description = '';
-    /**
-     * @var array
-     */
-    protected $possible_values = [];
+    protected string $type;
+    protected string $key;
+    protected string $description;
+    protected array $possible_values;
     /**
      * @var bool
      */

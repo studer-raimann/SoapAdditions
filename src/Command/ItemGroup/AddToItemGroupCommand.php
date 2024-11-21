@@ -21,20 +21,14 @@ use ilObject2;
  */
 class AddToItemGroupCommand extends Base
 {
-    /**
-     * @var int
-     */
-    protected $target_ref_id;
+    protected int $target_ref_id;
 
     /**
      * @var int[]
      */
-    protected $ref_ids;
+    protected array $ref_ids;
 
-    /**
-     * @var bool
-     */
-    protected $append;
+    protected bool $append;
 
     /**
      * @param int   $target_ref_id

@@ -10,6 +10,7 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\User;
 
+use srag\Plugins\SoapAdditions\Command\Command;
 use srag\Plugins\SoapAdditions\Command\User\UpdateUserSettingsCommand;
 
 /**
@@ -26,7 +27,7 @@ class UpdateUserSettingsRoute extends UserBase
      */
     protected $user_settings_config;
 
-    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): Command
     {
         return new UpdateUserSettingsCommand((int) $params['user_settings'][self::P_USER_ID], $params['user_settings']);
     }

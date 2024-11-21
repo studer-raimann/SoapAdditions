@@ -25,7 +25,7 @@ class RouteContainer extends ilAbstractSoapMethod
     /**
      * @var Base
      */
-    protected $route;
+    protected Route $route;
 
     /**
      * RouteContainer constructor.

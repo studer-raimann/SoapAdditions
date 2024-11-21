@@ -19,10 +19,7 @@ use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
  */
 class ParameterContainer implements \ilWsdlType
 {
-    /**
-     * @var Parameter
-     */
-    protected $parameter;
+    protected Parameter $parameter;
 
     /**
      * @param Parameter $parameter

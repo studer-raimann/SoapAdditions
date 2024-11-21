@@ -10,15 +10,18 @@
 
 namespace srag\Plugins\SoapAdditions\Routes\User;
 
+use srag\Plugins\SoapAdditions\Command\Command;
+use srag\Plugins\SoapAdditions\Command\User\GetUserSettingsCommand;
+
 /**
  * Class GetUserSettingsRoute
  * @author Fabian Schmid <fs@studer-raimann.ch>
  */
 class GetUserSettingsRoute extends UserBase
 {
-    public function getCommand(array $params): \srag\Plugins\SoapAdditions\Command\Command
+    public function getCommand(array $params): Command
     {
-        return new \srag\Plugins\SoapAdditions\Command\User\GetUserSettingsCommand((int) $params[self::P_USER_ID]);
+        return new GetUserSettingsCommand((int) $params[self::P_USER_ID]);
     }
 
     public function getName(): string

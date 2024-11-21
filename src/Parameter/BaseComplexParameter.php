@@ -18,11 +18,8 @@ class BaseComplexParameter extends BaseParameter implements ComplexParameter
     /**
      * @var Parameter[]
      */
-    protected $sub_parameters = [];
-    /**
-     * @var string
-     */
-    protected $type_without_prefix;
+    protected array $sub_parameters;
+    protected string $type_without_prefix;
 
     /**
      * BaseParameter constructor.

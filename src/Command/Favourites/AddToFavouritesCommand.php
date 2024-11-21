@@ -18,14 +18,8 @@ use ILIAS\BackgroundTasks\Exceptions\InvalidArgumentException;
  */
 class AddToFavouritesCommand extends Base
 {
-    /**
-     * @var int
-     */
-    private $ref_id;
-    /**
-     * @var int
-     */
-    private $object_id;
+    private int $ref_id;
+    private ?int $object_id = null;
     /**
      * @var array
      */
@@ -33,15 +27,12 @@ class AddToFavouritesCommand extends Base
     /**
      * @var false|mixed
      */
-    protected $inherit;
+    protected bool $inherit;
     /**
      * @var \ilDBInterface
      */
     protected $database;
-    /**
-     * @var \ilFavouritesManager
-     */
-    protected $manager;
+    protected \ilFavouritesManager $manager;
 
     public function __construct(int $ref_id, array $data)
     {
@@ -82,7 +73,7 @@ class AddToFavouritesCommand extends Base
             try {
                 $participants = \ilParticipants::getInstance($this->ref_id);
             } catch (InvalidArgumentException $e) {
-                throw new \ilSoapPluginException('no participants found for ref_id' . $this->ref_id);
+                throw new \ilSoapPluginException('no participants found for ref_id' . $this->ref_id, $e->getCode(), $e);
             }
 
             foreach ($participants->getParticipants() as $user_id) {
@@ -91,9 +82,7 @@ class AddToFavouritesCommand extends Base
         }
 
         $this->user_ids = array_unique($this->user_ids);
-        $this->user_ids = array_filter($this->user_ids, function ($user_id): bool {
-            return $this->isUserIdValid($user_id);
-        });
+        $this->user_ids = array_filter($this->user_ids, fn($user_id): bool => $this->isUserIdValid($user_id));
     }
 
     /**
