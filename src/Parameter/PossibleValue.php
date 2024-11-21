@@ -16,20 +16,11 @@ namespace srag\Plugins\SoapAdditions\Parameter;
 class PossibleValue
 {
     /**
-     * @var mixed
-     */
-    protected $value;
-    protected string $description;
-
-    /**
      * PossibleValue constructor.
-     * @param mixed  $value
      * @param string $description
      */
-    public function __construct($value, string $description)
+    public function __construct(protected mixed $value, protected string $description)
     {
-        $this->value = $value;
-        $this->description = $description;
     }
 
     public function getValue()

@@ -19,7 +19,6 @@ use srag\Plugins\SoapAdditions\Routes\User\UpdateUserSettingsRoute as SettingsCo
 class UpdateUserSettingsCommand extends Base
 {
     public $user_object;
-    protected int $user_id;
     protected array $params;
 
     /**
@@ -27,9 +26,8 @@ class UpdateUserSettingsCommand extends Base
      * @param int   $user_id
      * @param array $params
      */
-    public function __construct(int $user_id, array $params)
+    public function __construct(protected int $user_id, array $params)
     {
-        $this->user_id = $user_id;
         $this->params = $params ?? [];
     }
 

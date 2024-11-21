@@ -19,14 +19,11 @@ use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
  */
 class ParameterContainer implements \ilWsdlType
 {
-    protected Parameter $parameter;
-
     /**
      * @param Parameter $parameter
      */
-    public function __construct(Parameter $parameter)
+    public function __construct(protected Parameter $parameter)
     {
-        $this->parameter = $parameter;
     }
 
     public function getName(): string

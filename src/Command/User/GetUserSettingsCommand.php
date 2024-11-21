@@ -19,16 +19,14 @@ use srag\Plugins\SoapAdditions\Routes\User\UserBase;
 class GetUserSettingsCommand extends Base
 {
     public $user_object;
-    protected int $user_id;
 
     /**
      * UpdateUserSettingsRoute constructor.
      * @param int $user_id
      * @param array $params
      */
-    public function __construct(int $user_id)
+    public function __construct(protected int $user_id)
     {
-        $this->user_id = $user_id;
     }
 
     /**

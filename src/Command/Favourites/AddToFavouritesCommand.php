@@ -18,7 +18,6 @@ use ILIAS\BackgroundTasks\Exceptions\InvalidArgumentException;
  */
 class AddToFavouritesCommand extends Base
 {
-    private int $ref_id;
     private ?int $object_id = null;
     /**
      * @var array
@@ -34,10 +33,9 @@ class AddToFavouritesCommand extends Base
     protected $database;
     protected \ilFavouritesManager $manager;
 
-    public function __construct(int $ref_id, array $data)
+    public function __construct(private int $ref_id, array $data)
     {
         global $DIC;
-        $this->ref_id = $ref_id;
         $this->user_ids = (array) ($data['user_ids'] ?? []);
         $this->inherit = (bool) ($data['inherit'] ?? false);
         $this->manager = new \ilFavouritesManager();
@@ -89,10 +87,8 @@ class AddToFavouritesCommand extends Base
      * Checks if the given value is a valid $user_id and returns whether the
      * user exists or not. (Considers a referential integrity issue inside
      * ILIAS by trying to create an instance)
-     *
-     * @param mixed $user_id
      */
-    protected function isUserIdValid($user_id): bool
+    protected function isUserIdValid(mixed $user_id): bool
     {
         // checks for null, false or ''
         if (!$user_id) {
@@ -102,7 +98,7 @@ class AddToFavouritesCommand extends Base
         try {
             $user = new \ilObjUser($user_id);
             return true;
-        } catch (\Throwable $any) {
+        } catch (\Throwable) {
             return false;
         }
     }

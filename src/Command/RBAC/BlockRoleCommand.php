@@ -79,7 +79,7 @@ class BlockRoleCommand extends Base
                 $node_id,
                 true
             );
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->status = false;
             $this->error_message = "There was an unexpected error blocking the role";
         }

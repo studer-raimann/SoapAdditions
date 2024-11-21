@@ -21,31 +21,25 @@ use ilObject2;
  */
 class AddToItemGroupCommand extends Base
 {
-    protected int $target_ref_id;
-
     /**
      * @var int[]
      */
     protected array $ref_ids;
-
-    protected bool $append;
 
     /**
      * @param int   $target_ref_id
      * @param int[] $ref_ids
      * @param bool  $append
      */
-    public function __construct(int $target_ref_id, array $ref_ids, bool $append)
+    public function __construct(protected int $target_ref_id, array $ref_ids, protected bool $append)
     {
-        $this->target_ref_id = $target_ref_id;
         $this->ref_ids = array_unique($ref_ids);
-        $this->append = $append;
     }
 
     /**
      * @throws ilSoapPluginException
      */
-    public function run()
+    public function run(): array
     {
         $this->checkTargetRefId();
         $this->checkRefIds();

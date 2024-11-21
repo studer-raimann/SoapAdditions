@@ -23,17 +23,11 @@ use srag\Plugins\SoapAdditions\Parameter\ComplexParameter;
 class RouteContainer extends ilAbstractSoapMethod
 {
     /**
-     * @var Base
-     */
-    protected Route $route;
-
-    /**
      * RouteContainer constructor.
      * @param Route $route
      */
-    public function __construct(Route $route)
+    public function __construct(protected Route $route)
     {
-        $this->route = $route;
         parent::__construct();
     }
 
@@ -77,6 +71,7 @@ class RouteContainer extends ilAbstractSoapMethod
     /**
      * @param $message
      * @throws ilSoapPluginException
+     * @return never
      */
     protected function error($message)
     {

@@ -21,18 +21,14 @@ class UpdateCourseSettingsCommand extends Base
     public $course_object;
     public const FORMAT = 'Y-m-d H:i:s';
     protected int $obj_id;
-    protected int $ref_id;
-    protected array $parameters;
 
     /**
      * UpdateUserSettingsRoute constructor.
      * @param int $ref_id
      * @param array $parameters
      */
-    public function __construct(int $ref_id, array $parameters)
+    public function __construct(protected int $ref_id, protected array $parameters)
     {
-        $this->ref_id = $ref_id;
-        $this->parameters = $parameters;
         $this->obj_id = \ilObject2::_lookupObjId($this->ref_id);
     }
 

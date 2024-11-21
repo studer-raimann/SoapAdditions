@@ -15,10 +15,6 @@ namespace srag\Plugins\SoapAdditions\Parameter;
  */
 class BaseParameter implements Parameter
 {
-    protected string $type;
-    protected string $key;
-    protected string $description;
-    protected array $possible_values;
     /**
      * @var bool
      */
@@ -31,19 +27,11 @@ class BaseParameter implements Parameter
      * @param string $description
      * @param array  $possible_values
      */
-    public function __construct(
-        string $type,
-        string $key,
-        string $description,
-        array $possible_values
-    ) {
-        $this->type = $type;
-        $this->key = $key;
-        $this->description = $description;
-        $this->possible_values = $possible_values;
+    public function __construct(protected string $type, protected string $key, protected string $description, protected array $possible_values)
+    {
     }
 
-    public function getKey()
+    public function getKey(): string
     {
         return $this->key;
     }
