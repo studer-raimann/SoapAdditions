@@ -149,8 +149,8 @@ Parameters:
 ### Route: addToItemGroup
 Adds the given objects (ref_ids) to the given ItemGroup target (ref_id).
 Parameters:
-* target_ref_id (xsd:int): ILIAS Ref-ID of the ItemGroup Object
-* ref_ids (tns:intArray): List of Object Ref-IDs for the ItemGroup
+* target_ref_id (xsd:int): ILIAS ref-id of the ItemGroup object
+* ref_ids (tns:intArray): List of object ref-ids for the ItemGroup
 
 ```xml
 
@@ -168,6 +168,7 @@ Parameters:
                         <ref_ids xsi:type="urn:intArray" SOAP-ENC:arrayType="xsd:int[]" xmlns:urn="urn:ilUserAdministration">
                             <item xsi:type="xsd:int">?</item>
                         </ref_ids>
+                        <append xsi:type="xsd:boolean">?</append>
                     </urn:addToItemGroup>
                 </soapenv:Body>
             </soapenv:Envelope>
