@@ -16,13 +16,14 @@ use srag\Plugins\SoapAdditions\Routes\Route;
 /**
  * @noinspection AutoloadingIssuesInspection
  */
+
 class ilSoapAdditionsPlugin extends ilSoapHookPlugin
 {
     public const PLUGIN_NAME = 'SoapAdditions';
 
     protected function getRoutes(): array
     {
-        return (array) ((include '../src/routes.php') ?? []);
+        return (array) ((include __DIR__ . '/../src/routes.php') ?? []);
     }
 
     public function getSoapMethods(): array
